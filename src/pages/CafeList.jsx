@@ -1,23 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import '../styles/main.css';
 const Wrap = styled.div`
   width: 100%;
-  height: 44rem;
+  height: 53rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `;
 const HeaderCon = styled.div`
   width: 100%;
   height: 3rem;
 `;
-const CafeListCon = styled.div`
-  width: 85%;
-  height: 40rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const ContentsWrap = styled.div`
+width: 85%;
+height: 45rem;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 10px;
+}
 `;
 const UserCafeTitle = styled.div`
   width: 100%;
@@ -27,6 +30,7 @@ const UserCafeTitle = styled.div`
 const CafeSearchWrap = styled.div`
   width: 100%;
   height: 35%;
+  margin-top: 10px;
 `;
 const CafeInputWrap = styled.div`
   width: 90%;
@@ -63,32 +67,85 @@ const CafeThemeCon = styled.div`
   align-items: center;
 `;
 const CafeThemes = styled.button`
-  width: 10%;
-  height: 73%;
+  width: 5vw;
+  height: 5vw;
   border-radius: 50%;
   cursor: pointer;
   background-color: #ff6868;
   border: none;
   font-size: 0.6vw;
 `;
-const CafeLists = styled.div`
-  width: 70%;
-  height: 50%;
-  margin-top: 30px;
-  border: 1px solid #000000;
-  border-radius: 50px;
+const CafeListsWrap = styled.div`
+width: 70%;
+height: 20rem;
+margin-top: 30px;
+border: 1px solid #000000;
+border-radius: 50px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+`;
+const CafeListsCon = styled.div`
+  width: 90%;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  overflow: auto;
+`;
+const Cafe = styled.div`
+  width: calc(55rem / 5);
+  height: 3rem;
+  text-align: center;
+  border-radius: 30px;
+  border: 1px solid;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+`;
+const FooterWrap = styled.div`
+  width: 100%;
+  height: 5rem;
+  position: absolute;
+  bottom: 0;
+  background-color: #d9d9d9;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+`;
+const FooterTitle = styled.div`
+  width: 60%;
+  height: 2.5rem;
+  text-align: center;
 `;
 function CafeList() {
   const [userName, setuserName] = useState('');
   const themes = ['커피', '빵', '인테리어', '케이크', '브런치', '디저트'];
   const inputKinds = ['시/도', '시/구/군', '동/읍/면'];
+  const Cafes = [
+    '카페1',
+    '카페2',
+    '카페3',
+    '카페4',
+    '카페5',
+    '카페6',
+    '카페7',
+    '카페8',
+    '카페9',
+    '카페10',
+    '카페11',
+    '카페12',
+  ];
   useEffect(() => {
     setuserName('이주영');
   }, []);
   return (
     <Wrap>
       <HeaderCon></HeaderCon>
-      <CafeListCon>
+      <ContentsWrap>
         <UserCafeTitle>{userName}&apos;s CafeList</UserCafeTitle>
         <CafeSearchWrap>
           {inputKinds.map((a) => (
@@ -106,8 +163,17 @@ function CafeList() {
             </CafeThemeCon>
           </CafeThemeWrap>
         </CafeSearchWrap>
-        <CafeLists></CafeLists>
-      </CafeListCon>
+        <CafeListsWrap>
+          <CafeListsCon>
+            {Cafes.map((a) => (
+              <Cafe key={a}>{a}</Cafe>
+            ))}
+          </CafeListsCon>
+        </CafeListsWrap>
+      </ContentsWrap>
+      <FooterWrap>
+        <FooterTitle>약관/개인정보처리방침/문의 보내기</FooterTitle>
+      </FooterWrap>
     </Wrap>
   );
 }
