@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import '../styles/main.css';
 const Wrap = styled.div`
   width: 100%;
   height: 53rem;
@@ -26,6 +25,10 @@ const UserCafeTitle = styled.div`
   width: 100%;
   font-size: 3rem;
   text-align: center;
+  font-family: Inter;
+  font-weight: 700;
+  line-height: 58px;
+  letter-spacing: 0em;
 `;
 const CafeSearchWrap = styled.div`
   width: 100%;
@@ -45,6 +48,12 @@ const CafeThemeWrap = styled(CafeInputWrap)`
 `;
 const CafeInputTitle = styled.div`
   width: 20%;
+  text-align: center;
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  letter-spacing: 0em;
   text-align: center;
 `;
 const CafeInputCon = styled.input`
@@ -74,6 +83,7 @@ const CafeThemes = styled.button`
   background-color: #ff6868;
   border: none;
   font-size: 0.6vw;
+  font-weight: 700;
 `;
 const CafeListsWrap = styled.div`
 width: 70%;
@@ -105,6 +115,7 @@ const Cafe = styled.div`
   display: flex;
   align-items: center;
   margin: 10px;
+  font-weight: 700;
 `;
 const FooterWrap = styled.div`
   width: 100%;
