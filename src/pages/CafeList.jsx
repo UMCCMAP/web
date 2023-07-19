@@ -116,6 +116,7 @@ const Cafe = styled.div`
   align-items: center;
   margin: 10px;
   font-weight: 700;
+  cursor: pointer;
 `;
 const FooterWrap = styled.div`
   width: 100%;
