@@ -1,0 +1,75 @@
+.detailWrapper {
+  width: 500px;
+  height: 100vh;
+  background-color: rgba(249, 255, 253, 1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  --green: rgba(33, 174, 33, 1);
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s;
+}
+
+.detailWrapper.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.detailWrapper > .detailImgContainer {
+  width: 100%;
+  height: 25%;
+}
+
+.detailWrapper > .detailImgContainer > .leftIcon {
+  position: absolute;
+  top: 10px;
+  left: 5px;
+  color: rgba(249, 255, 253, 1);
+  cursor: pointer;
+}
+
+.detailWrapper > .detailCafeName {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--green);
+}
+
+.detailWrapper > .themeBtnContainer {
+  width: 150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detailWrapper > .saveBtnContainer {
+  width: 150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detailWrapper > .reviewScore {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.detailWrapper > .reviewScore > img {
+  width: 16px;
+  height: 16px;
+}
+.detailWrapper > .reviewScore > span {
+  text-align: center;
+  font-size: 16px;
+  color: rgba(0, 127, 211, 1);
+  margin-top: 3px;
+}
+
+.detailWrapper > .reviewContainer {
+  width: 100%;
+  height: 50%;
+}
