@@ -20,8 +20,27 @@
 }
 
 .detailWrapper > .detailImgContainer {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
   width: 100%;
   height: 25%;
+}
+
+.detailWrapper > .detailImgContainer > div:nth-child(2) {
+  background-color: red;
+  grid-row: span 2;
+}
+.detailWrapper > .detailImgContainer > div:nth-child(3) {
+  background-color: orange;
+}
+.detailWrapper > .detailImgContainer > div:nth-child(4) {
+  background-color: yellow;
+}
+.detailWrapper > .detailImgContainer > div:nth-child(5) {
+  background-color: green;
+}
+.detailWrapper > .detailImgContainer > div:nth-child(6) {
+  background-color: blue;
 }
 
 .detailWrapper > .detailImgContainer > .leftIcon {
@@ -72,4 +91,8 @@
 .detailWrapper > .reviewContainer {
   width: 100%;
   height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
