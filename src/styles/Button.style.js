@@ -13,16 +13,19 @@ export const ThemeButton = styled.button`
   text-align: center;
   padding: 3px;
   box-sizing: border-box;
+  cursor: pointer;
+  ...style,
 `;
 
 export const CommonButton = styled.button`
   width: ${(props) => props.width};
   color: ${(props) => props.color};
-  background: ${(props) => props.background};
+  background-color: ${(props) => props.background};
   border-radius: 30px;
   border: none;
   padding: 5px 10px;
   font-size: 12px;
   font-weight: 700;
   text-align: center;
+  cursor: pointer;
 `;
