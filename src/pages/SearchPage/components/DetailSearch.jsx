@@ -53,7 +53,7 @@ function DetailSearch({ isOpen, closeAction }) {
       <div className={styles.saveBtnContainer}>
         <CommonBtn
           name="지도에 저장"
-          width={70}
+          width="70px"
           color={color}
           background={background}
           clickEvent={() => {
@@ -63,7 +63,7 @@ function DetailSearch({ isOpen, closeAction }) {
         />
         <CommonBtn
           name="리뷰 작성"
-          width={70}
+          width="70px"
           color={color}
           background={background}
           clickEvent={() => {

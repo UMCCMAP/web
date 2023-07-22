@@ -23,7 +23,7 @@ export const CommonButton = styled.button`
   background-color: ${(props) => props.background};
   border-radius: 30px;
   border: none;
-  padding: 5px 10px;
+  padding: 5px 5px;
   font-size: 12px;
   font-weight: 700;
   text-align: center;
