@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+import Cafes from '../assets/Cafes';
 const Wrap = styled.div`
   width: 100%;
   height: 53rem;
@@ -137,20 +138,40 @@ function CafeList() {
   const [userName, setuserName] = useState('');
   const themes = ['커피', '빵', '인테리어', '케이크', '브런치', '디저트'];
   const inputKinds = ['시/도', '시/구/군', '동/읍/면'];
-  const Cafes = [
-    '카페1',
-    '카페2',
-    '카페3',
-    '카페4',
-    '카페5',
-    '카페6',
-    '카페7',
-    '카페8',
-    '카페9',
-    '카페10',
-    '카페11',
-    '카페12',
-  ];
+  const [search, setSearch] = useState({ city: '', town: '', village: '', theme: '' });
+  const filteredCafes = Cafes.filter((cafe) => {
+    const keys = Object.keys(search);
+    for (const key of keys) {
+      if (search[key] !== '') {
+        const regex = new RegExp(convertToRegexPattern(search[key]), 'gi');
+        if (!regex.test(convertToRegexPattern(cafe[key]))) {
+          return false;
+        }
+      }
+    }
+    return true;
+  });
+
+  // 입력된 문자열을 자음을 포함한 정규식 패턴으로 변환하는 함수
+  function convertToRegexPattern(str) {
+    const consonants = /[ㄱ-ㅎ]/g;
+    return str.replace(consonants, '');
+  }
+
+  const Input = (e, a) => {
+    let copy = { ...search };
+    if (a === '시/도') {
+      copy.city = e.target.value;
+    } else if (a === '시/구/군') {
+      copy.town = e.target.value;
+    } else {
+      copy.village = e.target.value;
+    }
+    setSearch(copy);
+  };
+  useEffect(() => {
+    console.log(search);
+  }, [search]);
   useEffect(() => {
     setuserName('이주영');
   }, []);
@@ -163,22 +184,31 @@ function CafeList() {
           {inputKinds.map((a) => (
             <CafeInputWrap key={a}>
               <CafeInputTitle>{a}</CafeInputTitle>
-              <CafeInputCon></CafeInputCon>
+              <CafeInputCon onChange={(event) => Input(event, a)}></CafeInputCon>
             </CafeInputWrap>
           ))}
           <CafeThemeWrap>
             <CafeInputTitle>테마</CafeInputTitle>
             <CafeThemeCon>
               {themes.map((a) => (
-                <CafeThemes key={a}>{a}</CafeThemes>
+                <CafeThemes
+                  key={a}
+                  onClick={() => {
+                    let copy = { ...search };
+                    copy.theme = a;
+                    setSearch(copy);
+                  }}
+                >
+                  {a}
+                </CafeThemes>
               ))}
             </CafeThemeCon>
           </CafeThemeWrap>
         </CafeSearchWrap>
         <CafeListsWrap>
           <CafeListsCon>
-            {Cafes.map((a) => (
-              <Cafe key={a}>{a}</Cafe>
+            {filteredCafes.map((a, i) => (
+              <Cafe key={i}>{a.name}</Cafe>
             ))}
           </CafeListsCon>
         </CafeListsWrap>
