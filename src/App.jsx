@@ -1,7 +1,8 @@
 import './App.css';
+import SearchPage from './pages/SearchPage/SearchPage';
 
 function App() {
-  return <div>Hello~!</div>;
+  return <SearchPage />;
 }
 
 export default App;
