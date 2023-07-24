@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import imgLogo from '../../assets/icon/Vector.png';
+import imgLogo from '../../assets/icon/CMAP.png';
+import WriteImg from '../../assets/icon/Vector.png';
+import ProFile from '../../assets/icon/Profile.png';
+import Footer from '../../components/Footer';
+
 const Wrap = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  flex-direction: column;
+  align-items: center;
 `;
 const ContentsWrap = styled.div`
   width: 67rem;
-  height: 62rem;
+  height: 90rem;
   display: flex;
   align-items: center;
 
@@ -16,11 +22,55 @@ const ContentsWrap = styled.div`
 `;
 const Header = styled.div`
   width: 100%;
-  height: 8rem;
+  height: 10rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+const Logo = styled.div`
+  width: 13rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+`;
+const SearchInput = styled.input`
+  outline: none;
+  background: #f1f1f1;
+  width: 29.25rem;
+  height: 3.5rem;
+  border-radius: 32px;
+  border: none;
+  gap: 10px;
+  text-align: center;
+  color: #939393;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin-left: -15px;
+`;
+const MyProfile = styled.div`
+  width: 7.875rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+`;
+const ProfileWord = styled.div`
+  font-family: Pretendard;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 29px;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: #939393;
 `;
 const BoardWrap = styled.div`
   width: 100%;
-  height: 48rem;
+  height: 80rem;
 `;
 const BoardKeywordWrap = styled.div`
   width: 100%;
@@ -78,7 +128,7 @@ const WriteText = styled.div`
   color: white;
 `;
 const BoardContentsWrap = styled.div`
-  height: 80rem;
+  height: 70rem;
   flex-direction: column;
   display: flex;
   margin-top: 5px;
@@ -86,7 +136,7 @@ const BoardContentsWrap = styled.div`
 const Board = styled.div`
   display: flex;
   height: 15rem;
-  margin-top: 15px;
+  margin-top: 30px;
 `;
 const BoardWords = styled.div`
   width: 48%;
@@ -149,26 +199,29 @@ function BoardList() {
     {
       title: '서초 근교에 주차 편리한 카페',
       content: '서초 근교에 주차 편리하고 넓은 카페 있을까요?',
-      recommand: true,
+      recommand: false,
       image: ['a', 'b', 'c'],
     },
     {
       title: '서초 근교에 주차 편리한 카페',
       content: '서초 근교에 주차 편리하고 넓은 카페 있을까요?',
-      recommand: true,
-      image: ['a', 'b', 'c'],
-    },
-    {
-      title: '서초 근교에 주차 편리한 카페',
-      content: '서초 근교에 주차 편리하고 넓은 카페 있을까요?',
-      recommand: true,
+      recommand: false,
       image: ['a', 'b', 'c'],
     },
   ]);
   return (
     <Wrap>
       <ContentsWrap>
-        <Header></Header>
+        <Header>
+          <Logo>
+            <img src={imgLogo} />
+          </Logo>
+          <SearchInput placeholder="통합검색" type="text" />
+          <MyProfile>
+            <img src={ProFile} />
+            <ProfileWord>내정보</ProfileWord>
+          </MyProfile>
+        </Header>
         <BoardWrap>
           <BoardKeywordWrap>
             <BoardKeyWords>
@@ -177,7 +230,7 @@ function BoardList() {
               ))}
             </BoardKeyWords>
             <BoardWriteButton>
-              <img src={imgLogo} alt="logo image" />
+              <img src={WriteImg} alt="logo image" />
               <WriteText>글쓰기</WriteText>
             </BoardWriteButton>
           </BoardKeywordWrap>
@@ -202,6 +255,8 @@ function BoardList() {
           </BoardContentsWrap>
         </BoardWrap>
       </ContentsWrap>
+
+      <Footer />
     </Wrap>
   );
 }
