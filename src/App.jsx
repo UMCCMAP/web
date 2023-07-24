@@ -1,7 +1,11 @@
 import './App.css';
-
+import BoardList from './pages/Board/BoardList';
 function App() {
-  return <div>Hello~!</div>;
+  return (
+    <>
+      <BoardList />
+    </>
+  );
 }
 
 export default App;
