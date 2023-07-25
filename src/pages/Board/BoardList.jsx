@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import imgLogo from '../../assets/icon/CMAP.png';
+
 import WriteImg from '../../assets/icon/Vector.png';
-import ProFile from '../../assets/icon/Profile.png';
+import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 const Wrap = styled.div`
@@ -20,54 +20,7 @@ const ContentsWrap = styled.div`
 
   flex-direction: column;
 `;
-const Header = styled.div`
-  width: 100%;
-  height: 10rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-const Logo = styled.div`
-  width: 13rem;
-  height: 5rem;
-  display: flex;
-  align-items: center;
-`;
-const SearchInput = styled.input`
-  outline: none;
-  background: #f1f1f1;
-  width: 29.25rem;
-  height: 3.5rem;
-  border-radius: 32px;
-  border: none;
-  gap: 10px;
-  text-align: center;
-  color: #939393;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 24px;
-  letter-spacing: -0.02em;
-  text-align: center;
-  margin-left: -15px;
-`;
-const MyProfile = styled.div`
-  width: 7.875rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-`;
-const ProfileWord = styled.div`
-  font-family: Pretendard;
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 29px;
-  letter-spacing: -0.02em;
-  text-align: center;
-  color: #939393;
-`;
+
 const BoardWrap = styled.div`
   width: 100%;
   height: 80rem;
@@ -212,16 +165,7 @@ function BoardList() {
   return (
     <Wrap>
       <ContentsWrap>
-        <Header>
-          <Logo>
-            <img src={imgLogo} />
-          </Logo>
-          <SearchInput placeholder="통합검색" type="text" />
-          <MyProfile>
-            <img src={ProFile} />
-            <ProfileWord>내정보</ProfileWord>
-          </MyProfile>
-        </Header>
+        <Header />
         <BoardWrap>
           <BoardKeywordWrap>
             <BoardKeyWords>
