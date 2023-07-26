@@ -165,7 +165,7 @@ function BoardList() {
   return (
     <Wrap>
       <ContentsWrap>
-        <Header />
+        <Header name="검색" />
         <BoardWrap>
           <BoardKeywordWrap>
             <BoardKeyWords>

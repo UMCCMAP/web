@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import ProFile from '../assets/icon/Profile.png';
 import imgLogo from '../assets/icon/CMAP.png';
-function Header() {
+function Header({ name }) {
   const HeaderWrap = styled.div`
     width: 100%;
     height: 10rem;
@@ -10,7 +10,7 @@ function Header() {
     align-items: center;
   `;
   const Logo = styled.div`
-    width: 13rem;
+    width: auto;
     height: 5rem;
     display: flex;
     align-items: center;
@@ -32,6 +32,16 @@ function Header() {
     letter-spacing: -0.02em;
     text-align: center;
     margin-left: -15px;
+  `;
+  const HeaderTitle = styled.div`
+    //styleName: Header 1;
+    font-family: Pretendard;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 41px;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: #ff6868;
   `;
   const MyProfile = styled.div`
     width: 7.875rem;
@@ -55,7 +65,11 @@ function Header() {
       <Logo>
         <img src={imgLogo} />
       </Logo>
-      <SearchInput placeholder="통합검색" type="text" />
+      {name == '검색' ? (
+        <SearchInput placeholder="통합검색" type="text" />
+      ) : (
+        <HeaderTitle>{name}</HeaderTitle>
+      )}
       <MyProfile>
         <img src={ProFile} />
         <ProfileWord>내정보</ProfileWord>

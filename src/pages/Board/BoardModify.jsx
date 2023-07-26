@@ -2,7 +2,7 @@ import Header from '../../components/Header';
 import { styled } from 'styled-components';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
-function BoardWrite() {
+function BoardModify() {
   const Wrap = styled.div`
     display: flex;
     justify-content: center;
@@ -132,7 +132,7 @@ function BoardWrite() {
   return (
     <Wrap>
       <ContentsWrap>
-        <Header name="글쓰기" />
+        <Header name="글 수정" />
         <BoardWrap>
           <Line></Line>
           <InputWrap>
@@ -166,4 +166,4 @@ function BoardWrite() {
     </Wrap>
   );
 }
-export default BoardWrite;
+export default BoardModify;
