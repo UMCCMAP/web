@@ -2,6 +2,7 @@ import Header from '../../components/Header';
 import { styled } from 'styled-components';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
+import Line from '../../components/Line';
 function BoardWrite() {
   const Wrap = styled.div`
     display: flex;
@@ -23,11 +24,6 @@ function BoardWrite() {
     height: 80rem;
     display: flex;
     flex-direction: column;
-  `;
-  const Line = styled.div`
-    width: 100%;
-    height: 0.063rem;
-    background: #939393;
   `;
   const InputWrap = styled.div`
     width: 100%;
@@ -134,7 +130,7 @@ function BoardWrite() {
       <ContentsWrap>
         <Header name="글쓰기" />
         <BoardWrap>
-          <Line></Line>
+          <Line top="0"></Line>
           <InputWrap>
             <TitleInput placeholder="제목" />
             <Button width="6rem" height="3rem" name="등록하기"></Button>
