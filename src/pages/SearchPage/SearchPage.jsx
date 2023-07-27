@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SearchNavbar from './components/SearchNavbar';
 import styles from './SearchPage.module.css';
 import DetailSearch from './components/DetailSearch';
+import Map from '../../components/Map';
 
 function SearchPage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,7 @@ function SearchPage() {
 
   return (
     <div className={styles.searchContainer}>
+      <Map markerImg="src/assets/images/cmapmark.svg" />
       <SearchNavbar />
       <div className={isOpen ? `${styles.searchBar} ${styles.show}` : styles.searchBar}>
         <div>
