@@ -7,7 +7,7 @@ import BoardView from './pages/Board/BoardView';
 function App() {
   return (
     <>
-      <BoardView />
+      <BoardModify />
     </>
   );
 }
