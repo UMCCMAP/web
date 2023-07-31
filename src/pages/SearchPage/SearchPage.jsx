@@ -32,7 +32,7 @@ function SearchPage() {
     <SearchContainer>
       <Map markerImg="src/assets/images/cmapmark.svg" />
       <SearchNavbar />
-      <SearchBar className={isOpen ? 'show' : ''}>
+      <SearchBar className={isOpen && reviewItem !== 1 && reviewItem !== 2 ? 'show' : ''}>
         <div>
           <input
             type="text"
@@ -89,9 +89,9 @@ function SearchPage() {
         closeAction={handleDetailClick}
         getReviewIndex={handleReviewIndexClick}
       />
-      {reviewItem === 1 ? (
+      {isDetailOpen && reviewItem === 1 ? (
         <RegisterReview closeReview={handleReviewIndexClick} />
-      ) : reviewItem === 2 ? (
+      ) : isDetailOpen && reviewItem === 2 ? (
         <UpdateReview closeReview={handleReviewIndexClick} />
       ) : undefined}
     </SearchContainer>
@@ -123,6 +123,8 @@ const SearchBar = styled.div`
     width: 423.5px;
     visibility: visible;
     opacity: 1;
+  }
+  &.show {
   }
   > div {
     width: 100%;

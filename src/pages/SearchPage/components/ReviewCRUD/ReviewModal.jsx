@@ -21,7 +21,11 @@ function ReviewModal({ closeAction, modalIndex, setModalItem, getReviewIndex }) 
         <ReviewContainer width="500px" height="560px">
           <CloseReviewModal onClick={closeReviewModal}>X</CloseReviewModal>
           {modalIndex === 2 ? (
-            <ReadReview closeAction={closeAction} getReviewIndex={getReviewIndex} />
+            <ReadReview
+              closeAction={closeAction}
+              setModalItem={setModalItem}
+              getReviewIndex={getReviewIndex}
+            />
           ) : undefined}
         </ReviewContainer>
       )}
@@ -58,7 +62,7 @@ const CloseReviewModal = styled.button`
   right: 20px;
   top: 25px;
   border: none;
-  weight: 700;
   background-color: transparent;
   cursor: pointer;
+  z-index: 1;
 `;

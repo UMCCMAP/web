@@ -15,6 +15,7 @@ function DetailSearch({ isOpen, closeAction, getReviewIndex }) {
 
   const openDetailHandler = () => {
     closeAction(!isOpen);
+    getReviewIndex(0);
   };
 
   const handleModalClick = () => {

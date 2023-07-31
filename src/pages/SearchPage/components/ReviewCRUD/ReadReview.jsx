@@ -3,7 +3,7 @@ import * as R from './ReviewModal.style';
 import styled from 'styled-components';
 import CommonBtn from '../../../../components/CommonBtn';
 
-function ReadReview({ closeAction, getReviewIndex }) {
+function ReadReview({ closeAction, getReviewIndex, setModalItem }) {
   return (
     <R.ReviewContainer>
       <InfoContainer>
@@ -26,6 +26,7 @@ function ReadReview({ closeAction, getReviewIndex }) {
             clickEvent={() => {
               closeAction(false);
               getReviewIndex(2);
+              setModalItem(0);
             }}
           />
           <CommonBtn
