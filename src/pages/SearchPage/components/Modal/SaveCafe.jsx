@@ -6,10 +6,16 @@ function SaveCafe() {
   return (
     <R.ReviewContainer>
       <AddBtnContainer>
-        <AddBtn height="150px">가본 카페</AddBtn>
-        <AddBtn height="150px">가보고 싶은 카페</AddBtn>
+        <AddBtn height="150px">
+          <h2>가볼 카페</h2>
+          <p>가보고 싶은 카페를 저장해요! 언제든지 지도에서 확인할 수 있어요.</p>
+        </AddBtn>
+        <AddBtn>
+          <h2>가본 카페</h2>
+          <p>카페가 마음에 들었거나 코멘트가 있으면 리뷰를 작성하거나 지도에 저장할 수 있어요.</p>
+        </AddBtn>
       </AddBtnContainer>
-      <AddBtn height="50px">저장</AddBtn>
+      <SaveBtn>저장!</SaveBtn>
     </R.ReviewContainer>
   );
 }
@@ -26,14 +32,42 @@ const AddBtnContainer = styled.div`
 `;
 
 const AddBtn = styled.button`
-  width: 150px;
-  height: ${(props) => props.height};
-  border-radius: 50px;
-  border: 1px solid black;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 32px;
+  border: 1px solid rgba(33, 174, 33, 1);
   background-color: transparent;
-  font-size: 24px;
-  font-weight: 700;
-  text-align: center;
   padding: 10px;
   cursor: pointer;
+  font-family: Pretendard;
+  text-align: center;
+  > h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: rgba(33, 174, 33, 1);
+    margin-bottom: 10px;
+  }
+  > p {
+    width: 110px;
+    font-size: 12px;
+    font-weight: 400;
+  }
+`;
+
+const SaveBtn = styled.button`
+  width: 137px;
+  heigth: 40px;
+  border-radius: 32px;
+  padding: 7px;
+  background-color: rgba(33, 174, 33, 1);
+  font-family: Pretendard;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 1);
+  border: none;
 `;

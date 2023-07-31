@@ -12,8 +12,10 @@ function ReviewModal({ closeAction, modalIndex }) {
   return (
     <ModalBackground>
       {modalIndex === 1 ? (
-        <ReviewContainer height="360px">
-          <CloseReviewModal onClick={closeReviewModal}>X</CloseReviewModal>
+        <ReviewContainer width="720px" height="400px">
+          <CloseReviewModal onClick={closeReviewModal}>
+            <img src="src/assets/images/close.svg" alt="close" />
+          </CloseReviewModal>
           <SaveCafe />
         </ReviewContainer>
       ) : (
@@ -45,21 +47,21 @@ const ModalBackground = styled.div`
 `;
 
 const ReviewContainer = styled.div`
-  width: 500px;
+  width: ${(props) => props.width};
   height: ${(props) => props.height};
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  border-radius: 8px;
+  border-radius: 32px;
 `;
 
 const CloseReviewModal = styled.button`
   position: absolute;
   font-size: 20px;
-  right: 15px;
-  top: 15px;
+  right: 20px;
+  top: 25px;
   border: none;
   weight: 700;
   background-color: transparent;
