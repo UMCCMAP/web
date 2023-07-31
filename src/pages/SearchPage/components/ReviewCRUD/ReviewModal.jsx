@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import RegisterReview from './RegisterReview';
 import ReadReview from './ReadReview';
-import UpdateReview from './UpdateReview';
 import SaveCafe from './SaveCafe';
 
-function ReviewModal({ closeAction, modalIndex }) {
+function ReviewModal({ closeAction, modalIndex, setModalItem, getReviewIndex }) {
   const closeReviewModal = () => {
     closeAction(false);
+    setModalItem(0);
   };
   return (
     <ModalBackground>
@@ -19,14 +18,10 @@ function ReviewModal({ closeAction, modalIndex }) {
           <SaveCafe />
         </ReviewContainer>
       ) : (
-        <ReviewContainer height="560px">
+        <ReviewContainer width="500px" height="560px">
           <CloseReviewModal onClick={closeReviewModal}>X</CloseReviewModal>
           {modalIndex === 2 ? (
-            <RegisterReview />
-          ) : modalIndex === 3 ? (
-            <ReadReview />
-          ) : modalIndex === 4 ? (
-            <UpdateReview />
+            <ReadReview closeAction={closeAction} getReviewIndex={getReviewIndex} />
           ) : undefined}
         </ReviewContainer>
       )}
@@ -66,5 +61,4 @@ const CloseReviewModal = styled.button`
   weight: 700;
   background-color: transparent;
   cursor: pointer;
-  z-index: 1;
 `;

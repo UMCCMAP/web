@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import SearchNavbar from './components/SearchNavbar';
 import DetailSearch from './components/DetailSearch';
 import Map from '../../components/Map';
+import RegisterReview from './components/ReviewCRUD/RegisterReview';
+import UpdateReview from './components/ReviewCRUD/UpdateReview';
 
 function SearchPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [reviewItem, setReviewItem] = useState(0);
   const [searchText, setSearchText] = useState('');
 
   const handleClick = () => {
@@ -19,6 +22,10 @@ function SearchPage() {
 
   const handleInputText = (e) => {
     setSearchText(e.target.value);
+  };
+
+  const handleReviewIndexClick = (index) => {
+    setReviewItem(index);
   };
 
   return (
@@ -77,7 +84,16 @@ function SearchPage() {
       ) : (
         <CloseSearchBar onClick={handleClick}></CloseSearchBar>
       )}
-      <DetailSearch isOpen={isDetailOpen} closeAction={handleDetailClick} />
+      <DetailSearch
+        isOpen={isDetailOpen}
+        closeAction={handleDetailClick}
+        getReviewIndex={handleReviewIndexClick}
+      />
+      {reviewItem === 1 ? (
+        <RegisterReview closeReview={handleReviewIndexClick} />
+      ) : reviewItem === 2 ? (
+        <UpdateReview closeReview={handleReviewIndexClick} />
+      ) : undefined}
     </SearchContainer>
   );
 }
@@ -97,7 +113,7 @@ const SearchBar = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
   margin: 0;
   width: 0;
   opacity: 0;
@@ -190,7 +206,7 @@ const ShowSearchBar = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  top: 170px;
+  top: 155px;
   cursor: pointer;
   transition: all 0.3s;
 `;

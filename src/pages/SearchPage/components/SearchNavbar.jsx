@@ -86,7 +86,7 @@ const NavbarWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.35);
-  z-index: 2;
+  z-index: 3;
 `;
 
 const CmapLogo = styled.div`

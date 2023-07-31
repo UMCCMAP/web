@@ -18,7 +18,7 @@ function CafeReview({
   return (
     <ReviewContainer
       onClick={() => {
-        clickIndex(3);
+        clickIndex(2);
         handleClick();
       }}
     >

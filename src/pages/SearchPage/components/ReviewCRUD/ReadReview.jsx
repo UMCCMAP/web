@@ -1,17 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as R from './ReviewModal.style';
 import styled from 'styled-components';
 import CommonBtn from '../../../../components/CommonBtn';
-import ReviewModal from './ReviewModal';
 
-function ReadReview() {
-  const [reviewModalOpen, setReviewModalOpen] = useState(false);
-  const [modalItem, setModalItem] = useState(2);
-
-  const handleModalClick = () => {
-    setReviewModalOpen(!reviewModalOpen);
-  };
-
+function ReadReview({ closeAction, getReviewIndex }) {
   return (
     <R.ReviewContainer>
       <InfoContainer>
@@ -32,8 +24,8 @@ function ReadReview() {
               padding: '3px',
             }}
             clickEvent={() => {
-              handleModalClick();
-              setModalItem(4);
+              closeAction(false);
+              getReviewIndex(2);
             }}
           />
           <CommonBtn
@@ -45,9 +37,10 @@ function ReadReview() {
           />
         </BtnContainer>
       </InfoContainer>
-      <R.ReviewBox>글</R.ReviewBox>
-      <R.ReviewImgBox>사진</R.ReviewImgBox>
-      {reviewModalOpen && <ReviewModal closeAction={handleModalClick} modalIndex={modalItem} />}
+      <ReviewBox width="430px" height="325px">
+        글
+      </ReviewBox>
+      <ReviewImgBox>사진</ReviewImgBox>
     </R.ReviewContainer>
   );
 }
@@ -79,4 +72,28 @@ const BtnContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const ReviewBox = styled.div`
+  width: 430px;
+  height: 325px;
+  border-radius: 20px;
+  border: 1px solid black;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const ReviewImgBox = styled.div`
+  width: 430px;
+  height: 70px;
+  border-radius: 20px;
+  border: 1px solid black;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 `;

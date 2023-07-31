@@ -4,12 +4,12 @@ import ThemeBtn from '../../../components/ThemeBtn';
 import CommonBtn from '../../../components/CommonBtn';
 import { AiOutlineLeft } from 'react-icons/ai';
 import CafeReview from './CafeReview';
-import ReviewModal from './Modal/ReviewModal';
+import ReviewModal from './ReviewCRUD/ReviewModal';
 
 const color = 'rgba(249, 255, 253, 1)';
 const background = 'rgba(33, 174, 33, 1)';
 
-function DetailSearch({ isOpen, closeAction }) {
+function DetailSearch({ isOpen, closeAction, getReviewIndex }) {
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
   const [modalItem, setModalItem] = useState(0);
 
@@ -26,7 +26,9 @@ function DetailSearch({ isOpen, closeAction }) {
   };
 
   return (
-    <DetailWrapper className={isOpen ? 'open' : ''}>
+    <DetailWrapper
+      className={`${isOpen ? 'open' : ''} ${modalItem !== 1 && modalItem !== 2 ? 'zIndex' : ''}`}
+    >
       <DetailImgContainer>
         <AiOutlineLeft className="leftIcon" size={35} onClick={openDetailHandler} />
         <div>1</div>
@@ -67,8 +69,7 @@ function DetailSearch({ isOpen, closeAction }) {
           color={color}
           background={background}
           clickEvent={() => {
-            handleModalClick();
-            setModalItem(2);
+            getReviewIndex(1);
           }}
         />
       </SaveBtnContainer>
@@ -98,7 +99,14 @@ function DetailSearch({ isOpen, closeAction }) {
           clickEvent={handleModalClick}
         />
       </ReviewContainer>
-      {reviewModalOpen && <ReviewModal closeAction={handleModalClick} modalIndex={modalItem} />}
+      {reviewModalOpen && (
+        <ReviewModal
+          closeAction={handleModalClick}
+          modalIndex={modalItem}
+          setModalItem={setModalItem}
+          getReviewIndex={getReviewIndex}
+        />
+      )}
     </DetailWrapper>
   );
 }
@@ -126,7 +134,6 @@ const DetailImgContainer = styled.div`
   > div:nth-child(6) {
     background-color: blue;
   }
-
   .leftIcon {
     position: absolute;
     top: 10px;
@@ -153,6 +160,9 @@ const DetailWrapper = styled.div`
   &.open {
     visibility: visible;
     opacity: 1;
+  }
+  &.zIndex {
+    z-index: 1;
   }
 `;
 
