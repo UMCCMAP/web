@@ -6,15 +6,16 @@ const FooterWrap = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
+  margin-top: ${(props) => props.top || 0};
 `;
 const FooterTitle = styled.div`
   width: 60%;
   height: 2.5rem;
   text-align: center;
 `;
-function Footer() {
+function Footer({ top }) {
   return (
-    <FooterWrap>
+    <FooterWrap top={top}>
       <FooterTitle>약관/개인정보처리방침/문의 보내기</FooterTitle>
     </FooterWrap>
   );

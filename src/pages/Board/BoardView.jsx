@@ -9,6 +9,7 @@ import tempImg2 from '../../assets/temp/tempcafeimg.jpg';
 import reviewIcon from '../../assets/icon/reviewIcon.png';
 import reviewHeart from '../../assets/icon/reviewHeart.png';
 import Footer from '../../components/Footer';
+import * as C from '../../styles/Common.style';
 const Wrap = styled.div`
   display: flex;
   justify-content: center;
@@ -273,8 +274,8 @@ function BoardView() {
     ],
   });
   return (
-    <Wrap>
-      <ContentsWrap>
+    <C.Wrap>
+      <C.ContentsWrap height="fit-content">
         <Header />
         <BoardWrap>
           <ButtonsWrap>
@@ -347,9 +348,9 @@ function BoardView() {
             </ReviewContentsWrap>
           </ReviewWrap>
         </BoardWrap>
-      </ContentsWrap>
-      <Footer />
-    </Wrap>
+      </C.ContentsWrap>
+      <Footer top="260px" />
+    </C.Wrap>
   );
 }
 export default BoardView;

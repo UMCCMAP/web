@@ -10,7 +10,7 @@ const CafeButton = styled.button`
   padding: 8px;
   border: none;
   font-family: Pretendard;
-  font-size: 15px;
+  font-size: ${(props) => props.font || '15px'};
   font-weight: 700;
   line-height: 24px;
   letter-spacing: -0.02em;
@@ -21,7 +21,7 @@ const CafeButton = styled.button`
   z-index: 999;
 `;
 
-function Button({ name, width, height, background, color, clickHandler }) {
+function Button({ name, width, height, background, color, clickHandler, font }) {
   return (
     <CafeButton
       width={width}
@@ -29,6 +29,7 @@ function Button({ name, width, height, background, color, clickHandler }) {
       onClick={clickHandler}
       background={background}
       color={color}
+      font={font}
     >
       {name}
     </CafeButton>

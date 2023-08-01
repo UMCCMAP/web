@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-
+import Button from '../../components/Button';
 import WriteImg from '../../assets/icon/Vector.png';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-
+import * as C from '../../styles/Common.style';
 const Wrap = styled.div`
   display: flex;
   justify-content: center;
@@ -163,14 +163,21 @@ function BoardList() {
     },
   ]);
   return (
-    <Wrap>
-      <ContentsWrap>
+    <C.Wrap>
+      <C.ContentsWrap>
         <Header name="검색" />
         <BoardWrap>
           <BoardKeywordWrap>
             <BoardKeyWords>
               {keyWords.map((a) => (
-                <BoardKeyWordsButton key={a}>{a}</BoardKeyWordsButton>
+                <Button
+                  key={a}
+                  name={a}
+                  width="80px"
+                  height="30px"
+                  bacground="#f1f1f1"
+                  font="13px"
+                ></Button>
               ))}
             </BoardKeyWords>
             <BoardWriteButton>
@@ -184,7 +191,13 @@ function BoardList() {
                 <BoardWords>
                   <Title>{a.title}</Title>
                   <Content>{a.content}</Content>
-                  <BoardKeyWordsButton>{a.recommand ? '추천해요' : '질문해요'}</BoardKeyWordsButton>
+                  <Button
+                    width="80px"
+                    height="40px"
+                    bacground="#f1f1f1"
+                    font="13px"
+                    name={a.recommand ? '추천해요' : '질문해요'}
+                  ></Button>
                 </BoardWords>
                 <BoardImagesWrap>
                   {a.image.map((a) => (
@@ -198,10 +211,10 @@ function BoardList() {
             ))}
           </BoardContentsWrap>
         </BoardWrap>
-      </ContentsWrap>
+      </C.ContentsWrap>
 
       <Footer />
-    </Wrap>
+    </C.Wrap>
   );
 }
 export default BoardList;
