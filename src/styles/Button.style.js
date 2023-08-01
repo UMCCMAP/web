@@ -7,7 +7,7 @@ export const ThemeButton = styled.button`
   border-radius: 50%;
   background-color: rgba(33, 174, 33, 1);
   color: ${(props) => props.color};
-  background: ${(props) => props.background}
+  background: ${(props) => props.background};
   font-size: 13px;
   font-weight: 700;  
   text-align: center;

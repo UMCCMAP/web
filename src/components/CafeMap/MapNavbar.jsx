@@ -10,7 +10,7 @@ import { ReactComponent as Bread } from '../../assets/images/bread.svg';
 import { ReactComponent as Cake } from '../../assets/images/cake.svg';
 import { ReactComponent as Pasta } from '../../assets/images/pasta.svg';
 
-function MapNavbar({ logoImg, color }) {
+function MapNavbar({ logoImg, color, hovercolor }) {
   const [activeNav, setActiveNav] = useState(1);
   const navItems = [
     {
@@ -73,6 +73,8 @@ function MapNavbar({ logoImg, color }) {
             id={data.id}
             onClick={() => setActiveNav(data.id)}
             className={activeNav === data.id ? 'active' : ''}
+            color={color}
+            hovercolor={hovercolor}
           >
             {data.image}
           </NavItem>
@@ -142,12 +144,12 @@ const NavItem = styled.li`
     height: 30px;
   }
   &:hover {
-    border-left: 8px solid rgb(154, 200, 154);
+    border-left: 8px solid ${(props) => props.hovercolor};
     box-sizing: border-box;
     margin-right: 8px;
   }
   &.active {
-    border-left: 8px solid rgba(33, 174, 33, 1);
+    border-left: 8px solid ${(props) => props.color};
     box-sizing: border-box;
     margin-right: 8px;
   }
