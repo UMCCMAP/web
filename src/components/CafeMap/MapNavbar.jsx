@@ -10,8 +10,10 @@ import { ReactComponent as Bread } from '../../assets/images/bread.svg';
 import { ReactComponent as Cake } from '../../assets/images/cake.svg';
 import { ReactComponent as Pasta } from '../../assets/images/pasta.svg';
 
-function MapNavbar({ logoImg, color, hovercolor }) {
-  const [activeNav, setActiveNav] = useState(1);
+function MapNavbar({ content, logoImg, color, hovercolor }) {
+  const [activeNav, setActiveNav] = useState(
+    content === 'recommend' ? 2 : content === 'search' ? 1 : 0,
+  );
   const navItems = [
     {
       id: 1,
@@ -67,18 +69,37 @@ function MapNavbar({ logoImg, color, hovercolor }) {
         <span style={{ color: color }}>CMAP</span>
       </CmapLogo>
       <NavbarContainer>
-        {navItems.map((data) => (
-          <NavItem
-            key={data.id}
-            id={data.id}
-            onClick={() => setActiveNav(data.id)}
-            className={activeNav === data.id ? 'active' : ''}
-            color={color}
-            hovercolor={hovercolor}
-          >
-            {data.image}
-          </NavItem>
-        ))}
+        {content === 'recommend' ? (
+          <>
+            {navItems.slice(1).map((data) => (
+              <NavItem
+                key={data.id}
+                id={data.id}
+                onClick={() => setActiveNav(data.id)}
+                className={activeNav === data.id ? 'active' : ''}
+                color={color}
+                hovercolor={hovercolor}
+              >
+                {data.image}
+              </NavItem>
+            ))}
+          </>
+        ) : content === 'search' ? (
+          <>
+            {navItems.map((data) => (
+              <NavItem
+                key={data.id}
+                id={data.id}
+                onClick={() => setActiveNav(data.id)}
+                className={activeNav === data.id ? 'active' : ''}
+                color={color}
+                hovercolor={hovercolor}
+              >
+                {data.image}
+              </NavItem>
+            ))}
+          </>
+        ) : undefined}
       </NavbarContainer>
       <Bento>
         <img src="src/assets/images/bento.svg" alt="bento" />
@@ -122,7 +143,7 @@ const CmapLogo = styled.div`
 
 const NavbarContainer = styled.ul`
   width: 100%;
-  height: 73%;
+  height: 70%;
   padding: 25px 0;
   display: flex;
   flex-direction: column;

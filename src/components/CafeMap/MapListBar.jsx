@@ -6,7 +6,7 @@ import UpdateReview from './MapReview/UpdateReview';
 import { ReactComponent as Open } from '../../assets/images/openSearchbar.svg';
 import { ReactComponent as Close } from '../../assets/images/closeSearchbar.svg';
 
-function MapListBar({ color }) {
+function MapListBar({ pos, color }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [reviewItem, setReviewItem] = useState(0);
@@ -69,7 +69,7 @@ function MapListBar({ color }) {
         </ul>
       </SearchBarContainer>
       {!isDetailOpen ? (
-        <ShowSearchBar onClick={handleClick}>
+        <ShowSearchBar position={pos} onClick={handleClick}>
           {!isOpen ? <Open fill={color} /> : <Close fill={color} />}
         </ShowSearchBar>
       ) : (
@@ -196,7 +196,7 @@ const ShowSearchBar = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  top: 155px;
+  top: ${(props) => props.position};
   cursor: pointer;
   transition: all 0.3s;
 `;

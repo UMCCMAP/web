@@ -9,11 +9,12 @@ function SearchPage() {
     <SearchContainer>
       <Map markerImg="src/assets/images/cmapmark.svg" />
       <MapNavbar
+        content="search"
         logoImg="src/assets/images/cmapLogoG.svg"
         color="rgba(33, 174, 33, 1)"
         hovercolor="rgb(154, 200, 154)"
       />
-      <MapListBar color="rgba(33, 174, 33, 1)" />
+      <MapListBar pos="155px" color="rgba(33, 174, 33, 1)" />
     </SearchContainer>
   );
 }
