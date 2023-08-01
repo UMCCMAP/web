@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import SearchNavbar from './components/SearchNavbar';
-import DetailSearch from './components/DetailSearch';
-import Map from '../../components/Map';
-import RegisterReview from './components/ReviewCRUD/RegisterReview';
-import UpdateReview from './components/ReviewCRUD/UpdateReview';
+import MapCafeDetail from './MapCafeDetail';
+import RegisterReview from './MapReview/RegisterReview';
+import UpdateReview from './MapReview/UpdateReview';
+import { ReactComponent as Open } from '../../assets/images/openSearchbar.svg';
+import { ReactComponent as Close } from '../../assets/images/closeSearchbar.svg';
 
-function SearchPage() {
+function MapListBar({ color }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [reviewItem, setReviewItem] = useState(0);
   const [searchText, setSearchText] = useState('');
+
+  const handleInputText = (e) => {
+    setSearchText(e.target.value);
+  };
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -20,19 +24,13 @@ function SearchPage() {
     setIsDetailOpen(!isDetailOpen);
   };
 
-  const handleInputText = (e) => {
-    setSearchText(e.target.value);
-  };
-
   const handleReviewIndexClick = (index) => {
     setReviewItem(index);
   };
 
   return (
-    <SearchContainer>
-      <Map markerImg="src/assets/images/cmapmark.svg" />
-      <SearchNavbar />
-      <SearchBar className={isOpen && reviewItem !== 1 && reviewItem !== 2 ? 'show' : ''}>
+    <>
+      <SearchBarContainer className={isOpen && reviewItem !== 1 && reviewItem !== 2 ? 'show' : ''}>
         <div>
           <input
             type="text"
@@ -48,7 +46,7 @@ function SearchPage() {
             <SearchCafeImg>
               <img src="src/assets/images/example.png" alt="카페 사진" />
             </SearchCafeImg>
-            <SearchCafeName>카페 이름</SearchCafeName>
+            <SearchCafeName color={color}>카페 이름</SearchCafeName>
             <SearchCafe>클래식한 분위기의 디저트 맛집</SearchCafe>
             <SearchCafeScore>
               <span>리뷰 21개</span>
@@ -60,7 +58,7 @@ function SearchPage() {
             <SearchCafeImg>
               <img src="src/assets/images/example.png" alt="카페 사진" />
             </SearchCafeImg>
-            <SearchCafeName>카페 이름</SearchCafeName>
+            <SearchCafeName color={color}>카페 이름</SearchCafeName>
             <SearchCafe>클래식한 분위기의 디저트 맛집</SearchCafe>
             <SearchCafeScore>
               <span>리뷰 21개</span>
@@ -69,43 +67,32 @@ function SearchPage() {
             </SearchCafeScore>
           </li>
         </ul>
-      </SearchBar>
+      </SearchBarContainer>
       {!isDetailOpen ? (
         <ShowSearchBar onClick={handleClick}>
-          <img
-            src={
-              !isOpen
-                ? 'src/assets/images/openSearchbar.svg'
-                : 'src/assets/images/closeSearchbar.svg'
-            }
-            alt="show"
-          />
+          {!isOpen ? <Open fill={color} /> : <Close fill={color} />}
         </ShowSearchBar>
       ) : (
         <CloseSearchBar onClick={handleClick}></CloseSearchBar>
       )}
-      <DetailSearch
+      <MapCafeDetail
         isOpen={isDetailOpen}
         closeAction={handleDetailClick}
         getReviewIndex={handleReviewIndexClick}
+        color={color}
       />
       {isDetailOpen && reviewItem === 1 ? (
-        <RegisterReview closeReview={handleReviewIndexClick} />
+        <RegisterReview closeReview={handleReviewIndexClick} color={color} />
       ) : isDetailOpen && reviewItem === 2 ? (
-        <UpdateReview closeReview={handleReviewIndexClick} />
+        <UpdateReview closeReview={handleReviewIndexClick} color={color} />
       ) : undefined}
-    </SearchContainer>
+    </>
   );
 }
 
-export default SearchPage;
+export default MapListBar;
 
-const SearchContainer = styled.div`
-  background-color: antiquewhite;
-  display: flex;
-`;
-
-const SearchBar = styled.div`
+const SearchBarContainer = styled.div`
   background-color: rgba(249, 255, 253, 1);
   position: relative;
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.25);
@@ -162,6 +149,7 @@ const SearchBar = styled.div`
     > li {
       width: 305px;
       height: 245px;
+      cursor: pointer;
     }
   }
 `;
@@ -173,7 +161,7 @@ const SearchCafeImg = styled.div`
 const SearchCafeName = styled.div`
   font-size: 28px;
   font-weight: 700;
-  color: rgba(33, 174, 33, 1);
+  color: ${(props) => props.color};
   margin: 15px 0;
 `;
 

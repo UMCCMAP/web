@@ -57,14 +57,14 @@ export const ImgItem = styled.div`
   width: 80px;
   height: 80px;
   border-radius: 16px;
-  border: 1px solid rgba(33, 174, 33, 1);
+  border: 1px solid ${(props) => props.color};
 `;
 
 export const ReviewContent = styled.textarea`
   width: 90%;
   height: 400px;
   border-radius: 32px;
-  border: 1px solid rgba(33, 174, 33, 1);
+  border: 1px solid ${(props) => props.color};
   padding: 30px 20px;
   box-sizing: border-box;
   font-family: Pretendard;
@@ -79,7 +79,7 @@ export const ReviewSubContent = styled.input`
   width: 90%;
   height: 80px;
   border-radius: 32px;
-  border: 1px solid rgba(33, 174, 33, 1);
+  border: 1px solid ${(props) => props.color};
   text-align: center;
   font-family: Pretendard;
   font-weight: 400;
@@ -96,7 +96,7 @@ export const ReviewBtnWrapper = styled.div`
 export const ReviewBtn = styled.button`
   border: none;
   border-radius: 16px;
-  background-color: rgba(33, 174, 33, 1);
+  background-color: ${(props) => props.color};
   width: 90px;
   height: 44px;
   font-family: Pretendard;

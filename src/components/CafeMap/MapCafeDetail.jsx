@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ThemeBtn from '../../../components/ThemeBtn';
-import CommonBtn from '../../../components/CommonBtn';
+import ThemeBtn from '../ThemeBtn';
+import CommonBtn from '../CommonBtn';
 import { AiOutlineLeft } from 'react-icons/ai';
 import CafeReview from './CafeReview';
-import ReviewModal from './ReviewCRUD/ReviewModal';
+import ReviewModal from './MapReview/ReviewModal';
+import { ReactComponent as Scope } from '../../assets/images/scope.svg';
 
-const color = 'rgba(249, 255, 253, 1)';
-const background = 'rgba(33, 174, 33, 1)';
+const fontColor = 'rgba(249, 255, 253, 1)';
 
-function DetailSearch({ isOpen, closeAction, getReviewIndex }) {
+function MapCafeDetail({ isOpen, closeAction, getReviewIndex, color }) {
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
   const [modalItem, setModalItem] = useState(0);
 
@@ -38,14 +38,14 @@ function DetailSearch({ isOpen, closeAction, getReviewIndex }) {
         <div>4</div>
         <div>5</div>
       </DetailImgContainer>
-      <DetailCafeName>카페 이름</DetailCafeName>
+      <DetailCafeName color={color}>카페 이름</DetailCafeName>
       <ThemeBtnContainer>
-        <ThemeBtn name="뷰" color={color} background={background} />
-        <ThemeBtn name="디저트" color={color} background={background} />
-        <ThemeBtn name="커피" color={color} background={background} />
+        <ThemeBtn name="뷰" color={fontColor} background={color} />
+        <ThemeBtn name="디저트" color={fontColor} background={color} />
+        <ThemeBtn name="커피" color={fontColor} background={color} />
       </ThemeBtnContainer>
       <ReviewScore>
-        <img src="src/assets/images/scope.svg" alt="별점" />
+        <Scope fill={color} />
         &nbsp;&nbsp;
         <span>4.2 / </span>
         &nbsp;
@@ -57,8 +57,8 @@ function DetailSearch({ isOpen, closeAction, getReviewIndex }) {
         <CommonBtn
           name="지도에 저장"
           width="70px"
-          color={color}
-          background={background}
+          color={fontColor}
+          background={color}
           clickEvent={() => {
             handleModalClick();
             setModalItem(1);
@@ -67,8 +67,8 @@ function DetailSearch({ isOpen, closeAction, getReviewIndex }) {
         <CommonBtn
           name="리뷰 작성"
           width="70px"
-          color={color}
-          background={background}
+          color={fontColor}
+          background={color}
           clickEvent={() => {
             getReviewIndex(1);
           }}
@@ -106,13 +106,14 @@ function DetailSearch({ isOpen, closeAction, getReviewIndex }) {
           modalIndex={modalItem}
           setModalItem={setModalItem}
           getReviewIndex={getReviewIndex}
+          color={color}
         />
       )}
     </DetailWrapper>
   );
 }
 
-export default DetailSearch;
+export default MapCafeDetail;
 
 const DetailImgContainer = styled.div`
   display: grid;
@@ -170,7 +171,7 @@ const DetailWrapper = styled.div`
 const DetailCafeName = styled.h2`
   font-size: 36px;
   font-weight: 700;
-  color: var(--green);
+  color: ${(props) => props.color};
 `;
 
 const ThemeBtnContainer = styled.div`

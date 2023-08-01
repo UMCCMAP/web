@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as R from './ReviewModal.style';
 
-function RegisterReview({ closeReview }) {
+function RegisterReview({ closeReview, color }) {
   const [addReviewTitle, setAddReviewTitle] = useState('');
   const [addReviewContent, setAddReviewContent] = useState('');
   const [addReviewSubContent, setAddReviewSubContent] = useState('');
@@ -29,21 +29,27 @@ function RegisterReview({ closeReview }) {
         onChange={handleInputTitle}
       />
       <R.ImgContainer>
-        <R.ImgItem></R.ImgItem>
-        <R.ImgItem></R.ImgItem>
-        <R.ImgItem></R.ImgItem>
-        <R.ImgItem></R.ImgItem>
+        <R.ImgItem color={color}></R.ImgItem>
+        <R.ImgItem color={color}></R.ImgItem>
+        <R.ImgItem color={color}></R.ImgItem>
+        <R.ImgItem color={color}></R.ImgItem>
       </R.ImgContainer>
-      <R.ReviewContent type="text-area" value={addReviewContent} onChange={handleInputContent} />
+      <R.ReviewContent
+        type="text-area"
+        value={addReviewContent}
+        color={color}
+        onChange={handleInputContent}
+      />
       <R.ReviewSubContent
         type="text"
         name="reviewSubContent"
         placeholder="해시태그, 주제 등 서브 내용"
+        color={color}
         value={addReviewSubContent}
         onChange={handleInputSubContent}
       />
       <R.ReviewBtnWrapper>
-        <R.ReviewBtn>작성하기</R.ReviewBtn>
+        <R.ReviewBtn color={color}>작성하기</R.ReviewBtn>
       </R.ReviewBtnWrapper>
     </R.ReviewWriteContainer>
   );

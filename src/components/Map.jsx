@@ -67,7 +67,7 @@ function Map({ markerImg }) {
     return {
       content: `
         <div style="position: relative;">
-          <img src="${pinImage}" alt="marker" style="width: 40px; height: 40px;">
+          <img src="${pinImage}" alt="Pin Image" />
           <div style="position: absolute; top: -20px; left: 0; text-align:center;font-size: 15px; font-weight: 700; ${clickedStyle}">
             ${content}
           </div>

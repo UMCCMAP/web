@@ -2,20 +2,20 @@ import React from 'react';
 import * as R from './ReviewModal.style';
 import styled from 'styled-components';
 
-function SaveCafe() {
+function SaveCafe({ color }) {
   return (
     <R.ReviewContainer>
       <AddBtnContainer>
-        <AddBtn height="150px">
-          <h2>가볼 카페</h2>
+        <AddBtn height="150px" color={color}>
+          <h2 style={{ color: color }}>가볼 카페</h2>
           <p>가보고 싶은 카페를 저장해요! 언제든지 지도에서 확인할 수 있어요.</p>
         </AddBtn>
-        <AddBtn>
-          <h2>가본 카페</h2>
+        <AddBtn color={color}>
+          <h2 style={{ color: color }}>가본 카페</h2>
           <p>카페가 마음에 들었거나 코멘트가 있으면 리뷰를 작성하거나 지도에 저장할 수 있어요.</p>
         </AddBtn>
       </AddBtnContainer>
-      <SaveBtn>저장!</SaveBtn>
+      <SaveBtn color={color}>저장!</SaveBtn>
     </R.ReviewContainer>
   );
 }
@@ -39,7 +39,7 @@ const AddBtn = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: 32px;
-  border: 1px solid rgba(33, 174, 33, 1);
+  border: 1px solid ${(props) => props.color};
   background-color: transparent;
   padding: 10px;
   cursor: pointer;
@@ -48,7 +48,6 @@ const AddBtn = styled.button`
   > h2 {
     font-size: 24px;
     font-weight: 700;
-    color: rgba(33, 174, 33, 1);
     margin-bottom: 10px;
   }
   > p {
@@ -63,7 +62,7 @@ const SaveBtn = styled.button`
   heigth: 40px;
   border-radius: 32px;
   padding: 7px;
-  background-color: rgba(33, 174, 33, 1);
+  background-color: ${(props) => props.color};
   font-family: Pretendard;
   text-align: center;
   font-size: 24px;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ReadReview from './ReadReview';
 import SaveCafe from './SaveCafe';
 
-function ReviewModal({ closeAction, modalIndex, setModalItem, getReviewIndex }) {
+function ReviewModal({ closeAction, modalIndex, setModalItem, getReviewIndex, color }) {
   const closeReviewModal = () => {
     closeAction(false);
     setModalItem(0);
@@ -15,7 +15,7 @@ function ReviewModal({ closeAction, modalIndex, setModalItem, getReviewIndex }) 
           <CloseReviewModal onClick={closeReviewModal}>
             <img src="src/assets/images/close.svg" alt="close" />
           </CloseReviewModal>
-          <SaveCafe />
+          <SaveCafe color={color} />
         </ReviewContainer>
       ) : (
         <ReviewContainer width="500px" height="560px">
