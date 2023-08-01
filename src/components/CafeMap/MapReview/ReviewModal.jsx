@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ReadReview from './ReadReview';
 import SaveCafe from './SaveCafe';
+import * as M from '../../../styles/Modal.style';
 
 function ReviewModal({ closeAction, modalIndex, setModalItem, getReviewIndex, color }) {
   const closeReviewModal = () => {
@@ -9,7 +10,7 @@ function ReviewModal({ closeAction, modalIndex, setModalItem, getReviewIndex, co
     setModalItem(0);
   };
   return (
-    <ModalBackground>
+    <M.ModalBackground>
       {modalIndex === 1 ? (
         <ReviewContainer width="720px" height="400px">
           <CloseReviewModal onClick={closeReviewModal}>
@@ -29,21 +30,11 @@ function ReviewModal({ closeAction, modalIndex, setModalItem, getReviewIndex, co
           ) : undefined}
         </ReviewContainer>
       )}
-    </ModalBackground>
+    </M.ModalBackground>
   );
 }
 
 export default ReviewModal;
-
-const ModalBackground = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-`;
 
 const ReviewContainer = styled.div`
   width: ${(props) => props.width};

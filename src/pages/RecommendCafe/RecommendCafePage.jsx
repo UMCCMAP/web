@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import Map from '../components/Map';
-import MapNavbar from '../components/CafeMap/MapNavbar';
-import MapListBar from '../components/CafeMap/MapListBar';
+import Map from '../../components/Map';
+import MapNavbar from '../../components/CafeMap/MapNavbar';
+import MapListBar from '../../components/CafeMap/MapListBar';
+import SelectThemeModal from './components/SelectThemeModal';
 
 function RecommendCafePage() {
+  const [selectModalOpen, setSelectModalOpen] = useState(true);
+
+  const handleModalClick = () => {
+    setSelectModalOpen(!selectModalOpen);
+  };
+
   return (
     <SearchContainer>
+      {selectModalOpen && <SelectThemeModal closeAction={handleModalClick} />}
       <Map markerImg="src/assets/images/cmapmark.svg" />
       <MapNavbar
         content="recommend"
