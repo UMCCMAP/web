@@ -5,10 +5,11 @@ import WriteImg from '../../assets/icon/Vector.png';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import * as C from './styles/Common.style';
-
+import boards from '../dummy/Boards';
 const BoardWrap = styled.div`
   width: 100%;
-  height: 80rem;
+  height: fit-content;
+  margin-top: 10px;
 `;
 const BoardKeywordWrap = styled.div`
   width: 100%;
@@ -52,7 +53,7 @@ const WriteText = styled.div`
   color: white;
 `;
 const BoardContentsWrap = styled.div`
-  height: 70rem;
+  height: fit-content;
   flex-direction: column;
   display: flex;
   margin-top: 5px;
@@ -81,6 +82,11 @@ const Content = styled.div`
   align-items: center;
   line-height: 15px;
 `;
+const Themes = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 12px;
+`;
 const BoardImagesWrap = styled.div`
   width: 52%;
   height: 100%;
@@ -95,6 +101,31 @@ const BoardImage = styled.div`
   background: #f1f1f1;
   border-radius: 32px;
 `;
+const PageButtons = styled.div`
+  width: 150px;
+  height: 20px;
+  margin-top: 43px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: center;
+`;
+const PageNums = styled.div`
+  width: 70%;
+  height: 100%;
+  display: flex;
+`;
+const PageNum = styled.div`
+  width: calc(100% / 5);
+  text-align: center;
+  flex: 1;
+  cursor: pointer;
+  color: ${(props) => props.color};
+`;
+const PageMoveButton = styled.div`
+  width: 15%;
+  cursor: pointer;
+  text-align: center;
+`;
 function BoardList() {
   const [keyWords] = useState([
     '질문해요',
@@ -105,37 +136,61 @@ function BoardList() {
     '음료',
     'CMAP',
   ]);
-  const [cafes] = useState([
-    {
-      title: '성수동 카페 뷰맛집!',
-      content:
-        '오늘 날이 좋아서 성수동에 카페를 가보았습니다! 막 들어간 카페 치고 뷰가 너무 좋더라구요 석양이 딱 보이는 위치고 디저트도 너무 맛있어요!!',
-      recommand: true,
-      image: ['a', 'b', 'c'],
-    },
-    {
-      title: '한강 근처 브런치 카페 추천',
-      content:
-        '한강 산책하다가 배가 고파져서 잠원 근처에 브런치 폭풍 검색..그리고 들어간 카페인데 가격도 괜찮고 맛있네요.. 다음에 또 올게요!',
-      recommand: true,
-      image: ['b', 'c'],
-    },
-    {
-      title: '서초 근교에 주차 편리한 카페',
-      content: '서초 근교에 주차 편리하고 넓은 카페 있을까요?',
-      recommand: false,
-      image: ['a', 'b', 'c'],
-    },
-    {
-      title: '서초 근교에 주차 편리한 카페',
-      content: '서초 근교에 주차 편리하고 넓은 카페 있을까요?',
-      recommand: false,
-      image: ['a', 'b', 'c'],
-    },
-  ]);
+
+  const ITEMS_PER_PAGE = 5;
+  const PAGE_RANGE_DISPLAY = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // 현재 페이지에 해당하는 카페들을 가져오는 함수
+  const getCurrentPageCafes = () => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    return boards.slice(startIndex, endIndex);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => 5 * Math.floor((prevPage + PAGE_RANGE_DISPLAY - 1) / 5) + 1);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => 5 * Math.floor((prevPage - PAGE_RANGE_DISPLAY - 1) / 5) + 1);
+  };
+
+  const pageCount = Math.ceil(boards.length / ITEMS_PER_PAGE);
+
+  const isNextDisabled =
+    Math.floor((currentPage - 1) / PAGE_RANGE_DISPLAY) ===
+    Math.floor(pageCount / PAGE_RANGE_DISPLAY);
+
+  const isPrevDisabled = Math.floor((currentPage - 1) / PAGE_RANGE_DISPLAY) === 0;
+
+  const renderPageButtons = () => {
+    const pageButtons = [];
+    const startPage =
+      currentPage <= PAGE_RANGE_DISPLAY
+        ? 1
+        : Math.floor((currentPage - 1) / PAGE_RANGE_DISPLAY) * PAGE_RANGE_DISPLAY + 1;
+
+    const endPage = Math.min(startPage + PAGE_RANGE_DISPLAY - 1, pageCount);
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageButtons.push(
+        <PageNum
+          key={i}
+          onClick={() => setCurrentPage(i)}
+          color={i === currentPage ? '#000000' : '#A0A0A0'}
+        >
+          {i}
+        </PageNum>,
+      );
+    }
+
+    return pageButtons;
+  };
+
   return (
     <C.Wrap>
-      <C.ContentsWrap>
+      <C.ContentsWrap height="fit-content">
         <Header name="검색" />
         <BoardWrap>
           <BoardKeywordWrap>
@@ -146,7 +201,7 @@ function BoardList() {
                   name={a}
                   width="80px"
                   height="30px"
-                  bacground="#f1f1f1"
+                  background="#f1f1f1"
                   font="13px"
                 ></Button>
               ))}
@@ -157,18 +212,23 @@ function BoardList() {
             </BoardWriteButton>
           </BoardKeywordWrap>
           <BoardContentsWrap>
-            {cafes.map((a) => (
-              <Board key={a}>
+            {getCurrentPageCafes().map((a, i) => (
+              <Board key={i}>
                 <BoardWords>
                   <Title>{a.title}</Title>
                   <Content>{a.content}</Content>
-                  <Button
-                    width="80px"
-                    height="40px"
-                    bacground="#f1f1f1"
-                    font="13px"
-                    name={a.recommand ? '추천해요' : '질문해요'}
-                  ></Button>
+                  <Themes>
+                    {a.theme.map((a) => (
+                      <Button
+                        key={a}
+                        width="80px"
+                        height="30px"
+                        bacground="#f1f1f1"
+                        font="13px"
+                        name={a}
+                      ></Button>
+                    ))}
+                  </Themes>
                 </BoardWords>
                 <BoardImagesWrap>
                   {a.image.map((a) => (
@@ -182,6 +242,27 @@ function BoardList() {
             ))}
           </BoardContentsWrap>
         </BoardWrap>
+        <PageButtons>
+          {!isPrevDisabled && (
+            <PageMoveButton
+              onClick={() => {
+                handlePrevPage();
+              }}
+            >
+              {'<'}
+            </PageMoveButton>
+          )}
+          <PageNums>{renderPageButtons()}</PageNums>
+          {!isNextDisabled && (
+            <PageMoveButton
+              onClick={() => {
+                handleNextPage();
+              }}
+            >
+              {'>'}
+            </PageMoveButton>
+          )}
+        </PageButtons>
       </C.ContentsWrap>
 
       <Footer />
