@@ -1,8 +1,9 @@
 import './App.css';
-import SearchPage from './pages/SearchPage/SearchPage';
+import RecommendCafePage from './pages/RecommendCafe/RecommendCafePage';
+import SearchPage from './pages/SearchPage';
 
 function App() {
-  return <SearchPage />;
+  return <RecommendCafePage />;
 }
 
 export default App;
