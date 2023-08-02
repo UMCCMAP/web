@@ -134,32 +134,6 @@ const PageMoveButton = styled.div`
   cursor: pointer;
   text-align: center;
 `;
-const PageButtons = styled.div`
-  width: 150px;
-  height: 20px;
-  margin-top: 43px;
-  margin-bottom: 12px;
-  display: flex;
-  justify-content: center;
-`;
-const PageNums = styled.div`
-  width: 70%;
-  height: 100%;
-  display: flex;
-`;
-const PageNum = styled.div`
-  width: calc(100% / 5);
-  text-align: center;
-  flex: 1;
-  cursor: pointer;
-  color: ${(props) => props.color};
-`;
-const PageMoveButton = styled.div`
-  width: 15%;
-  cursor: pointer;
-  text-align: center;
-`;
-
 function BoardList() {
   const [keyWords] = useState([
     '질문해요',
