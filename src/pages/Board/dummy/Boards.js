@@ -1,30 +1,35 @@
+import tempImg from '../../../assets/temp/tempcafeimg.jpg';
+import tempImg2 from '../../../assets/temp/tempcafeimg2.png';
+import tempImg3 from '../../../assets/temp/tempcafeimg3.jpg';
+import tempImg4 from '../../../assets/temp/tempcafeimg4.png';
+import tempImg5 from '../../../assets/temp/tempcafeimg5.jpg';
 const Boards = [
   {
     title: '성수동 카페 뷰맛집!',
     content:
       '오늘 날이 좋아서 성수동에 카페를 가보았습니다! 막 들어간 카페 치고 뷰가 너무 좋더라구요 석양이 딱 보이는 위치고 디저트도 너무 맛있어요!!',
-    image: ['a', 'b', 'c'],
+    image: [tempImg, tempImg2, tempImg4],
     theme: ['질문해요', '추천해요', '음료', 'CMAP'],
   },
   {
     title: '한강 근처 브런치 카페 추천',
     content:
       '한강 산책하다가 배가 고파져서 잠원 근처에 브런치 폭풍 검색..그리고 들어간 카페인데 가격도 괜찮고 맛있네요.. 다음에 또 올게요!',
-    image: ['b', 'c'],
+    image: [tempImg3, tempImg5],
     theme: ['질문해요', '음료', 'CMAP'],
   },
   {
     title: '서울 중심 데이트 카페',
     content:
       '서울 중심에 위치한 아늑한 데이트 카페를 발견했습니다! 분위기도 좋고 디저트 메뉴가 다양해서 좋았어요.',
-    image: ['c', 'd'],
+    image: [],
     theme: ['추천해요', '디저트', '파스타'],
   },
   {
     title: '카페 매니아를 위한 음료 메카',
     content:
       '음료를 사랑하는 카페 매니아들을 위한 특별한 공간입니다. 다양한 음료 메뉴와 커피 아티스트의 솜씨를 즐겨보세요!',
-    image: ['e'],
+    image: [tempImg3, tempImg4],
     theme: ['음료', 'CMAP'],
   },
   {

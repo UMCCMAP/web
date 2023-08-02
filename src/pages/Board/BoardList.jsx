@@ -5,7 +5,8 @@ import WriteImg from '../../assets/icon/Vector.png';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import * as C from './styles/Common.style';
-import boards from '../dummy/Boards';
+import boards from './dummy/Boards';
+
 const BoardWrap = styled.div`
   width: 100%;
   height: fit-content;
@@ -62,6 +63,7 @@ const Board = styled.div`
   display: flex;
   height: 15rem;
   margin-top: 30px;
+  cursor: pointer;
 `;
 const BoardWords = styled.div`
   width: 48%;
@@ -98,8 +100,15 @@ const BoardImagesWrap = styled.div`
 const BoardImage = styled.div`
   width: 10rem;
   height: 10rem;
-  background: #f1f1f1;
+  background-color: #f1f1f1;
   border-radius: 32px;
+  background-image: url('${(props) => props.background}');
+  background-size: cover;
+  transition: transform 0.3s ease; /* 부드러운 애니메이션 효과를 추가합니다. */
+
+  &:hover {
+    transform: scale(1.2); /* 마우스를 올렸을 때 이미지 크기를 1.2배로 확대합니다. */
+  }
 `;
 const PageButtons = styled.div`
   width: 150px;
@@ -232,10 +241,7 @@ function BoardList() {
                 </BoardWords>
                 <BoardImagesWrap>
                   {a.image.map((a) => (
-                    <BoardImage key={a}>
-                      {a}
-                      <img src={a} />
-                    </BoardImage>
+                    <BoardImage key={a} background={a}></BoardImage>
                   ))}
                 </BoardImagesWrap>
               </Board>
