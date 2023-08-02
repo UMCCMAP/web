@@ -19,7 +19,7 @@ function BoardWrite() {
           <B.ContentsInput></B.ContentsInput>
           <B.CafeNameInput placeholder="카페 이름" />
           <B.DragDropWrap>
-            <B.DragDropTitle>Drag&Drop</B.DragDropTitle>
+            <B.DragDropTitle></B.DragDropTitle>
             <B.DragDropImages>
               <B.Image></B.Image>
               <B.Image></B.Image>
@@ -39,7 +39,7 @@ function BoardWrite() {
           </B.ThemeSelectWrap>
         </B.BoardWrap>
       </C.ContentsWrap>
-      <Footer />
+      <Footer top="50px" />
     </C.Wrap>
   );
 }

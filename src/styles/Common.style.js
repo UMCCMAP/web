@@ -14,4 +14,7 @@ export const ContentsWrap = styled.div`
   align-items: center;
 
   flex-direction: column;
+  @media (max-width: 67rem) {
+    width: 100%;
+  }
 `;

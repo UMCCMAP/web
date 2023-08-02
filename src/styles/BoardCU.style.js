@@ -14,6 +14,9 @@ export const ContentsWrap = styled.div`
   align-items: center;
 
   flex-direction: column;
+  @media (max-width: 67rem) {
+    width: 100%;
+  }
 `;
 export const BoardWrap = styled.div`
   width: 100%;
@@ -105,7 +108,7 @@ export const Image = styled.div`
 `;
 export const ThemeSelectWrap = styled.div`
   width: 100%;
-  height: 3.188rem;
+  height: fit-content;
   margin-top: 14px;
   display: flex;
   justify-content: flex-start;
@@ -115,9 +118,11 @@ export const ThemeSelectWrap = styled.div`
 `;
 export const ThemesWrap = styled.div`
   width: fit-content;
-  height: 2rem;
+  height: fit-content;
   display: flex;
   margin-left: 10px;
   gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
+  margin: 5px;
 `;
