@@ -4,22 +4,7 @@ import Button from '../../components/Button';
 import WriteImg from '../../assets/icon/Vector.png';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import * as C from '../../styles/Common.style';
-const Wrap = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
-`;
-const ContentsWrap = styled.div`
-  width: 67rem;
-  height: 90rem;
-  display: flex;
-  align-items: center;
-
-  flex-direction: column;
-`;
+import * as C from './styles/Common.style';
 
 const BoardWrap = styled.div`
   width: 100%;
@@ -41,21 +26,7 @@ const BoardKeyWords = styled.div`
   margin-left: 2px;
   gap: 10px;
 `;
-const BoardKeyWordsButton = styled.div`
-  width: 65px;
-  height: 24px;
-  padding: 4px 10px 4px 10px;
-  border-radius: 16px;
-  gap: 10px;
-  background-color: #f1f1f1;
-  font-family: Pretendard;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 16px;
-  letter-spacing: -0.02em;
-  text-align: center;
-  cursor: pointer;
-`;
+
 const BoardWriteButton = styled.div`
   background: #60a7e1;
   width: 108px;
@@ -125,7 +96,7 @@ const BoardImage = styled.div`
   border-radius: 32px;
 `;
 function BoardList() {
-  const [keyWords, setKeyWords] = useState([
+  const [keyWords] = useState([
     '질문해요',
     '추천해요',
     '디저트',
@@ -134,7 +105,7 @@ function BoardList() {
     '음료',
     'CMAP',
   ]);
-  const [cafes, setCafes] = useState([
+  const [cafes] = useState([
     {
       title: '성수동 카페 뷰맛집!',
       content:

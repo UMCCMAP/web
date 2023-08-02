@@ -1,7 +1,6 @@
 import Header from '../../components/Header';
 import { styled } from 'styled-components';
 import Button from '../../components/Button';
-import Line from '../../components/Line';
 import LocationImg from '../../assets/icon/locationIcon.png';
 import { useState } from 'react';
 import tempImg from '../../assets/temp/tempcafeimg2.png';
@@ -9,23 +8,8 @@ import tempImg2 from '../../assets/temp/tempcafeimg.jpg';
 import reviewIcon from '../../assets/icon/reviewIcon.png';
 import reviewHeart from '../../assets/icon/reviewHeart.png';
 import Footer from '../../components/Footer';
-import * as C from '../../styles/Common.style';
-const Wrap = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
-`;
-const ContentsWrap = styled.div`
-  width: 67rem;
-  height: fit-content;
-  display: flex;
-  align-items: center;
+import * as C from './styles/Common.style';
 
-  flex-direction: column;
-  margin-bottom: 260px;
-`;
 const BoardWrap = styled.div`
   width: 58rem;
   height: fit-content;
@@ -183,11 +167,7 @@ const Review = styled.div`
   display: flex;
   gap: 16px;
 `;
-const ReviewContentsUserWrap = styled.div`
-  height: 72px;
-  width: 160px;
-  display: flex;
-`;
+
 const ReviewDate = styled.div`
   width: 100%;
   font-family: Pretendard;
@@ -293,7 +273,7 @@ function BoardView() {
               <Icon></Icon>
             </InfoWrap>
           </TitleWrap>
-          <Line top="26"></Line>
+          <C.Line top="26"></C.Line>
 
           <CafeTitle>
             <CafeIcon>
@@ -331,7 +311,7 @@ function BoardView() {
                 <ReviewNumber color="#60A7E1">{board.review.length}</ReviewNumber>
               </ReviewIconWrap>
             </ReviewInfo>
-            <Line top="8"></Line>
+            <C.Line top="8"></C.Line>
             <ReviewContentsWrap>
               {board.review.map((a, i) => (
                 <Review key={i}>

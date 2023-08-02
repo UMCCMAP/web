@@ -1,23 +1,5 @@
 import styled from 'styled-components';
 
-export const Wrap = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
-`;
-export const ContentsWrap = styled.div`
-  width: 67rem;
-  height: 90rem;
-  display: flex;
-  align-items: center;
-
-  flex-direction: column;
-  @media (max-width: 67rem) {
-    width: 100%;
-  }
-`;
 export const BoardWrap = styled.div`
   width: 100%;
   height: 80rem;

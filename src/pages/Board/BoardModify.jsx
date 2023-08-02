@@ -1,17 +1,15 @@
 import Header from '../../components/Header';
-import { styled } from 'styled-components';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
-import Line from '../../components/Line';
-import * as B from '../../styles/BoardCU.style';
-import * as C from '../../styles/Common.style';
+import * as B from './styles/BoardCU.style';
+import * as C from './styles/Common.style';
 function BoardModify() {
   return (
     <C.Wrap>
       <C.ContentsWrap>
         <Header name="글 수정" />
         <B.BoardWrap>
-          <Line top="0"></Line>
+          <C.Line top="0"></C.Line>
           <B.InputWrap>
             <B.TitleInput placeholder="제목" />
             <Button width="6rem" height="3rem" name="등록하기"></Button>

@@ -18,3 +18,9 @@ export const ContentsWrap = styled.div`
     width: 100%;
   }
 `;
+export const Line = styled.div`
+  width: 100%;
+  height: 0.063rem;
+  background: #939393;
+  margin-top: ${(props) => props.top}px;
+`;
