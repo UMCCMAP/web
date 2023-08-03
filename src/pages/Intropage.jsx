@@ -4,7 +4,7 @@ import Bg from '../assets/IntroIcon/cafeimg.png';
 import Icon from '../assets/CMAP.png';
 import Examimg from '../assets/IntroIcon/ex5.png';
 import Footer from '../components/footer';
-import { navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Bgimg = styled.div`
   width: 100%;
@@ -179,6 +179,7 @@ const Lasttextmedium = styled.div`
 `;
 
 function Intropage() {
+  const navigate = useNavigate();
   const goToLogin = () => {
     navigate('/login');
   };
