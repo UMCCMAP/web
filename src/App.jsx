@@ -1,17 +1,37 @@
 import './App.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Intropage from './pages/Intropage';
+import Homepage from './pages/Homepage/Homepage';
+import Loginpage from './pages/Loginpage';
+import SearchPage from './pages/SearchPage';
+import RecommendCafePage from './pages/RecommendCafe/RecommendCafePage';
 import BoardList from './pages/Board/BoardList';
 import BoardModify from './pages/Board/BoardModify';
-import CafeList from './pages/CafeList';
-import BoardWrite from './pages/Board/BoardWrite';
 import BoardView from './pages/Board/BoardView';
-import RecommendCafePage from './pages/RecommendCafe/RecommendCafePage';
-import SearchPage from './pages/SearchPage';
+import BoardWrite from './pages/Board/BoardWrite';
+import Root from './Root';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root />,
+    // errorElement: '',
+    children: [
+      { path: '/', element: <Intropage /> },
+      { path: '/home', element: <Homepage /> },
+      { path: '/login', element: <Loginpage /> },
+      { path: '/search', element: <SearchPage /> },
+      { path: '/recommend', element: <RecommendCafePage /> },
+      { path: '/board', element: <BoardList /> },
+      { path: '/board/modify', element: <BoardModify /> },
+      { path: '/board/view', element: <BoardView /> },
+      { path: '/board/write', element: <BoardWrite /> },
+    ],
+  },
+]);
+
 function App() {
-  return (
-    <>
-      <BoardList />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
