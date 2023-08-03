@@ -4,6 +4,7 @@ import Bg from '../assets/IntroIcon/cafeimg.png';
 import Icon from '../assets/CMAP.png';
 import Examimg from '../assets/IntroIcon/ex5.png';
 import Footer from '../components/footer';
+import { navigate } from 'react-router-dom';
 
 const Bgimg = styled.div`
   width: 100%;
@@ -178,6 +179,9 @@ const Lasttextmedium = styled.div`
 `;
 
 function Intropage() {
+  const goToLogin = () => {
+    navigate('/login');
+  };
   return (
     <>
       <Main>
@@ -186,7 +190,7 @@ function Intropage() {
           <Titletext>카페를 좋아하는 당신을 위한 지도</Titletext>
           <TitletextThick>CMAP</TitletextThick>
           <SubTitletext>좀 더 쉽고, 빠르고, 간편하게 나의 안성맞춤 카페지도</SubTitletext>
-          <LoginBtn>Login</LoginBtn>
+          <LoginBtn onClick={goToLogin}>Login</LoginBtn>
         </Bgimg>
         <Mainimg1 src={Examimg}></Mainimg1>
         <Mainimg2 src={Examimg}></Mainimg2>
