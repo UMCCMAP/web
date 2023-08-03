@@ -10,12 +10,13 @@ import BoardModify from './pages/Board/BoardModify';
 import BoardView from './pages/Board/BoardView';
 import BoardWrite from './pages/Board/BoardWrite';
 import Root from './Root';
+import ErrorPage from './ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
-    // errorElement: '',
+    errorElement: <ErrorPage />,
     children: [
       { path: '/', element: <Intropage /> },
       { path: '/home', element: <Homepage /> },
