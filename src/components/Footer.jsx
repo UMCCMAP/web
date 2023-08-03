@@ -1,23 +1,35 @@
+import React from 'react';
 import { styled } from 'styled-components';
-const FooterWrap = styled.div`
+
+const Footerdiv = styled.div`
   width: 100%;
-  height: 5rem;
+  height: 80px;
+  position: absolute;
+  bottom: 0px;
   background-color: #d9d9d9;
-  justify-content: center;
   align-items: center;
   display: flex;
-  margin-top: ${(props) => props.top || 0};
+  justify-content: center;
 `;
-const FooterTitle = styled.div`
-  width: 60%;
-  height: 2.5rem;
+const Footertext = styled.div`
+  width: 23%;
+  height: 29px;
   text-align: center;
+  margin: 0 auto;
+  display: block;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 29px;
 `;
-function Footer({ top }) {
+
+function Footer() {
   return (
-    <FooterWrap top={top}>
-      <FooterTitle>약관/개인정보처리방침/문의 보내기</FooterTitle>
-    </FooterWrap>
+    <>
+      <Footerdiv>
+        <Footertext>약관 / 개인정보처리방침 / 문의 보내기</Footertext>
+      </Footerdiv>
+    </>
   );
 }
+
 export default Footer;
