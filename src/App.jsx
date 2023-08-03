@@ -9,7 +9,7 @@ import SearchPage from './pages/SearchPage';
 function App() {
   return (
     <>
-      <BoardList />
+      <BoardWrite />
     </>
   );
 }
