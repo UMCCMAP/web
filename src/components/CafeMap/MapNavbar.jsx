@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { ReactComponent as Home } from '../../assets/images/home.svg';
 import { ReactComponent as Book } from '../../assets/images/book.svg';
 import { ReactComponent as Coffee } from '../../assets/images/coffee.svg';
@@ -64,7 +65,7 @@ function MapNavbar({ content, logoImg, color, hovercolor }) {
 
   return (
     <NavbarWrapper>
-      <CmapLogo>
+      <CmapLogo to="/home">
         <img src={logoImg} alt="cmapmark" />
         <span style={{ color: color }}>CMAP</span>
       </CmapLogo>
@@ -120,7 +121,7 @@ const NavbarWrapper = styled.div`
   z-index: 3;
 `;
 
-const CmapLogo = styled.div`
+const CmapLogo = styled(Link)`
   width: 100%;
   height: 15%;
   padding: 30px 0 0 0;
@@ -129,6 +130,7 @@ const CmapLogo = styled.div`
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  text-decoration: none;
   > img {
     width: 41px;
     height: 54px;
