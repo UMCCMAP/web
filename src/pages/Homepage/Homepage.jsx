@@ -8,6 +8,7 @@ import Map from '../../assets/HomepageIcon/MapIcon.png';
 import Recommend from '../../assets/HomepageIcon/BluestarIcon.png';
 import Category from '../../assets/HomepageIcon/CommunityIcon.png';
 import RedStar from '../../assets/HomepageIcon/RedStarIcon.png';
+import { Link } from 'react-router-dom';
 import './Homepage.css';
 
 const Wrap = styled.div`
@@ -217,8 +218,9 @@ const ContentText = styled.div`
 
 //카페 둘러보기 버튼
 
-const CafeBtn = styled.button`
+const CafeBtn = styled(Link)`
   ${ShareMainBtn};
+  text-decoration: none;
   height: 150px;
   top: 0px;
   right: 0px;
@@ -263,8 +265,9 @@ const ContentText2 = styled.div`
   bottom: 0px;
 `;
 // 추천카페
-const RecommendCafeBtn = styled.button`
+const RecommendCafeBtn = styled(Link)`
   ${ShareMainBtn};
+  text-decoration: none;
   height: 137px;
   top: 181px;
   right: 0px;
@@ -293,7 +296,7 @@ const ContentText3 = styled.div`
   bottom: 10px;
 `;
 //게시판
-const CommunityBtn = styled.button`
+const CommunityBtn = styled(Link)`
   width: 100%;
   border-radius: 32px;
   border: none;
@@ -304,6 +307,7 @@ const CommunityBtn = styled.button`
   justify-content: center;
   align-items: center;
   background-color: #f1f1f1;
+  text-decoration: none;
   cursor: pointer;
 `;
 const CommunityTextDiv = styled.div`
@@ -408,21 +412,21 @@ function Homepage() {
               </MyCmapTextDiv>
             </div>
           </MyCmapBtn>
-          <CafeBtn>
+          <CafeBtn to="/search">
             <CafeTextDiv>
               <img src={Map}></img>
               <Text3>카페 둘러보기</Text3>
               <ContentText2>내 주변에서 내가 찾던 카페를 찾아보세요!</ContentText2>
             </CafeTextDiv>
           </CafeBtn>
-          <RecommendCafeBtn>
+          <RecommendCafeBtn to="/recommend">
             <CafeTextDiv>
               <img src={Recommend}></img>
               <Text4>CMAP 추천 카페</Text4>
               <ContentText3>CMAP에서 엄선한 추천카페</ContentText3>
             </CafeTextDiv>
           </RecommendCafeBtn>
-          <CommunityBtn>
+          <CommunityBtn to="/board">
             <CommunityTextDiv>
               <img src={Category}></img>
               <Text5>CMAP 유저 게시판</Text5>
