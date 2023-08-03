@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+import Footer from '../components/Footer';
 import Cafes from '../assets/Cafes';
+
 const Wrap = styled.div`
   width: 100%;
   height: 53rem;
@@ -119,21 +121,7 @@ const Cafe = styled.div`
   font-weight: 700;
   cursor: pointer;
 `;
-const FooterWrap = styled.div`
-  width: 100%;
-  height: 5rem;
-  position: absolute;
-  bottom: 0;
-  background-color: #d9d9d9;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-`;
-const FooterTitle = styled.div`
-  width: 60%;
-  height: 2.5rem;
-  text-align: center;
-`;
+
 function CafeList() {
   const [userName, setuserName] = useState('');
   const themes = ['커피', '빵', '인테리어', '케이크', '브런치', '디저트'];
@@ -213,9 +201,7 @@ function CafeList() {
           </CafeListsCon>
         </CafeListsWrap>
       </ContentsWrap>
-      <FooterWrap>
-        <FooterTitle>약관/개인정보처리방침/문의 보내기</FooterTitle>
-      </FooterWrap>
+      <Footer />
     </Wrap>
   );
 }
