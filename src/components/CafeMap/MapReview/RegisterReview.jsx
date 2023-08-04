@@ -4,6 +4,7 @@ import ImgDragDrop from './ImgDragDrop';
 
 function RegisterReview({ closeReview, color }) {
   const [addReviewTitle, setAddReviewTitle] = useState('');
+  const [addReviewImg, setAddReviewImg] = useState([]);
   const [addReviewContent, setAddReviewContent] = useState('');
   const [addReviewSubContent, setAddReviewSubContent] = useState('');
 
@@ -16,6 +17,14 @@ function RegisterReview({ closeReview, color }) {
   const handleInputSubContent = (e) => {
     setAddReviewSubContent(e.target.value);
   };
+
+  const sendRegisterReview = () => {
+    console.log('제목: ' + addReviewTitle);
+    console.log('이미지: ' + addReviewImg);
+    console.log('내용: ' + addReviewContent);
+    console.log('해시태크: ' + addReviewSubContent);
+  };
+
   return (
     <R.ReviewWriteContainer>
       <R.Title>
@@ -31,7 +40,7 @@ function RegisterReview({ closeReview, color }) {
         onChange={handleInputTitle}
       />
       <R.ImgWrap color={color}>
-        <ImgDragDrop color={color} />
+        <ImgDragDrop color={color} addImg={setAddReviewImg} />
       </R.ImgWrap>
       <R.ReviewContentWrap color={color}>
         <R.ReviewContent
@@ -41,7 +50,6 @@ function RegisterReview({ closeReview, color }) {
           onChange={handleInputContent}
         />
       </R.ReviewContentWrap>
-
       <R.ReviewSubContent
         type="text"
         name="reviewSubContent"
@@ -51,7 +59,9 @@ function RegisterReview({ closeReview, color }) {
         onChange={handleInputSubContent}
       />
       <R.ReviewBtnWrapper>
-        <R.ReviewBtn color={color}>작성하기</R.ReviewBtn>
+        <R.ReviewBtn color={color} onClick={() => sendRegisterReview()}>
+          작성하기
+        </R.ReviewBtn>
       </R.ReviewBtnWrapper>
     </R.ReviewWriteContainer>
   );

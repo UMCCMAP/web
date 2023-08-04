@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import * as D from './styles/ImgDragDrop.style';
 import { TiDelete } from 'react-icons/ti';
 
-function ImgDragDrop({ color }) {
+function ImgDragDrop({ color, addImg }) {
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
@@ -27,7 +27,12 @@ function ImgDragDrop({ color }) {
   };
 
   useEffect(() => {
-    files.forEach((file) => URL.revokeObjectURL(file.preview));
+    files.forEach((file) => {
+      addImg((prev) => [...prev, file.preview]);
+    });
+    return () => {
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
+    };
   }, [files]);
   return (
     <D.DragDropContainer>
