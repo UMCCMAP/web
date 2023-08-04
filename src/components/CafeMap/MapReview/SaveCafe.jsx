@@ -6,6 +6,11 @@ import * as M from '../../../styles/Modal.style';
 function SaveCafe({ color, closeAction }) {
   const [clickSave, setClickSave] = useState('');
 
+  const sendSaveType = () => {
+    console.log(clickSave);
+    closeAction();
+  };
+
   return (
     <M.ModalBackground>
       <M.ModalContainer width="720px" height="400px">
@@ -33,7 +38,9 @@ function SaveCafe({ color, closeAction }) {
               </p>
             </AddBtn>
           </AddBtnContainer>
-          <SaveBtn color={color}>저장!</SaveBtn>
+          <SaveBtn color={color} onClick={sendSaveType}>
+            저장!
+          </SaveBtn>
         </R.ReviewContainer>
       </M.ModalContainer>
     </M.ModalBackground>
@@ -65,7 +72,6 @@ const AddBtn = styled.button`
   cursor: pointer;
   font-family: Pretendard;
   text-align: center;
-  box-shadow: 0.8rem 0.5rem 1.4rem #bec5d0, -0.3rem -0.4rem 0.8rem #fbfbfb;
   > h2 {
     font-size: 24px;
     font-weight: 700;
@@ -82,7 +88,6 @@ const AddBtn = styled.button`
   }
   &.clicked {
     background-color: ${(props) => props.color};
-    box-shadow: inset -0.3rem -0.1rem 1.4rem #fbfbfb, inset 0.3rem 0.4rem 0.8rem #bec5d0;
     cursor: pointer;
   }
 `;
