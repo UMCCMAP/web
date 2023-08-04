@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import * as R from './ReviewModal.style';
+import * as R from './styles/ReviewModal.style';
+import ImgDragDrop from './ImgDragDrop';
 
 function RegisterReview({ closeReview, color }) {
   const [updateReviewTitle, setUpdateReviewTitle] = useState('');
@@ -29,12 +30,9 @@ function RegisterReview({ closeReview, color }) {
         value={updateReviewTitle}
         onChange={handleInputTitle}
       />
-      <R.ImgContainer>
-        <R.ImgItem color={color}></R.ImgItem>
-        <R.ImgItem color={color}></R.ImgItem>
-        <R.ImgItem color={color}></R.ImgItem>
-        <R.ImgItem color={color}></R.ImgItem>
-      </R.ImgContainer>
+      <R.ImgWrap color={color}>
+        <ImgDragDrop color={color} />
+      </R.ImgWrap>
       <R.ReviewContent
         type="text-area"
         value={updateReviewContent}

@@ -32,10 +32,11 @@ function MapListBar({ pos, color }) {
     <>
       <SearchBarContainer className={isOpen && reviewItem !== 1 && reviewItem !== 2 ? 'show' : ''}>
         <div>
-          <input
+          <SearchInput
             type="text"
             name="searchText"
             placeholder="검색"
+            color={color}
             value={searchText}
             onChange={handleInputText}
           />
@@ -113,21 +114,6 @@ const SearchBarContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    > input {
-      width: 330px;
-      border-radius: 25px;
-      background-color: rgba(241, 241, 241, 1);
-      border: none;
-      font-size: 20px;
-      font-weight: 700;
-      color: rgba(147, 147, 147, 1);
-      text-align: center;
-      padding: 10px 20px 10px 20px;
-      box-sizing: border-box;
-      &:focus {
-        outline: 2px solid rgba(33, 174, 33, 1);
-      }
-    }
   }
   > hr {
     width: 360px;
@@ -151,6 +137,22 @@ const SearchBarContainer = styled.div`
     &::-webkit-scrollbar {
       display: none;
     }
+  }
+`;
+
+const SearchInput = styled.input`
+  width: 330px;
+  border-radius: 25px;
+  background-color: rgba(241, 241, 241, 1);
+  border: none;
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(147, 147, 147, 1);
+  text-align: center;
+  padding: 10px 20px 10px 20px;
+  box-sizing: border-box;
+  &:focus {
+    outline: 2px solid ${(props) => props.color};
   }
 `;
 

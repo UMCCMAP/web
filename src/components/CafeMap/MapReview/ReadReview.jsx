@@ -1,5 +1,5 @@
 import React from 'react';
-import * as R from './ReviewModal.style';
+import * as R from './styles/ReviewModal.style';
 import styled from 'styled-components';
 import CommonBtn from '../../CommonBtn';
 import * as M from '../../../styles/Modal.style';

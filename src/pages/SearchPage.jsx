@@ -11,10 +11,10 @@ function SearchPage() {
       <MapNavbar
         content="search"
         logoImg="src/assets/images/cmapLogoG.svg"
-        color="rgba(33, 174, 33, 1)"
+        color="rgb(33, 174, 33)"
         hovercolor="rgb(154, 200, 154)"
       />
-      <MapListBar pos="155px" color="rgba(33, 174, 33, 1)" />
+      <MapListBar pos="155px" color="rgb(33, 174, 33)" />
     </SearchContainer>
   );
 }

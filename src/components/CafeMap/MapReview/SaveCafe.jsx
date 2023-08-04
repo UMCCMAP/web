@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import * as R from './ReviewModal.style';
+import * as R from './styles/ReviewModal.style';
 import * as M from '../../../styles/Modal.style';
 
 function SaveCafe({ color, closeAction }) {

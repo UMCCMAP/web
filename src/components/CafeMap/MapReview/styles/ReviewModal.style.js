@@ -44,28 +44,33 @@ export const ReviewTitle = styled.input`
   font-weight: 400;
   font-size: 20px;
   color: rgba(147, 147, 147, 1);
+  &:focus {
+    outline: 2px solid ${(props) => props.color};
+  }
 `;
 
-export const ImgContainer = styled.div`
+export const ImgWrap = styled.div`
   width: 90%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const ImgItem = styled.div`
-  width: 80px;
-  height: 80px;
-  border-radius: 16px;
+  height: 90px;
   border: 1px solid ${(props) => props.color};
+  border-radius: 16px;
+  box-sizing: border-box;
+  padding: 10px;
 `;
 
-export const ReviewContent = styled.textarea`
+export const ReviewContentWrap = styled.div`
   width: 90%;
   height: 400px;
   border-radius: 32px;
   border: 1px solid ${(props) => props.color};
-  padding: 30px 20px;
+  padding: 18px 0px;
+  box-sizing: border-box;
+  overflow: hidden;
+`;
+export const ReviewContent = styled.textarea`
+  width: 100%;
+  height: 100%;
+  padding: 15px 20px;
   box-sizing: border-box;
   font-family: Pretendard;
   font-weight: 400;
@@ -73,6 +78,22 @@ export const ReviewContent = styled.textarea`
   color: rgba(0, 0, 0, 1);
   resize: none;
   text-align: center;
+  overflow-y: auto;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 10%;
+    background-color: ${(props) => props.color};
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(241, 241, 241, 0.7);
+  }
 `;
 
 export const ReviewSubContent = styled.input`
@@ -85,6 +106,9 @@ export const ReviewSubContent = styled.input`
   font-weight: 400;
   font-size: 20px;
   color: rgba(0, 0, 0, 1);
+  &:focus {
+    outline: 1px solid ${(props) => props.color};
+  }
 `;
 
 export const ReviewBtnWrapper = styled.div`
