@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import * as R from './styles/ReviewModal.style';
 import * as M from '../../../styles/Modal.style';
+import * as S from './styles/SaveCafe.style';
 
 function SaveCafe({ color, closeAction }) {
   const [clickSave, setClickSave] = useState('');
@@ -18,16 +18,16 @@ function SaveCafe({ color, closeAction }) {
           <img src="src/assets/images/close.svg" alt="close" />
         </M.CloseReviewModal>
         <R.ReviewContainer>
-          <AddBtnContainer>
-            <AddBtn
+          <S.AddBtnContainer>
+            <S.AddBtn
               color={color}
               onClick={() => setClickSave('want')}
               className={clickSave === 'want' ? 'clicked' : ''}
             >
               <h2 style={{ color: clickSave === 'want' ? 'white' : color }}>WANT</h2>
               <p>가보고 싶은 카페를 저장해요! 언제든지 지도에서 확인할 수 있어요.</p>
-            </AddBtn>
-            <AddBtn
+            </S.AddBtn>
+            <S.AddBtn
               color={color}
               onClick={() => setClickSave('went')}
               className={clickSave === 'went' ? 'clicked' : ''}
@@ -36,11 +36,11 @@ function SaveCafe({ color, closeAction }) {
               <p>
                 카페가 마음에 들었거나 코멘트가 있으면 리뷰를 작성하거나 지도에 저장할 수 있어요.
               </p>
-            </AddBtn>
-          </AddBtnContainer>
-          <SaveBtn color={color} onClick={sendSaveType}>
+            </S.AddBtn>
+          </S.AddBtnContainer>
+          <S.SaveBtn color={color} onClick={sendSaveType}>
             저장
-          </SaveBtn>
+          </S.SaveBtn>
         </R.ReviewContainer>
       </M.ModalContainer>
     </M.ModalBackground>
@@ -48,60 +48,3 @@ function SaveCafe({ color, closeAction }) {
 }
 
 export default SaveCafe;
-
-const AddBtnContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 75%;
-  margin-top: 28px;
-  margin-bottom: 30px;
-`;
-
-const AddBtn = styled.button`
-  width: 152px;
-  height: 152px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 32px;
-  border: 1px solid ${(props) => props.color};
-  background-color: transparent;
-  padding: 10px;
-  cursor: pointer;
-  font-family: Pretendard;
-  text-align: center;
-  > h2 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 10px;
-  }
-  > p {
-    width: 110px;
-    font-size: 12px;
-    font-weight: 400;
-  }
-  &:active {
-    box-shadow: inset -0.3rem -0.1rem 1.4rem #fbfbfb, inset 0.3rem 0.4rem 0.8rem #bec5d0;
-    cursor: pointer;
-  }
-  &.clicked {
-    background-color: ${(props) => props.color};
-    cursor: pointer;
-  }
-`;
-
-const SaveBtn = styled.button`
-  width: 116px;
-  heigth: 29px;
-  border-radius: 32px;
-  padding: 7px;
-  background-color: ${(props) => props.color};
-  font-family: Pretendard;
-  text-align: center;
-  font-size: 16px;
-  color: rgba(255, 255, 255, 1);
-  border: none;
-  cursor: pointer;
-`;
