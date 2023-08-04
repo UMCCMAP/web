@@ -5,10 +5,11 @@ import RegisterReview from './MapReview/RegisterReview';
 import UpdateReview from './MapReview/UpdateReview';
 import { ReactComponent as Open } from '../../assets/images/openSearchbar.svg';
 import { ReactComponent as Close } from '../../assets/images/closeSearchbar.svg';
+import search from '../../pages/dummy/Search';
 
 function MapListBar({ pos, color }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [detailId, setDetailId] = useState(0);
   const [reviewItem, setReviewItem] = useState(0);
   const [searchText, setSearchText] = useState('');
 
@@ -21,13 +22,12 @@ function MapListBar({ pos, color }) {
   };
 
   const handleDetailClick = () => {
-    setIsDetailOpen(!isDetailOpen);
+    setDetailId(0);
   };
 
   const handleReviewIndexClick = (index) => {
     setReviewItem(index);
   };
-
   return (
     <>
       <SearchBarContainer className={isOpen && reviewItem !== 1 && reviewItem !== 2 ? 'show' : ''}>
@@ -42,50 +42,45 @@ function MapListBar({ pos, color }) {
         </div>
         <hr />
         <ul>
-          <li onClick={handleDetailClick}>
-            <SearchCafeImg>
-              <img src="src/assets/images/example.png" alt="카페 사진" />
-            </SearchCafeImg>
-            <SearchCafeName color={color}>카페 이름</SearchCafeName>
-            <SearchCafe>클래식한 분위기의 디저트 맛집</SearchCafe>
-            <SearchCafeScore>
-              <span>리뷰 21개</span>
-              <hr />
-              <span>평점 4.2</span>
-            </SearchCafeScore>
-          </li>
-          <li>
-            <SearchCafeImg>
-              <img src="src/assets/images/example.png" alt="카페 사진" />
-            </SearchCafeImg>
-            <SearchCafeName color={color}>카페 이름</SearchCafeName>
-            <SearchCafe>클래식한 분위기의 디저트 맛집</SearchCafe>
-            <SearchCafeScore>
-              <span>리뷰 21개</span>
-              <hr />
-              <span>평점 4.2</span>
-            </SearchCafeScore>
-          </li>
+          {search.map((data, index) => (
+            <li key={index} onClick={() => setDetailId(data.id)}>
+              <SearchCafeImg>
+                <img src={data.images[0]} alt="카페 사진" />
+              </SearchCafeImg>
+              <SearchCafeName color={color}>{data.title}</SearchCafeName>
+              <SearchCafe>{data.info}</SearchCafe>
+              <SearchCafeScore>
+                <span>리뷰 {data.reviews.length}개</span>
+                <hr />
+                <span>평점 {data.scope}</span>
+              </SearchCafeScore>
+            </li>
+          ))}
         </ul>
       </SearchBarContainer>
-      {!isDetailOpen ? (
+      {detailId === 0 ? (
         <ShowSearchBar position={pos} onClick={handleClick}>
           {!isOpen ? <Open fill={color} /> : <Close fill={color} />}
         </ShowSearchBar>
       ) : (
         <CloseSearchBar onClick={handleClick}></CloseSearchBar>
       )}
-      <MapCafeDetail
-        isOpen={isDetailOpen}
-        closeAction={handleDetailClick}
-        getReviewIndex={handleReviewIndexClick}
-        color={color}
-      />
-      {isDetailOpen && reviewItem === 1 ? (
+      {detailId !== 0 && (
+        <MapCafeDetail
+          closeAction={handleDetailClick}
+          getReviewIndex={handleReviewIndexClick}
+          color={color}
+          data={search[detailId - 1]}
+        />
+      )}
+      {detailId !== 0 && reviewItem === 1 ? (
         <RegisterReview closeReview={handleReviewIndexClick} color={color} />
-      ) : isDetailOpen && reviewItem === 2 ? (
-        <UpdateReview closeReview={handleReviewIndexClick} color={color} />
-      ) : undefined}
+      ) : (
+        detailId !== 0 &&
+        reviewItem === 2 && (
+          <UpdateReview closeReview={handleReviewIndexClick} color={color} reviewData />
+        )
+      )}
     </>
   );
 }
@@ -108,10 +103,9 @@ const SearchBarContainer = styled.div`
   transition: all 0.3s;
   &.show {
     width: 423.5px;
+    height: 100vh;
     visibility: visible;
     opacity: 1;
-  }
-  &.show {
   }
   > div {
     width: 100%;
@@ -141,28 +135,46 @@ const SearchBarContainer = styled.div`
     margin: 0;
   }
   > ul {
-    height: 90%;
+    flex: 1;
+    width: 90%;
+    margin: 20px 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    overflow-y: scroll;
     > li {
-      width: 305px;
-      height: 245px;
+      width: 90%;
+      margin: 10px 0 15px 0;
       cursor: pointer;
+    }
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 `;
 
 const SearchCafeImg = styled.div`
   width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  position: relative;
+  overflow: hidden;
+  > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const SearchCafeName = styled.div`
   font-size: 28px;
   font-weight: 700;
   color: ${(props) => props.color};
-  margin: 15px 0;
+  margin: 13px 0;
 `;
 
 const SearchCafe = styled.div`
@@ -191,7 +203,7 @@ const ShowSearchBar = styled.div`
   width: 40px;
   height: 56px;
   border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-right-radius: 8 ㅠpx;
   display: flex;
   justify-content: center;
   align-items: center;

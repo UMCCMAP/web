@@ -22,6 +22,6 @@ function SearchPage() {
 export default SearchPage;
 
 const SearchContainer = styled.div`
-  background-color: antiquewhite;
+  height: 100vh;
   display: flex;
 `;

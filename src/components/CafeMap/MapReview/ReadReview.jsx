@@ -2,47 +2,58 @@ import React from 'react';
 import * as R from './ReviewModal.style';
 import styled from 'styled-components';
 import CommonBtn from '../../CommonBtn';
+import * as M from '../../../styles/Modal.style';
 
-function ReadReview({ closeAction, getReviewIndex, setModalItem }) {
+function ReadReview({ data, closeAction, getReviewIndex, setClickReviewItem }) {
+  const closeReviewModal = () => {
+    closeAction(false);
+    setClickReviewItem(false);
+  };
+
   return (
-    <R.ReviewContainer>
-      <InfoContainer>
-        <WriterContainer>
-          <span>작성자 이름</span>
-          <span>20NN 년 NN 월 NN 일</span>
-        </WriterContainer>
-        <BtnContainer>
-          <CommonBtn
-            name="수정"
-            width="30px"
-            color="rgba(0, 0, 0, 1)"
-            background="rgba(217, 217, 217, 1)"
-            style={{
-              lineHeight: '1',
-              fontSize: '10px',
-              fontWeight: '400',
-              padding: '3px',
-            }}
-            clickEvent={() => {
-              closeAction(false);
-              getReviewIndex(2);
-              setModalItem(0);
-            }}
-          />
-          <CommonBtn
-            name="삭제"
-            width="30px"
-            color="rgba(0, 0, 0, 1)"
-            background="rgba(217, 217, 217, 1)"
-            style={{ lineHeight: '1', fontSize: '10px', fontWeight: '400', padding: '3px' }}
-          />
-        </BtnContainer>
-      </InfoContainer>
-      <ReviewBox width="430px" height="325px">
-        글
-      </ReviewBox>
-      <ReviewImgBox>사진</ReviewImgBox>
-    </R.ReviewContainer>
+    <M.ModalBackground>
+      <M.ModalContainer width="500px" height="560px">
+        <M.CloseReviewModal onClick={closeReviewModal}>X</M.CloseReviewModal>
+        <R.ReviewContainer>
+          <InfoContainer>
+            <WriterContainer>
+              <span>{data.user}</span>
+              <span>20NN 년 NN 월 NN 일</span>
+            </WriterContainer>
+            <BtnContainer>
+              <CommonBtn
+                name="수정"
+                width="30px"
+                color="rgba(0, 0, 0, 1)"
+                background="rgba(217, 217, 217, 1)"
+                style={{
+                  lineHeight: '1',
+                  fontSize: '10px',
+                  fontWeight: '400',
+                  padding: '3px',
+                }}
+                clickEvent={() => {
+                  closeAction(false);
+                  getReviewIndex(2);
+                  setClickReviewItem(false);
+                }}
+              />
+              <CommonBtn
+                name="삭제"
+                width="30px"
+                color="rgba(0, 0, 0, 1)"
+                background="rgba(217, 217, 217, 1)"
+                style={{ lineHeight: '1', fontSize: '10px', fontWeight: '400', padding: '3px' }}
+              />
+            </BtnContainer>
+          </InfoContainer>
+          <ReviewBox width="430px" height="325px">
+            {data.content}
+          </ReviewBox>
+          <ReviewImgBox>{data.images.length}</ReviewImgBox>
+        </R.ReviewContainer>
+      </M.ModalContainer>
+    </M.ModalBackground>
   );
 }
 

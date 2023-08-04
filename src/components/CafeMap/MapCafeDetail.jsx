@@ -4,112 +4,103 @@ import ThemeBtn from '../ThemeBtn';
 import CommonBtn from '../CommonBtn';
 import { AiOutlineLeft } from 'react-icons/ai';
 import CafeReview from './CafeReview';
-import ReviewModal from './MapReview/ReviewModal';
+
+import { fadeIn } from '../../styles/Transition.style';
 import { ReactComponent as Scope } from '../../assets/images/scope.svg';
+import SaveCafe from './MapReview/SaveCafe';
 
 const fontColor = 'rgba(249, 255, 253, 1)';
 
-function MapCafeDetail({ isOpen, closeAction, getReviewIndex, color }) {
-  const [reviewModalOpen, setReviewModalOpen] = useState(false);
-  const [modalItem, setModalItem] = useState(0);
+function MapCafeDetail({ closeAction, getReviewIndex, color, data }) {
+  const [saveModalOpen, setSaveModalOpen] = useState(false);
+  const [clickReviewItem, setClickReviewItem] = useState(false);
 
   const openDetailHandler = () => {
-    closeAction(!isOpen);
+    closeAction();
     getReviewIndex(0);
   };
 
   const handleModalClick = () => {
-    setReviewModalOpen(!reviewModalOpen);
+    setSaveModalOpen(false);
   };
 
-  const handleModalIndexClick = (index) => {
-    setModalItem(index);
+  const getImgCount = () => {
+    const numImages = data.images.length;
+    switch (numImages) {
+      case 5:
+        return '2fr 1fr 1fr 1fr 1fr';
+      case 4:
+        return '50% 25% repeat(2,1fr)';
+      case 3:
+        return '50% repeat(2,1fr)';
+      case 2:
+        return 'repeat(2, 1fr)';
+      case 1:
+        return '100%';
+      default:
+        return '50% repeat(4,1fr)';
+    }
   };
-
   return (
-    <DetailWrapper
-      className={`${isOpen ? 'open' : ''} ${modalItem !== 1 && modalItem !== 2 ? 'zIndex' : ''}`}
-    >
-      <DetailImgContainer>
-        <AiOutlineLeft className="leftIcon" size={35} onClick={openDetailHandler} />
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-      </DetailImgContainer>
-      <DetailCafeName color={color}>카페 이름</DetailCafeName>
-      <ThemeBtnContainer>
-        <ThemeBtn name="뷰" color={fontColor} background={color} />
-        <ThemeBtn name="디저트" color={fontColor} background={color} />
-        <ThemeBtn name="커피" color={fontColor} background={color} />
-      </ThemeBtnContainer>
-      <ReviewScore>
-        <Scope fill={color} />
-        &nbsp;&nbsp;
-        <span>4.2 / </span>
-        &nbsp;
-        <span>게시글 6 / </span>
-        &nbsp;
-        <span>리뷰 12</span>
-      </ReviewScore>
-      <SaveBtnContainer>
-        <CommonBtn
-          name="지도에 저장"
-          width="70px"
-          color={fontColor}
-          background={color}
-          clickEvent={() => {
-            handleModalClick();
-            setModalItem(1);
-          }}
-        />
-        <CommonBtn
-          name="리뷰 작성"
-          width="70px"
-          color={fontColor}
-          background={color}
-          clickEvent={() => {
-            getReviewIndex(1);
-          }}
-        />
-      </SaveBtnContainer>
-      <ReviewContainer>
-        <CafeReview
-          content="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat
-          laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque
-          voluptatem neque, at dignissimos corrupti vitae?"
-          reviewImg="src/assets/images/coffee.svg"
-          userImg="src/assets/images/coffee.svg"
-          userName="작성자 이름"
-          writeDate="날짜"
-          visitCount="방문 횟수"
-          clickIndex={handleModalIndexClick}
-          clickEvent={handleModalClick}
-        />
-        <CafeReview
-          content="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat
-          laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque
-          voluptatem neque, at dignissimos corrupti vitae?"
-          reviewImg="src/assets/images/coffee.svg"
-          userImg="src/assets/images/coffee.svg"
-          userName="작성자 이름"
-          writeDate="날짜"
-          visitCount="방문 횟수"
-          clickIndex={handleModalIndexClick}
-          clickEvent={handleModalClick}
-        />
-      </ReviewContainer>
-      {reviewModalOpen && (
-        <ReviewModal
-          closeAction={handleModalClick}
-          modalIndex={modalItem}
-          setModalItem={setModalItem}
-          getReviewIndex={getReviewIndex}
-          color={color}
-        />
-      )}
-    </DetailWrapper>
+    <>
+      <DetailWrapper className={!clickReviewItem ? 'zIndex' : ''}>
+        <DetailImgContainer gridTemplateColumns={getImgCount}>
+          <AiOutlineLeft className="leftIcon" size={35} onClick={openDetailHandler} />
+          {data.images.map((data, index) => (
+            <div key={index}>
+              <DetailCafeImg src={data} alt="reviewPhoto" isFirst={index === 0} />
+            </div>
+          ))}
+        </DetailImgContainer>
+        <DetailCafeName color={color}>{data.title}</DetailCafeName>
+        <ThemeBtnContainer>
+          <ThemeBtn name="뷰" color={fontColor} background={color} />
+          <ThemeBtn name="디저트" color={fontColor} background={color} />
+          <ThemeBtn name="커피" color={fontColor} background={color} />
+        </ThemeBtnContainer>
+        <ReviewScore>
+          <Scope fill={color} />
+          &nbsp;&nbsp;
+          <span>{data.scope} / </span>
+          &nbsp;
+          <span>게시글 6 / </span>
+          &nbsp;
+          <span>리뷰 {data.reviews.length}</span>
+        </ReviewScore>
+        <SaveBtnContainer>
+          <CommonBtn
+            name="지도에 저장"
+            width="70px"
+            color={fontColor}
+            background={color}
+            clickEvent={() => {
+              setSaveModalOpen(true);
+            }}
+          />
+          <CommonBtn
+            name="리뷰 작성"
+            width="70px"
+            color={fontColor}
+            background={color}
+            clickEvent={() => {
+              getReviewIndex(1);
+            }}
+          />
+        </SaveBtnContainer>
+        <ReviewContainer>
+          {data.reviews.map((data, index) => (
+            <CafeReview
+              key={index}
+              data={data}
+              closeAction={handleModalClick}
+              getReviewIndex={getReviewIndex}
+              setClickReviewItem={setClickReviewItem}
+            />
+          ))}
+        </ReviewContainer>
+      </DetailWrapper>
+      {saveModalOpen && <SaveCafe color={color} closeAction={handleModalClick} />}
+    </>
   );
 }
 
@@ -117,31 +108,48 @@ export default MapCafeDetail;
 
 const DetailImgContainer = styled.div`
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 2fr repeat(2, 1fr);
+  // grid-template-columns: ${(props) => props.gridTemplateColumns};
+  grid-template-columns: 2fr repeat(2, 1fr);
+
   width: 100%;
   height: 25%;
-  > div:nth-child(2) {
-    background-color: red;
-    grid-row: span 2;
-  }
-  > div:nth-child(3) {
-    background-color: orange;
-  }
-  > div:nth-child(4) {
-    background-color: yellow;
-  }
-  > div:nth-child(5) {
-    background-color: green;
-  }
-  > div:nth-child(6) {
-    background-color: blue;
-  }
+  overflow: hidden;
+  position: relative;
+  // > div:nth-child(2) {
+  //   background-color: red;
+  //   grid-row: span 2;
+  // }
+  // > div:nth-child(3) {
+  //   background-color: orange;
+  // }
+  // > div:nth-child(4) {
+  //   background-color: yellow;
+  // }
+  // > div:nth-child(5) {
+  //   background-color: green;
+  // }
+  // > div:nth-child(6) {
+  //   background-color: blue;
+  // }
+
   .leftIcon {
     position: absolute;
     top: 10px;
     left: 5px;
     color: rgba(249, 255, 253, 1);
     cursor: pointer;
+  }
+`;
+
+const DetailCafeImg = styled.img`
+  width: 100%;
+  height: ${(props) => (props.isFirst ? '200%' : '100%')};
+  object-fit: cover;
+  ${(props) => (props.isFirst ? 'grid-row: span 2' : 'span 1')}
+  &:nth-child(4),
+  &:nth-child(5) {
+    grid-row: span 2;
   }
 `;
 
@@ -156,13 +164,8 @@ const DetailWrapper = styled.div`
   align-items: center;
   --green: rgba(33, 174, 33, 1);
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.25);
-  opacity: 0;
-  visibility: hidden;
   transition: all 0.2s;
-  &.open {
-    visibility: visible;
-    opacity: 1;
-  }
+  animation: ${fadeIn} 0.3s ease-in-out;
   &.zIndex {
     z-index: 1;
   }
@@ -207,8 +210,13 @@ const ReviewScore = styled.div`
 const ReviewContainer = styled.div`
   width: 100%;
   height: 50%;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

@@ -1,22 +1,42 @@
-import React from 'react';
-import * as R from './ReviewModal.style';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import * as R from './ReviewModal.style';
+import * as M from '../../../styles/Modal.style';
 
-function SaveCafe({ color }) {
+function SaveCafe({ color, closeAction }) {
+  const [clickSave, setClickSave] = useState('');
+
   return (
-    <R.ReviewContainer>
-      <AddBtnContainer>
-        <AddBtn height="150px" color={color}>
-          <h2 style={{ color: color }}>가볼 카페</h2>
-          <p>가보고 싶은 카페를 저장해요! 언제든지 지도에서 확인할 수 있어요.</p>
-        </AddBtn>
-        <AddBtn color={color}>
-          <h2 style={{ color: color }}>가본 카페</h2>
-          <p>카페가 마음에 들었거나 코멘트가 있으면 리뷰를 작성하거나 지도에 저장할 수 있어요.</p>
-        </AddBtn>
-      </AddBtnContainer>
-      <SaveBtn color={color}>저장!</SaveBtn>
-    </R.ReviewContainer>
+    <M.ModalBackground>
+      <M.ModalContainer width="720px" height="400px">
+        <M.CloseReviewModal onClick={closeAction}>
+          <img src="src/assets/images/close.svg" alt="close" />
+        </M.CloseReviewModal>
+        <R.ReviewContainer>
+          <AddBtnContainer>
+            <AddBtn
+              color={color}
+              onClick={() => setClickSave('want')}
+              className={clickSave === 'want' ? 'clicked' : ''}
+            >
+              <h2 style={{ color: clickSave === 'want' ? 'white' : color }}>가볼 카페</h2>
+              <p>가보고 싶은 카페를 저장해요! 언제든지 지도에서 확인할 수 있어요.</p>
+            </AddBtn>
+            <AddBtn
+              color={color}
+              onClick={() => setClickSave('went')}
+              className={clickSave === 'went' ? 'clicked' : ''}
+            >
+              <h2 style={{ color: clickSave === 'went' ? 'white' : color }}>가본 카페</h2>
+              <p>
+                카페가 마음에 들었거나 코멘트가 있으면 리뷰를 작성하거나 지도에 저장할 수 있어요.
+              </p>
+            </AddBtn>
+          </AddBtnContainer>
+          <SaveBtn color={color}>저장!</SaveBtn>
+        </R.ReviewContainer>
+      </M.ModalContainer>
+    </M.ModalBackground>
   );
 }
 
@@ -45,6 +65,7 @@ const AddBtn = styled.button`
   cursor: pointer;
   font-family: Pretendard;
   text-align: center;
+  box-shadow: 0.8rem 0.5rem 1.4rem #bec5d0, -0.3rem -0.4rem 0.8rem #fbfbfb;
   > h2 {
     font-size: 24px;
     font-weight: 700;
@@ -54,6 +75,15 @@ const AddBtn = styled.button`
     width: 110px;
     font-size: 12px;
     font-weight: 400;
+  }
+  &:active {
+    box-shadow: inset -0.3rem -0.1rem 1.4rem #fbfbfb, inset 0.3rem 0.4rem 0.8rem #bec5d0;
+    cursor: pointer;
+  }
+  &.clicked {
+    background-color: ${(props) => props.color};
+    box-shadow: inset -0.3rem -0.1rem 1.4rem #fbfbfb, inset 0.3rem 0.4rem 0.8rem #bec5d0;
+    cursor: pointer;
   }
 `;
 
@@ -69,4 +99,5 @@ const SaveBtn = styled.button`
   font-weight: 700;
   color: rgba(255, 255, 255, 1);
   border: none;
+  cursor: pointer;
 `;
