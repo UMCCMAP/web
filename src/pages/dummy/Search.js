@@ -16,13 +16,15 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페1R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
-          'src/assets/temp/tempcafeimg.jpg',
-          'src/assets/temp/tempcafeimg2.png',
-          'src/assets/temp/tempcafeimg3.jpg',
-          'src/assets/temp/tempcafeimg4.png',
+          'https://news.samsungdisplay.com/wp-content/uploads/2018/08/8.jpg',
+          'https://news.samsungdisplay.com/wp-content/uploads/2018/08/8.jpg',
+          'https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg',
+          'https://cdn.travie.com/news/photo/first/201710/img_19975_1.jpg',
         ],
       },
       {
@@ -30,8 +32,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페2R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -44,8 +48,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페3R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -58,8 +64,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페4R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -72,8 +80,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페5R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -100,8 +110,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페6R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -114,8 +126,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페7R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -137,8 +151,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페8R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -151,8 +167,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페9R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -165,8 +183,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페9R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -179,8 +199,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페10R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -206,8 +228,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/home.svg',
         data: '2023-05-25',
         visit: 1,
+        title: '카페11R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -228,8 +252,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페12R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -242,8 +268,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페13R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -256,8 +284,10 @@ const SearchCafes = [
         userImg: 'src/assets/images/cake.svg',
         data: '2023-08-01',
         visit: 3,
+        title: '카페14R',
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
+        subContent: 's',
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',

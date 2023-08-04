@@ -4,7 +4,9 @@ import * as M from '../../../styles/Modal.style';
 import * as RR from './styles/ReadReview.style';
 import CommonBtn from '../../CommonBtn';
 
-function ReadReview({ data, closeAction, getReviewIndex, setClickReviewItem }) {
+function ReadReview({ data, closeAction, getReviewIndex, getUpdateReview, setClickReviewItem }) {
+  const [year, month, day] = data.data.split('-');
+
   const closeReviewModal = () => {
     closeAction(false);
     setClickReviewItem(false);
@@ -18,7 +20,9 @@ function ReadReview({ data, closeAction, getReviewIndex, setClickReviewItem }) {
           <RR.InfoContainer>
             <RR.WriterContainer>
               <span>{data.user}</span>
-              <span>20NN 년 NN 월 NN 일</span>
+              <span>
+                {year} 년 {month} 월 {day} 일
+              </span>
             </RR.WriterContainer>
             <RR.BtnContainer>
               <CommonBtn
@@ -36,6 +40,7 @@ function ReadReview({ data, closeAction, getReviewIndex, setClickReviewItem }) {
                   closeAction(false);
                   getReviewIndex(2);
                   setClickReviewItem(false);
+                  getUpdateReview(data);
                 }}
               />
               <CommonBtn

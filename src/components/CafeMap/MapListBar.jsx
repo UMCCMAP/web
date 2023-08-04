@@ -10,7 +10,8 @@ import search from '../../pages/dummy/Search';
 function MapListBar({ pos, color }) {
   const [isOpen, setIsOpen] = useState(false);
   const [detailId, setDetailId] = useState(0);
-  const [reviewItem, setReviewItem] = useState(0);
+  const [reviewRU, setReviewRU] = useState(0);
+  const [updateReviewData, setUpdateReviewData] = useState([]);
   const [searchText, setSearchText] = useState('');
 
   const handleInputText = (e) => {
@@ -26,11 +27,15 @@ function MapListBar({ pos, color }) {
   };
 
   const handleReviewIndexClick = (index) => {
-    setReviewItem(index);
+    setReviewRU(index);
+  };
+
+  const handleUpdateReviewData = (data) => {
+    setUpdateReviewData(data);
   };
   return (
     <>
-      <SearchBarContainer className={isOpen && reviewItem !== 1 && reviewItem !== 2 ? 'show' : ''}>
+      <SearchBarContainer className={isOpen && reviewRU !== 1 && reviewRU !== 2 ? 'show' : ''}>
         <div>
           <SearchInput
             type="text"
@@ -72,14 +77,19 @@ function MapListBar({ pos, color }) {
           getReviewIndex={handleReviewIndexClick}
           color={color}
           data={search[detailId - 1]}
+          getUpdateReview={handleUpdateReviewData}
         />
       )}
-      {detailId !== 0 && reviewItem === 1 ? (
+      {detailId !== 0 && reviewRU === 1 ? (
         <RegisterReview closeReview={handleReviewIndexClick} color={color} />
       ) : (
         detailId !== 0 &&
-        reviewItem === 2 && (
-          <UpdateReview closeReview={handleReviewIndexClick} color={color} reviewData />
+        reviewRU === 2 && (
+          <UpdateReview
+            closeReview={handleReviewIndexClick}
+            color={color}
+            reviewData={updateReviewData}
+          />
         )
       )}
     </>

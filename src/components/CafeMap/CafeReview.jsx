@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ReadReview from './MapReview/ReadReview';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 
-function CafeReview({ data, closeAction, getReviewIndex, setClickReviewItem }) {
+function CafeReview({ data, closeAction, getReviewIndex, getUpdateReview, setClickReviewItem }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
 
@@ -53,6 +53,7 @@ function CafeReview({ data, closeAction, getReviewIndex, setClickReviewItem }) {
             closeAction={handleModalClick}
             getReviewIndex={getReviewIndex}
             setClickReviewItem={setClickReviewItem}
+            getUpdateReview={getUpdateReview}
             data={data}
           />
         )}

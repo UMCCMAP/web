@@ -11,7 +11,7 @@ import SaveCafe from './MapReview/SaveCafe';
 
 const fontColor = 'rgba(249, 255, 253, 1)';
 
-function MapCafeDetail({ closeAction, getReviewIndex, color, data }) {
+function MapCafeDetail({ closeAction, getReviewIndex, getUpdateReview, color, data }) {
   const [saveModalOpen, setSaveModalOpen] = useState(false);
   const [clickReviewItem, setClickReviewItem] = useState(false);
 
@@ -24,31 +24,31 @@ function MapCafeDetail({ closeAction, getReviewIndex, color, data }) {
     setSaveModalOpen(false);
   };
 
-  const getImgCount = () => {
-    const numImages = data.images.length;
-    switch (numImages) {
-      case 5:
-        return '2fr 1fr 1fr 1fr 1fr';
-      case 4:
-        return '50% 25% repeat(2,1fr)';
-      case 3:
-        return '50% repeat(2,1fr)';
-      case 2:
-        return 'repeat(2, 1fr)';
-      case 1:
-        return '100%';
-      default:
-        return '50% repeat(4,1fr)';
-    }
-  };
+  // const getImgCount = () => {
+  //   const numImages = data.images.length;
+  //   switch (numImages) {
+  //     case 5:
+  //       return '2fr 1fr 1fr 1fr 1fr';
+  //     case 4:
+  //       return '50% 25% repeat(2,1fr)';
+  //     case 3:
+  //       return '50% repeat(2,1fr)';
+  //     case 2:
+  //       return 'repeat(2, 1fr)';
+  //     case 1:
+  //       return '100%';
+  //     default:
+  //       return '50% repeat(4,1fr)';
+  //   }
+  // };
   return (
     <>
       <DetailWrapper className={!clickReviewItem ? 'zIndex' : ''}>
-        <DetailImgContainer gridTemplateColumns={getImgCount}>
+        <DetailImgContainer>
           <AiOutlineLeft className="leftIcon" size={35} onClick={openDetailHandler} />
           {data.images.map((data, index) => (
             <div key={index}>
-              <DetailCafeImg src={data} alt="reviewPhoto" isFirst={index === 0} />
+              <DetailCafeImg src={data} alt="reviewPhoto" isfirst={index === 0 ? '200%' : '100%'} />
             </div>
           ))}
         </DetailImgContainer>
@@ -95,6 +95,7 @@ function MapCafeDetail({ closeAction, getReviewIndex, color, data }) {
               closeAction={handleModalClick}
               getReviewIndex={getReviewIndex}
               setClickReviewItem={setClickReviewItem}
+              getUpdateReview={getUpdateReview}
             />
           ))}
         </ReviewContainer>
@@ -109,7 +110,7 @@ export default MapCafeDetail;
 const DetailImgContainer = styled.div`
   display: grid;
   grid-template-rows: 2fr repeat(2, 1fr);
-  // grid-template-columns: ${(props) => props.gridTemplateColumns};
+  // grid-template-columns: ${(props) => props.gridtemplatecolumns};
   grid-template-columns: 2fr repeat(2, 1fr);
 
   width: 100%;
@@ -144,9 +145,8 @@ const DetailImgContainer = styled.div`
 
 const DetailCafeImg = styled.img`
   width: 100%;
-  height: ${(props) => (props.isFirst ? '200%' : '100%')};
+  height: ${(props) => props.isfirst};
   object-fit: cover;
-  ${(props) => (props.isFirst ? 'grid-row: span 2' : 'span 1')}
   &:nth-child(4),
   &:nth-child(5) {
     grid-row: span 2;

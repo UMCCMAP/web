@@ -127,6 +127,7 @@ export const ReviewBtn = styled.button`
   font-size: 20px;
   font-weight: 700;
   color: rgba(249, 255, 253, 1);
+  cursor: pointer;
 `;
 
 /* 리뷰 조회, 저장 */

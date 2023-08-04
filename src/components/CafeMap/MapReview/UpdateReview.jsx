@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import * as R from './styles/ReviewModal.style';
 import ImgDragDrop from './ImgDragDrop';
 
-function RegisterReview({ closeReview, color }) {
-  const [updateReviewTitle, setUpdateReviewTitle] = useState('');
-  const [updateReviewContent, setUpdateReviewContent] = useState('');
-  const [updateReviewSubContent, setUpdateReviewSubContent] = useState('');
+function UpdateReview({ closeReview, color, reviewData }) {
+  const [updateReviewTitle, setUpdateReviewTitle] = useState(reviewData.title);
+  const [updateReviewImg, setUpdateReviewImg] = useState([]);
+  const [updateReviewContent, setUpdateReviewContent] = useState(reviewData.content);
+  const [updateReviewSubContent, setUpdateReviewSubContent] = useState(reviewData.subContent);
 
   const handleInputTitle = (e) => {
     setUpdateReviewTitle(e.target.value);
@@ -15,6 +16,13 @@ function RegisterReview({ closeReview, color }) {
   };
   const handleInputSubContent = (e) => {
     setUpdateReviewSubContent(e.target.value);
+  };
+
+  const sendUpdateReview = () => {
+    console.log('제목: ' + updateReviewTitle);
+    console.log('이미지: ' + updateReviewImg);
+    console.log('내용: ' + updateReviewContent);
+    console.log('해시태크: ' + updateReviewSubContent);
   };
 
   return (
@@ -31,14 +39,16 @@ function RegisterReview({ closeReview, color }) {
         onChange={handleInputTitle}
       />
       <R.ImgWrap color={color}>
-        <ImgDragDrop color={color} />
+        <ImgDragDrop color={color} addImg={setUpdateReviewImg} data={reviewData.images} />
       </R.ImgWrap>
-      <R.ReviewContent
-        type="text-area"
-        value={updateReviewContent}
-        color={color}
-        onChange={handleInputContent}
-      />
+      <R.ReviewContentWrap color={color}>
+        <R.ReviewContent
+          type="text-area"
+          value={updateReviewContent}
+          color={color}
+          onChange={handleInputContent}
+        />
+      </R.ReviewContentWrap>
       <R.ReviewSubContent
         type="text"
         name="reviewSubContent"
@@ -48,10 +58,12 @@ function RegisterReview({ closeReview, color }) {
         onChange={handleInputSubContent}
       />
       <R.ReviewBtnWrapper>
-        <R.ReviewBtn color={color}>수정하기</R.ReviewBtn>
+        <R.ReviewBtn color={color} onClick={() => sendUpdateReview()}>
+          수정하기
+        </R.ReviewBtn>
       </R.ReviewBtnWrapper>
     </R.ReviewWriteContainer>
   );
 }
 
-export default RegisterReview;
+export default UpdateReview;
