@@ -51,19 +51,37 @@ export const NavItem = styled.li`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  > img {
-    width: 40px;
-    height: 30px;
+  > label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
   }
-  &:hover {
-    border-left: 8px solid ${(props) => props.hovercolor};
-    box-sizing: border-box;
-    margin-right: 8px;
+  > input {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    &:checked + label {
+      border-left: 5px solid ${(props) => props.color};
+      box-sizing: border-box;
+      margin-right: 5px;
+    }
   }
   &.active {
-    border-left: 8px solid ${(props) => props.color};
+    border-left: 10px solid ${(props) => props.color};
     box-sizing: border-box;
-    margin-right: 8px;
+    margin-right: 10px;
+  }
+  &.hover {
+    &:hover {
+      border-left: 10px solid ${(props) => props.hovercolor};
+      box-sizing: border-box;
+      margin-right: 10px;
+    }
   }
 `;
 
