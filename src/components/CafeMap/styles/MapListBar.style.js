@@ -122,7 +122,7 @@ export const ShowSearchBar = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  top: ${(props) => props.position};
+  top: 19%;
   cursor: pointer;
   transition: all 0.3s;
 `;

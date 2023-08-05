@@ -14,7 +14,7 @@ function SearchPage() {
         color="rgb(33, 174, 33)"
         hovercolor="rgb(154, 200, 154)"
       />
-      <MapListBar pos="155px" color="rgb(33, 174, 33)" />
+      <MapListBar color="rgb(33, 174, 33)" />
     </SearchContainer>
   );
 }

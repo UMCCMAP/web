@@ -22,7 +22,7 @@ function RecommendCafePage() {
         color="rgba(96, 167, 225, 1)"
         hovercolor="rgba(117, 177, 226, 0.812)"
       />
-      <MapListBar pos="175px" color="rgba(96, 167, 225, 1)" />
+      <MapListBar color="rgba(96, 167, 225, 1)" />
     </RecommendContainer>
   );
 }

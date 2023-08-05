@@ -7,7 +7,7 @@ import { ReactComponent as Open } from '../../assets/images/openSearchbar.svg';
 import { ReactComponent as Close } from '../../assets/images/closeSearchbar.svg';
 import search from '../../pages/dummy/Search';
 
-function MapListBar({ pos, color }) {
+function MapListBar({ color }) {
   const [isOpen, setIsOpen] = useState(false);
   const [detailId, setDetailId] = useState(0);
   const [reviewRU, setReviewRU] = useState(0);
@@ -65,7 +65,7 @@ function MapListBar({ pos, color }) {
         </ul>
       </L.SearchBarContainer>
       {detailId === 0 ? (
-        <L.ShowSearchBar position={pos} onClick={handleClick}>
+        <L.ShowSearchBar onClick={handleClick}>
           {!isOpen ? <Open fill={color} /> : <Close fill={color} />}
         </L.ShowSearchBar>
       ) : (
