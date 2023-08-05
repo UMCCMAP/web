@@ -3,30 +3,52 @@ import { fadeIn } from '../../../styles/Transition.style';
 
 export const DetailImgContainer = styled.div`
   display: grid;
-  grid-template-rows: 2fr repeat(2, 1fr);
-  // grid-template-columns: ${(props) => props.gridtemplatecolumns};
-  grid-template-columns: 2fr repeat(2, 1fr);
-
   width: 100%;
   height: 25%;
   overflow: hidden;
-  position: relative;
-  // > div:nth-child(2) {
-  //   background-color: red;
-  //   grid-row: span 2;
-  // }
-  // > div:nth-child(3) {
-  //   background-color: orange;
-  // }
-  // > div:nth-child(4) {
-  //   background-color: yellow;
-  // }
-  // > div:nth-child(5) {
-  //   background-color: green;
-  // }
-  // > div:nth-child(6) {
-  //   background-color: blue;
-  // }
+  grid-gap: 2px;
+  > div {
+    overflow: hidden;
+  }
+  &.two {
+    grid-template-columns: 1fr 1fr;
+  }
+  &.three {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    > div:nth-child(2) {
+      grid-row: span 2;
+      background-color: red;
+    }
+  }
+  &.four {
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    > div:nth-child(2) {
+      grid-row: span 2;
+      background-color: red;
+    }
+    > div:nth-child(5) {
+      grid-column: span 2;
+      background-color: purple;
+    }
+  }
+  &.five {
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    > div:nth-child(2) {
+      grid-row: span 2;
+      background-color: red;
+    }
+  }
+  &.over {
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    > div:nth-child(2) {
+      grid-row: span 2;
+      background-color: red;
+    }
+  }
 
   .leftIcon {
     position: absolute;
@@ -39,11 +61,25 @@ export const DetailImgContainer = styled.div`
 
 export const DetailCafeImg = styled.img`
   width: 100%;
-  height: ${(props) => props.isfirst};
+  height: 100%;
   object-fit: cover;
-  &:nth-child(4),
-  &:nth-child(5) {
-    grid-row: span 2;
+`;
+
+export const TextOverlay = styled.div`
+  position: absolute;
+  top: 12.6%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  width: 24.8%;
+  height: 12.5%;
+  cursor: pointer;
+  > p {
+    margin-top: 5px;
+    text-align: center;
   }
 `;
 

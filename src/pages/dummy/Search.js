@@ -7,6 +7,7 @@ const SearchCafes = [
       'src/assets/temp/tempcafeimg3.jpg',
       'src/assets/temp/tempcafeimg4.png',
       'src/assets/temp/tempcafeimg5.jpg',
+      'src/assets/temp/tempcafeimg5.jpg',
     ],
     title: '카페1',
     info: '클래식한 분위기의 디저트 맛집',

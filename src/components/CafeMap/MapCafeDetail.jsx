@@ -3,6 +3,7 @@ import * as D from './styles/MapCafeDetail.style';
 import ThemeBtn from '../ThemeBtn';
 import CommonBtn from '../CommonBtn';
 import { AiOutlineLeft } from 'react-icons/ai';
+import { MdOutlinePhotoCamera } from 'react-icons/md';
 import CafeReview from './CafeReview';
 import { ReactComponent as Scope } from '../../assets/images/scope.svg';
 import SaveCafe from './MapReview/SaveCafe';
@@ -22,37 +23,52 @@ function MapCafeDetail({ closeAction, getReviewIndex, getUpdateReview, color, da
     setSaveModalOpen(false);
   };
 
-  // const getImgCount = () => {
-  //   const numImages = data.images.length;
-  //   switch (numImages) {
-  //     case 5:
-  //       return '2fr 1fr 1fr 1fr 1fr';
-  //     case 4:
-  //       return '50% 25% repeat(2,1fr)';
-  //     case 3:
-  //       return '50% repeat(2,1fr)';
-  //     case 2:
-  //       return 'repeat(2, 1fr)';
-  //     case 1:
-  //       return '100%';
-  //     default:
-  //       return '50% repeat(4,1fr)';
-  //   }
-  // };
+  const getImgCount = () => {
+    const numImages = data.images.length;
+    switch (numImages) {
+      case 1:
+        return 'one';
+      case 2:
+        return 'two';
+      case 3:
+        return 'three';
+      case 4:
+        return 'four';
+      case 5:
+        return 'five';
+      default:
+        return 'over';
+    }
+  };
+  let remainer = data.images.length - 5;
   return (
     <>
       <D.DetailWrapper className={!clickReviewItem ? 'zIndex' : ''}>
-        <D.DetailImgContainer>
+        <D.DetailImgContainer className={`${getImgCount()}`}>
           <AiOutlineLeft className="leftIcon" size={35} onClick={openDetailHandler} />
-          {data.images.map((data, index) => (
-            <div key={index}>
-              <D.DetailCafeImg
-                src={data}
-                alt="reviewPhoto"
-                isfirst={index === 0 ? '200%' : '100%'}
-              />
-            </div>
-          ))}
+          {getImgCount() === 'over' ? (
+            <>
+              {data.images.slice(0, 5).map((image, index) => (
+                <div key={index}>
+                  <D.DetailCafeImg src={image} alt="reviewPhoto" />
+                  {index === 4 && (
+                    <D.TextOverlay>
+                      <MdOutlinePhotoCamera size="30" />
+                      <p>{`${remainer}+ 더보기`}</p>
+                    </D.TextOverlay>
+                  )}
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              {data.images.map((image, index) => (
+                <div key={index}>
+                  <D.DetailCafeImg src={image} alt="reviewPhoto" />
+                </div>
+              ))}
+            </>
+          )}
         </D.DetailImgContainer>
         <D.DetailCafeName color={color}>{data.title}</D.DetailCafeName>
         <D.ThemeBtnContainer>
