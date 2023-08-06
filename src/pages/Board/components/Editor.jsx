@@ -3,6 +3,7 @@ import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize-module-react';
 import DragAndDropModule from 'quill-drag-and-drop-module';
+import './Editor.css';
 function Editor({ value, setValue }) {
   // 버튼 클릭 시 실행될 함수
 
@@ -22,7 +23,6 @@ function Editor({ value, setValue }) {
     [{ font: [] }],
     [{ align: [] }], // 가운데 정렬, 왼쪽 정렬, 오른쪽 정렬 옵션 추가
   ];
-
   const ImageHandler = () => {
     // input type="file" DOM을 생성합니다.
     const input = document.createElement('input');
