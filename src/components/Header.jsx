@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import ProFile from '../assets/icon/Profile.png';
+import ProFile from '../assets/icon/ProFile.png';
 import imgLogo from '../assets/icon/CMAP.png';
 import { Link } from 'react-router-dom';
 function Header({ name }) {

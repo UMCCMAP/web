@@ -7,7 +7,7 @@ import Search from '../../assets/HomepageIcon/SearchLogo.png';
 import Map from '../../assets/HomepageIcon/MapIcon.png';
 import Recommend from '../../assets/HomepageIcon/BluestarIcon.png';
 import Category from '../../assets/HomepageIcon/CommunityIcon.png';
-import RedStar from '../../assets/HomepageIcon/RedStarIcon.png';
+import RedStar from '../../assets/HomepageIcon/RedstarIcon.png';
 import { Link } from 'react-router-dom';
 import './Homepage.css';
 

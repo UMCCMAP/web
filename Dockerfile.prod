@@ -3,4 +3,4 @@ WORKDIR /web
 COPY package*.json yarn.lock /web/
 RUN yarn install --ignore-platform
 COPY . .
-CMD [ "yarn", "dev" ]
+RUN yarn build
