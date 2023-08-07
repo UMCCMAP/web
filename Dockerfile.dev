@@ -1,0 +1,6 @@
+FROM node:18-alpine
+WORKDIR /web
+COPY package*.json /web/
+RUN yarn install
+COPY . .
+CMD [ "yarn", "dev" ]
