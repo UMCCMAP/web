@@ -21,6 +21,7 @@ const SearchCafes = [
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
         subContent: 's',
+        scope: 4,
         images: [
           'https://news.samsungdisplay.com/wp-content/uploads/2018/08/8.jpg',
           'https://news.samsungdisplay.com/wp-content/uploads/2018/08/8.jpg',
@@ -37,6 +38,7 @@ const SearchCafes = [
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
         subContent: 's',
+        scope: 4,
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -53,6 +55,7 @@ const SearchCafes = [
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
         subContent: 's',
+        scope: 1,
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -69,6 +72,7 @@ const SearchCafes = [
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
         subContent: 's',
+        scope: 2,
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -85,6 +89,7 @@ const SearchCafes = [
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
         subContent: 's',
+        scope: 3,
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -115,6 +120,7 @@ const SearchCafes = [
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
         subContent: 's',
+        scope: 5,
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -131,6 +137,7 @@ const SearchCafes = [
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
         subContent: 's',
+        scope: 1,
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',
@@ -156,6 +163,7 @@ const SearchCafes = [
         content:
           'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil in vero, deleniti fugiat laudantium maiores corrupti, dolor ea, quae ad maxime inventore consequuntur? Eaque voluptatem neque, at dignissimos corrupti vitae?',
         subContent: 's',
+        scope: 2,
         images: [
           'src/assets/temp/tempcafeimg.jpg',
           'src/assets/temp/tempcafeimg2.png',

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import * as R from './styles/ReviewModal.style';
 import ImgDragDrop from './ImgDragDrop';
+import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
 
 function UpdateReview({ closeReview, color, reviewData }) {
   const [updateReviewTitle, setUpdateReviewTitle] = useState(reviewData.title);
   const [updateReviewImg, setUpdateReviewImg] = useState([]);
   const [updateReviewContent, setUpdateReviewContent] = useState(reviewData.content);
   const [updateReviewSubContent, setUpdateReviewSubContent] = useState(reviewData.subContent);
+  const [addReviewScope, setAddReviewScope] = useState(reviewData.scope);
 
   const handleInputTitle = (e) => {
     setUpdateReviewTitle(e.target.value);
@@ -17,12 +19,16 @@ function UpdateReview({ closeReview, color, reviewData }) {
   const handleInputSubContent = (e) => {
     setUpdateReviewSubContent(e.target.value);
   };
+  const handleClickScope = (id) => {
+    setAddReviewScope(id);
+  };
 
   const sendUpdateReview = () => {
     console.log('제목: ' + updateReviewTitle);
     console.log('이미지: ' + updateReviewImg);
     console.log('내용: ' + updateReviewContent);
     console.log('해시태크: ' + updateReviewSubContent);
+    console.log('별점 ' + addReviewScope);
   };
 
   return (
@@ -57,6 +63,17 @@ function UpdateReview({ closeReview, color, reviewData }) {
         value={updateReviewSubContent}
         onChange={handleInputSubContent}
       />
+      <R.ReviewScopeWrapper>
+        {[1, 2, 3, 4, 5].map((id) => (
+          <ReviewStar
+            key={id}
+            className="reviewscope"
+            id={id}
+            fill={id <= addReviewScope ? color : '#F1F1F1'}
+            onClick={() => handleClickScope(id)}
+          />
+        ))}
+      </R.ReviewScopeWrapper>
       <R.ReviewBtnWrapper>
         <R.ReviewBtn color={color} onClick={() => sendUpdateReview()}>
           수정하기
