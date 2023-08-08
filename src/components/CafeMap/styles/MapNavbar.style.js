@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const NavbarWrapper = styled.div`
   background-color: #f9fffd;
@@ -11,7 +12,7 @@ export const NavbarWrapper = styled.div`
   z-index: 3;
 `;
 
-export const CmapLogo = styled.div`
+export const CmapLogo = styled(Link)`
   width: 100%;
   height: 15%;
   padding: 30px 0 0 0;
