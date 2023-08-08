@@ -21,6 +21,7 @@ export const CmapLogo = styled(Link)`
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  text-decoration: none;
   > img {
     width: 41px;
     height: 54px;
