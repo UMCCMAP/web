@@ -1,6 +1,6 @@
 import Header from '../../components/Header';
 import Button from '../../components/Button';
-import Footer from '../../components/Footer';
+import Footer from './components/Footer';
 import * as B from './styles/BoardCU.style';
 import * as C from './styles/Common.style';
 import Editor from './components/Editor';

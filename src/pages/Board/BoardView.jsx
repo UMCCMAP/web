@@ -7,7 +7,7 @@ import tempImg from '../../assets/temp/tempcafeimg2.png';
 import tempImg2 from '../../assets/temp/tempcafeimg.jpg';
 import reviewIcon from '../../assets/icon/reviewIcon.png';
 import reviewHeart from '../../assets/icon/reviewHeart.png';
-import Footer from '../../components/Footer';
+import Footer from './components/Footer';
 import * as C from './styles/Common.style';
 
 const BoardWrap = styled.div`
