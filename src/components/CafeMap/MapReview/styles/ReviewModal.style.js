@@ -7,7 +7,7 @@ export const ReviewWriteContainer = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   background-color: rgba(255, 255, 255, 1);
   padding: 20px 0;
@@ -44,28 +44,33 @@ export const ReviewTitle = styled.input`
   font-weight: 400;
   font-size: 20px;
   color: rgba(147, 147, 147, 1);
+  &:focus {
+    outline: 2px solid ${(props) => props.color};
+  }
 `;
 
-export const ImgContainer = styled.div`
+export const ImgWrap = styled.div`
   width: 90%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const ImgItem = styled.div`
-  width: 80px;
-  height: 80px;
-  border-radius: 16px;
+  height: 11%;
   border: 1px solid ${(props) => props.color};
+  border-radius: 16px;
+  box-sizing: border-box;
+  padding: 10px;
 `;
 
-export const ReviewContent = styled.textarea`
+export const ReviewContentWrap = styled.div`
   width: 90%;
-  height: 400px;
+  height: 55%;
   border-radius: 32px;
   border: 1px solid ${(props) => props.color};
-  padding: 30px 20px;
+  padding: 18px 0px;
+  box-sizing: border-box;
+  overflow: hidden;
+`;
+export const ReviewContent = styled.textarea`
+  width: 100%;
+  height: 100%;
+  padding: 15px 20px;
   box-sizing: border-box;
   font-family: Pretendard;
   font-weight: 400;
@@ -73,18 +78,49 @@ export const ReviewContent = styled.textarea`
   color: rgba(0, 0, 0, 1);
   resize: none;
   text-align: center;
+  overflow-y: auto;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 10%;
+    background-color: ${(props) => props.color};
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(241, 241, 241, 0.7);
+  }
 `;
 
 export const ReviewSubContent = styled.input`
   width: 90%;
-  height: 80px;
+  height: 10%;
   border-radius: 32px;
   border: 1px solid ${(props) => props.color};
+  box-sizing: border-box;
   text-align: center;
   font-family: Pretendard;
   font-weight: 400;
   font-size: 20px;
   color: rgba(0, 0, 0, 1);
+  &:focus {
+    outline: 1px solid ${(props) => props.color};
+  }
+`;
+
+export const ReviewScopeWrapper = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  .reviewscope {
+    cursor: pointer;
+  }
 `;
 
 export const ReviewBtnWrapper = styled.div`
@@ -97,12 +133,12 @@ export const ReviewBtn = styled.button`
   border: none;
   border-radius: 16px;
   background-color: ${(props) => props.color};
-  width: 90px;
-  height: 44px;
+  width: 76px;
+  height: 40px;
   font-family: Pretendard;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 16px;
   color: rgba(249, 255, 253, 1);
+  cursor: pointer;
 `;
 
 /* 리뷰 조회, 저장 */

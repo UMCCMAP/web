@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import * as R from './ReviewModal.style';
+import * as R from './styles/ReviewModal.style';
+import ImgDragDrop from './ImgDragDrop';
+import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
 
-function RegisterReview({ closeReview, color }) {
-  const [updateReviewTitle, setUpdateReviewTitle] = useState('');
-  const [updateReviewContent, setUpdateReviewContent] = useState('');
-  const [updateReviewSubContent, setUpdateReviewSubContent] = useState('');
+function UpdateReview({ closeReview, color, reviewData }) {
+  const [updateReviewTitle, setUpdateReviewTitle] = useState(reviewData.title);
+  const [updateReviewImg, setUpdateReviewImg] = useState([]);
+  const [updateReviewContent, setUpdateReviewContent] = useState(reviewData.content);
+  const [updateReviewSubContent, setUpdateReviewSubContent] = useState(reviewData.subContent);
+  const [addReviewScope, setAddReviewScope] = useState(reviewData.scope);
 
   const handleInputTitle = (e) => {
     setUpdateReviewTitle(e.target.value);
@@ -14,6 +18,17 @@ function RegisterReview({ closeReview, color }) {
   };
   const handleInputSubContent = (e) => {
     setUpdateReviewSubContent(e.target.value);
+  };
+  const handleClickScope = (id) => {
+    setAddReviewScope(id);
+  };
+
+  const sendUpdateReview = () => {
+    console.log('제목: ' + updateReviewTitle);
+    console.log('이미지: ' + updateReviewImg);
+    console.log('내용: ' + updateReviewContent);
+    console.log('해시태크: ' + updateReviewSubContent);
+    console.log('별점 ' + addReviewScope);
   };
 
   return (
@@ -29,18 +44,17 @@ function RegisterReview({ closeReview, color }) {
         value={updateReviewTitle}
         onChange={handleInputTitle}
       />
-      <R.ImgContainer>
-        <R.ImgItem color={color}></R.ImgItem>
-        <R.ImgItem color={color}></R.ImgItem>
-        <R.ImgItem color={color}></R.ImgItem>
-        <R.ImgItem color={color}></R.ImgItem>
-      </R.ImgContainer>
-      <R.ReviewContent
-        type="text-area"
-        value={updateReviewContent}
-        color={color}
-        onChange={handleInputContent}
-      />
+      <R.ImgWrap color={color}>
+        <ImgDragDrop color={color} addImg={setUpdateReviewImg} data={reviewData.images} />
+      </R.ImgWrap>
+      <R.ReviewContentWrap color={color}>
+        <R.ReviewContent
+          type="text-area"
+          value={updateReviewContent}
+          color={color}
+          onChange={handleInputContent}
+        />
+      </R.ReviewContentWrap>
       <R.ReviewSubContent
         type="text"
         name="reviewSubContent"
@@ -49,11 +63,24 @@ function RegisterReview({ closeReview, color }) {
         value={updateReviewSubContent}
         onChange={handleInputSubContent}
       />
+      <R.ReviewScopeWrapper>
+        {[1, 2, 3, 4, 5].map((id) => (
+          <ReviewStar
+            key={id}
+            className="reviewscope"
+            id={id}
+            fill={id <= addReviewScope ? color : '#F1F1F1'}
+            onClick={() => handleClickScope(id)}
+          />
+        ))}
+      </R.ReviewScopeWrapper>
       <R.ReviewBtnWrapper>
-        <R.ReviewBtn color={color}>수정하기</R.ReviewBtn>
+        <R.ReviewBtn color={color} onClick={() => sendUpdateReview()}>
+          수정하기
+        </R.ReviewBtn>
       </R.ReviewBtnWrapper>
     </R.ReviewWriteContainer>
   );
 }
 
-export default RegisterReview;
+export default UpdateReview;

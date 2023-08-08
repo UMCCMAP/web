@@ -13,7 +13,7 @@ function RecommendCafePage() {
   };
 
   return (
-    <SearchContainer>
+    <RecommendContainer>
       {selectModalOpen && <SelectThemeModal closeAction={handleModalClick} />}
       <Map markerImg="src/assets/images/cmapmark.svg" />
       <MapNavbar
@@ -22,14 +22,14 @@ function RecommendCafePage() {
         color="rgba(96, 167, 225, 1)"
         hovercolor="rgba(117, 177, 226, 0.812)"
       />
-      <MapListBar pos="175px" color="rgba(96, 167, 225, 1)" />
-    </SearchContainer>
+      <MapListBar color="rgba(96, 167, 225, 1)" />
+    </RecommendContainer>
   );
 }
 
 export default RecommendCafePage;
 
-const SearchContainer = styled.div`
-  background-color: antiquewhite;
+const RecommendContainer = styled.div`
   display: flex;
+  height: 100vh;
 `;
