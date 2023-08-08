@@ -3,9 +3,10 @@ import { styled } from 'styled-components';
 import Button from '../../components/Button';
 import WriteImg from '../../assets/icon/Vector.png';
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import Footer from './components/Footer';
 import * as C from './styles/Common.style';
 import boards from './dummy/Boards';
+import { Link, useNavigate } from 'react-router-dom';
 const BoardWrap = styled.div`
   width: 100%;
   height: fit-content;
@@ -144,7 +145,7 @@ function BoardList() {
     '음료',
     'CMAP',
   ]);
-
+  const navigate = useNavigate();
   const ITEMS_PER_PAGE = 5;
   const PAGE_RANGE_DISPLAY = 5;
   const [currentPage, setCurrentPage] = useState(1);
@@ -214,14 +215,23 @@ function BoardList() {
                 ></Button>
               ))}
             </BoardKeyWords>
-            <BoardWriteButton>
+            <BoardWriteButton
+              onClick={() => {
+                navigate('/board/write');
+              }}
+            >
               <img src={WriteImg} alt="logo image" />
               <WriteText>글쓰기</WriteText>
             </BoardWriteButton>
           </BoardKeywordWrap>
           <BoardContentsWrap>
             {getCurrentPageCafes().map((a, i) => (
-              <Board key={i}>
+              <Board
+                onClick={() => {
+                  navigate('/board/view');
+                }}
+                key={i}
+              >
                 <BoardWords>
                   <Title>{a.title}</Title>
                   <Content>{a.content}</Content>

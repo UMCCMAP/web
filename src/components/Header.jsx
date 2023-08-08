@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import ProFile from '../assets/icon/Profile.png';
 import imgLogo from '../assets/icon/CMAP.png';
+import { Link } from 'react-router-dom';
 function Header({ name }) {
   const HeaderWrap = styled.div`
     width: 100%;
@@ -62,9 +63,11 @@ function Header({ name }) {
   `;
   return (
     <HeaderWrap>
-      <Logo>
-        <img src={imgLogo} />
-      </Logo>
+      <Link to="/home">
+        <Logo>
+          <img src={imgLogo} />
+        </Logo>
+      </Link>
       {name == '검색' ? (
         <SearchInput placeholder="통합검색" type="text" />
       ) : (

@@ -1,0 +1,29 @@
+.PinkOpt {
+  width: 290px;
+  height: 108px;
+  gap: 16px;
+}
+
+.OptinImg {
+  width: 84px;
+  height: 108px;
+  position: relative;
+  right: 102px;
+}
+.left {
+  position: absolute;
+  left: 0px;
+}
+.right {
+  position: absolute;
+  right: 0px;
+}
+.recommend {
+  width: 100px;
+  height: 29px;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 28.64px;
+  align-items: center;
+  color: #373737;
+}

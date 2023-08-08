@@ -67,7 +67,7 @@ function MapNavbar({ content, logoImg, color, hovercolor }) {
 
   return (
     <N.NavbarWrapper>
-      <N.CmapLogo>
+      <N.CmapLogo to="/home">
         <img src={logoImg} alt="cmapmark" />
         <span style={{ color: color }}>CMAP</span>
       </N.CmapLogo>
