@@ -29,7 +29,7 @@ export const TitleInput = styled.input`
   letter-spacing: -0.02em;
   padding-left: 20px;
 `;
-export const ContentsInput = styled.textarea`
+export const ContentsInput = styled.div`
   width: calc(100%-20px);
   margin-top: 14px;
   height: 52rem;
