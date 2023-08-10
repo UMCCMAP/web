@@ -36,7 +36,7 @@ export const CmapLogo = styled(Link)`
 
 export const NavbarContainer = styled.ul`
   width: 100%;
-  height: 70%;
+  height: 75%;
   padding: 25px 0;
   display: flex;
   flex-direction: column;
@@ -92,7 +92,49 @@ export const Bento = styled.div`
   text-align: center;
   padding-top: 20px;
   box-sizing: border-box;
-  > img {
-    width: 38px;
-    height: 38
+  .bento {
+    cursor: pointer;
+  }
+  &.openToggle {
+    background-color: rgba(249, 255, 253, 1);
+    width: 360px;
+    height: 108px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transition: opacity visibility 0.3s;
+    display: flex;
+    justify-content: space-between;
+    padding: 35px 40px;
+    align-items: start;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 27px;
+    box-sizing: border-box;
+    z-index: 100;
+  }
+`;
+
+export const ToggleBento = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 180px;
+  > li {
+    cursor: pointer;
+    > p {
+      font-size: 10px;
+      color: ${(props) => props.color};
+      text-align: center;
+      font-family: 'Pretendard';
+      margin-top: 4px;
+    }
+  }
+  &.show-menu {
+    visibility: visible;
+    opacity: 1;
+  }
+  &.hide-menu {
+    visibility: hidden;
+    opacity: 0;
+  }
 `;
