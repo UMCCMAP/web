@@ -1,6 +1,6 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Intropage from './pages/Intropage';
+import Intropage from './pages/IntroPage/Intropage';
 import Homepage from './pages/Homepage/Homepage';
 import Loginpage from './pages/Login/Loginpage';
 import Registerpage from './pages/Login/RegisterPage';

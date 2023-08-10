@@ -219,6 +219,7 @@ function BoardList() {
               <WriteText>글쓰기</WriteText>
             </BoardWriteButton>
           </BoardKeywordWrap>
+
           <BoardContentsWrap>
             {getCurrentPageCafes().map((a, i) => (
               <Board key={i}>
@@ -247,6 +248,7 @@ function BoardList() {
             ))}
           </BoardContentsWrap>
         </BoardWrap>
+
         <PageButtons>
           {!isPrevDisabled && (
             <PageMoveButton

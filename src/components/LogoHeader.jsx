@@ -20,11 +20,9 @@ const CMAPLogo = styled(Link)`
 function LogoHeader() {
   return (
     <HeaderWrap>
-      <Link to="/home">
-        <CMAPLogo>
-          <img src={imgLogo} />
-        </CMAPLogo>
-      </Link>
+      <CMAPLogo to="/home">
+        <img src={imgLogo} />
+      </CMAPLogo>
     </HeaderWrap>
   );
 }
