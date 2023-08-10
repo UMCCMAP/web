@@ -1,13 +1,14 @@
 import { styled } from 'styled-components';
 
-export const Wrapper = styled.div`
-  // 공통 컴포넌트 빼야됨
-  width: 100%;
-  height: 100%;
+export const WholeDiv = styled.div`
+  width: 833px;
+  height: 420px;
   flex-direction: column;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: space-around;
+  align-self: center;
+  margin-top: 240px;
 `;
 
 export const WelcomeText = styled.div`

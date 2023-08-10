@@ -2,6 +2,7 @@ import Footer from '../../components/footer';
 import Logo from '../../components/LogoHeader';
 import Profile from '../../assets/ProfileImg.png';
 import ProfileIcon from '../../assets/ProfileIcon/UserProfileIcon.png';
+import { Link } from 'react-router-dom';
 import './profile.css';
 import * as S from '../../styles/Myprofilepage.style';
 import * as W from '../../styles/Wapper.style';
