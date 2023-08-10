@@ -1,12 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
 import Map from '../components/Map';
 import MapNavbar from '../components/CafeMap/MapNavbar';
 import MapListBar from '../components/CafeMap/MapListBar';
+import * as C from '../styles/PageContainer.style';
 
 function SearchPage() {
   return (
-    <SearchContainer>
+    <C.Container>
       <Map markerImg="src/assets/images/cmapmark.svg" />
       <MapNavbar
         content="search"
@@ -15,13 +15,8 @@ function SearchPage() {
         hovercolor="rgb(154, 200, 154)"
       />
       <MapListBar color="rgb(33, 174, 33)" />
-    </SearchContainer>
+    </C.Container>
   );
 }
 
 export default SearchPage;
-
-const SearchContainer = styled.div`
-  height: 100vh;
-  display: flex;
-`;
