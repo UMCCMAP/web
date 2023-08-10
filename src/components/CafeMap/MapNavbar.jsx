@@ -9,6 +9,7 @@ import { ReactComponent as Photo } from '../../assets/images/photo.svg';
 import { ReactComponent as Bread } from '../../assets/images/bread.svg';
 import { ReactComponent as Cake } from '../../assets/images/cake.svg';
 import { ReactComponent as Pasta } from '../../assets/images/pasta.svg';
+import { ReactComponent as Bento } from '../../assets/images/bento.svg';
 
 function MapNavbar({ content, logoImg, color, hovercolor }) {
   const [activeNav, setActiveNav] = useState(true);
@@ -109,7 +110,7 @@ function MapNavbar({ content, logoImg, color, hovercolor }) {
         </>
       </N.NavbarContainer>
       <N.Bento>
-        <img src="src/assets/images/bento.svg" alt="bento" />
+        <Bento fill={color} />
       </N.Bento>
     </N.NavbarWrapper>
   );
