@@ -26,14 +26,9 @@ export const TitleDiv = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-export const Title = styled.div`
-  color: #ffffff;
+export const TitleTextIcon = styled.img`
   width: 295px;
-  height: 119px;
-  font-size: 100px;
-  font-weight: 700;
-  text-align: center;
-  line-height: 119.34px;
+  height: fit-content;
 `;
 export const TitleLogo = styled.img`
   widhth: 95px;
@@ -244,6 +239,7 @@ export const CommunityBtn = styled(Link)`
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  text-decoration: none;
 
   background-color: #f1f1f1;
   cursor: pointer;

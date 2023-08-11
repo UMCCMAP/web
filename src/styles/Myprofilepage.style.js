@@ -94,7 +94,7 @@ export const MateListDiv = styled.div`
 export const MateList = styled.div`
   width: 325px;
   height: 386px;
-  overflow: scroll; // 스크롤? 히든?
+  overflow: auto; // 스크롤? 히든?
   border: 1px solid #d9d9d9;
   flex-direction: column;
   justify-content: top;
@@ -129,16 +129,24 @@ export const Mate = styled.button`
   }
 `;
 export const WriteCntText = styled.div`
-  width: auto;
+  width: 280px;
   height: 19px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   margin-bottom: 13px;
-
+`;
+export const CntBtn = styled(Link)`
+  width: fit-content;
+  height: fit-content;
   font-size: 15px;
   font-weight: 400;
-  line-height: 18.15px;
-  align-items: center;
-  color: #000000;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #00b2ff;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
 `;

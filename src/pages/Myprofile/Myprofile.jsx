@@ -2,12 +2,15 @@ import Footer from '../../components/footer';
 import Logo from '../../components/LogoHeader';
 import Profile from '../../assets/ProfileImg.png';
 import ProfileIcon from '../../assets/ProfileIcon/UserProfileIcon.png';
-import { Link } from 'react-router-dom';
 import './profile.css';
 import * as S from '../../styles/Myprofilepage.style';
 import * as W from '../../styles/Wapper.style';
+import Review from '../Review/dummy/Review';
+import Board from '../Board/dummy/Boards';
 
 function Myprofile() {
+  const borderCnt = Board.length;
+  const reviewCnt = Review.length;
   // const [name, setName] = useState('user');
   return (
     <W.Wrapper flexDir="row">
@@ -38,7 +41,12 @@ function Myprofile() {
       </S.ProfileWholeDiv>
 
       <S.MateListDiv>
-        <S.WriteCntText>게시글 작성 수 N 리뷰 작성 수 N</S.WriteCntText>
+        <S.WriteCntText>
+          <S.CntBtn id="borderCnt">게시글 작성 수 {borderCnt} </S.CntBtn>
+          <S.CntBtn id="reviewCnt" to="/review">
+            리뷰 작성 수 {reviewCnt}
+          </S.CntBtn>
+        </S.WriteCntText>
         <S.ShareTxt width="325px">My Cafe Mates</S.ShareTxt>
         <S.MateList>
           <S.Mate>

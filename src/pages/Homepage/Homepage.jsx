@@ -1,6 +1,7 @@
 import React from 'react';
 import Footer from '../../components/footer';
 import Redpin from '../../assets/HomepageIcon/MainLogo.png';
+import Logo from '../../assets/CMAPwhite.png';
 import Search from '../../assets/HomepageIcon/SearchLogo.png';
 import Map from '../../assets/HomepageIcon/MapIcon.png';
 import Recommend from '../../assets/HomepageIcon/BluestarIcon.png';
@@ -27,7 +28,7 @@ function Homepage() {
         </S.HeaderBtnDiv>
         <S.TitleDiv>
           <S.TitleLogo src={Redpin} />
-          <S.Title>CMAP</S.Title>
+          <S.TitleTextIcon src={Logo} />
         </S.TitleDiv>
       </S.HeadBg>
       <S.SearchDiv>

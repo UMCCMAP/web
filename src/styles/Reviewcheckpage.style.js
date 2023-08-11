@@ -84,14 +84,20 @@ export const Wrting = styled.button`
   justify-content: space-between;
   align-items: center;
 `;
-export const ReviewContent = styled.h3`
-  max-width: 400px;
-  max-height: 140px;
-  font-size: 45px;
-  font-weight: 700;
-  align-items: center;
+export const ReviewContent = styled.div`
+  width: 400px;
+  height: 70px;
+  text-align: left;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  font-size: 30px;
+  font-weight: 600;
   color: #000000;
   margin-left: 50px;
+  margin-top: 20px;
 `;
 export const ReviewImgDiv = styled.div`
   width: 200px;
@@ -107,7 +113,7 @@ export const PageNumberListDiv = styled.div`
   width: 370px;
   height: 40px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin-top: 80px;
 `;
@@ -128,21 +134,21 @@ export const NextOrSearchBtn = styled.button`
   }
 `;
 
-export const PageNumberList = styled.div`
+export const PageNumberstDiv = styled.div`
   width: 320px;
   height: 100%;
   display: flex;
-  justify-content: left;
-
-  button {
-    font-size: 32px;
-    font-weight: 400;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    color: #000000;
-    margin-left: 7px;
-  }
+  justify-content: center;
+`;
+export const PageNum = styled.button`
+  width: fit-content;
+  font-size: 32px;
+  font-weight: ${(props) => props.weight};
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: #000000;
+  margin-left: 7px;
 `;
 export const ReviewSearchDiv = styled.div`
   width: 700px;
