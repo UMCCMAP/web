@@ -22,3 +22,13 @@ export const Hr = styled.div`
   height: 1px;
   background: #939393;
 `;
+export const WholeDiv = styled.div`
+  width: 833px;
+  height: 420px;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  align-self: center;
+  margin-top: 240px;
+`;

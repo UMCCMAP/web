@@ -1,16 +1,5 @@
 import { styled } from 'styled-components';
 
-export const WholeDiv = styled.div`
-  width: 833px;
-  height: 420px;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  align-self: center;
-  margin-top: 240px;
-`;
-
 export const ChooseLogintext = styled.div`
   width: 262px;
   height: 24px;

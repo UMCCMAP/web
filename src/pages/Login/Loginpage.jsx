@@ -14,7 +14,7 @@ function Loginpage() {
   };
   return (
     <W.Wrapper>
-      <S.WholeDiv>
+      <L.WholeDiv>
         <L.Logo to="/">
           <img src={Cmap} alt="Logo" />
         </L.Logo>
@@ -31,7 +31,7 @@ function Loginpage() {
             <S.BtnText>네이버 아이디로 로그인</S.BtnText>
           </S.LoginBtn>
         </S.BtnCollect>
-      </S.WholeDiv>
+      </L.WholeDiv>
     </W.Wrapper>
   );
 }
