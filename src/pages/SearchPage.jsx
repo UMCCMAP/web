@@ -7,7 +7,7 @@ import * as C from '../styles/PageContainer.style';
 function SearchPage() {
   return (
     <C.Container>
-      <Map markerImg="src/assets/images/cmapmark.svg" />
+      <Map markerImg="src/assets/images/cmapLogoG.svg" />
       <MapNavbar
         content="search"
         logoImg="src/assets/images/cmapLogoG.svg"
