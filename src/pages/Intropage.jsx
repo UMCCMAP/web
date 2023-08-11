@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import Bg from '../assets/IntroIcon/cafeimg.png';
 import Icon from '../assets/CMAP.png';
 import Examimg from '../assets/IntroIcon/ex5.png';
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 
 const Bgimg = styled.div`
