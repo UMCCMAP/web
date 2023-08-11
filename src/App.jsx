@@ -11,7 +11,7 @@ import BoardView from './pages/Board/BoardView';
 import BoardWrite from './pages/Board/BoardWrite';
 import Root from './Root';
 import ErrorPage from './pages/ErrorPage';
-import CmapPage from './pages/CmapPage';
+import CmapPage from './pages/Cmap/CmapPage';
 
 const router = createBrowserRouter([
   {
