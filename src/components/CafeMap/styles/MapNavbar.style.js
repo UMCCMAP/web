@@ -10,6 +10,7 @@ export const NavbarWrapper = styled.div`
   align-items: center;
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.35);
   z-index: 3;
+  overflow: hidden;
 `;
 
 export const CmapLogo = styled(Link)`
@@ -110,7 +111,6 @@ export const Bento = styled.div`
     box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.25);
     border-radius: 27px;
     box-sizing: border-box;
-    z-index: 100;
   }
 `;
 
