@@ -10,7 +10,8 @@ import BoardModify from './pages/Board/BoardModify';
 import BoardView from './pages/Board/BoardView';
 import BoardWrite from './pages/Board/BoardWrite';
 import Root from './Root';
-import ErrorPage from './ErrorPage';
+import ErrorPage from './pages/ErrorPage';
+import CmapPage from './pages/CmapPage';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: '/login', element: <Loginpage /> },
       { path: '/search', element: <SearchPage /> },
       { path: '/recommend', element: <RecommendCafePage /> },
+      { path: '/cmap', element: <CmapPage /> },
       { path: '/board', element: <BoardList /> },
       { path: '/board/modify', element: <BoardModify /> },
       { path: '/board/view', element: <BoardView /> },

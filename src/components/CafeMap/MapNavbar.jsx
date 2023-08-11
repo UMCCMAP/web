@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as N from './styles/MapNavbar.style';
 import { ReactComponent as Home } from '../../assets/images/home.svg';
 import { ReactComponent as Book } from '../../assets/images/book.svg';
@@ -9,10 +10,21 @@ import { ReactComponent as Photo } from '../../assets/images/photo.svg';
 import { ReactComponent as Bread } from '../../assets/images/bread.svg';
 import { ReactComponent as Cake } from '../../assets/images/cake.svg';
 import { ReactComponent as Pasta } from '../../assets/images/pasta.svg';
+import { ReactComponent as Bento } from '../../assets/images/bento.svg';
+import { ReactComponent as BentoStar } from '../../assets/images/bentoStar.svg';
+import { ReactComponent as BentoMap } from '../../assets/images/bentoMap.svg';
+import { ReactComponent as BentoMarker } from '../../assets/images/bentoMarker.svg';
 
 function MapNavbar({ content, logoImg, color, hovercolor }) {
+  const navigate = useNavigate();
   const [activeNav, setActiveNav] = useState(true);
   const [checkedList, setCheckedList] = useState([]);
+  const [bentoMenu, setBentoMenu] = useState(false);
+  const path = window.location.pathname;
+
+  const handleBentoMenu = () => {
+    setBentoMenu((bentoMenu) => !bentoMenu);
+  };
 
   const navItems = [
     {
@@ -108,8 +120,26 @@ function MapNavbar({ content, logoImg, color, hovercolor }) {
           ))}
         </>
       </N.NavbarContainer>
-      <N.Bento>
-        <img src="src/assets/images/bento.svg" alt="bento" />
+      <N.Bento className={bentoMenu ? 'openToggle' : ''}>
+        <Bento
+          fill={bentoMenu ? 'rgba(147, 147, 147, 1)' : color}
+          onClick={handleBentoMenu}
+          className="bento"
+        />
+        <N.ToggleBento className={bentoMenu ? 'show-menu' : 'hide-menu'}>
+          <li onClick={() => navigate('/search')}>
+            <BentoMap stroke={path === '/search' ? color : '#939393'} />
+            <p style={path === '/search' ? { color: color } : { color: '#939393' }}>지도홈</p>
+          </li>
+          <li onClick={() => navigate('/cmap')}>
+            <BentoMarker fill={path === '/cmap' ? color : '#939393'} />
+            <p style={path === '/cmap' ? { color: color } : { color: '#939393' }}>CMAP</p>
+          </li>
+          <li onClick={() => navigate('/recommend')}>
+            <BentoStar fill={path === '/recommend' ? color : '#939393'} />
+            <p style={path === '/recommend' ? { color: color } : { color: '#939393' }}>랜덤 지도</p>
+          </li>
+        </N.ToggleBento>
       </N.Bento>
     </N.NavbarWrapper>
   );

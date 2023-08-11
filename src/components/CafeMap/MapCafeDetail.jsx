@@ -10,9 +10,8 @@ import SaveCafe from './MapReview/SaveCafe';
 
 const fontColor = 'rgba(249, 255, 253, 1)';
 
-function MapCafeDetail({ closeAction, getReviewIndex, getUpdateReview, color, data }) {
+function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data }) {
   const [saveModalOpen, setSaveModalOpen] = useState(false);
-  const [clickReviewItem, setClickReviewItem] = useState(false);
 
   const openDetailHandler = () => {
     closeAction();
@@ -43,7 +42,7 @@ function MapCafeDetail({ closeAction, getReviewIndex, getUpdateReview, color, da
   let remainer = data.images.length - 5;
   return (
     <>
-      <D.DetailWrapper className={!clickReviewItem ? 'zIndex' : ''}>
+      <D.DetailWrapper>
         <D.DetailImgContainer className={`${getImgCount()}`}>
           <AiOutlineLeft className="leftIcon" size={35} onClick={openDetailHandler} />
           {getImgCount() === 'over' ? (
@@ -112,8 +111,7 @@ function MapCafeDetail({ closeAction, getReviewIndex, getUpdateReview, color, da
               data={data}
               closeAction={handleModalClick}
               getReviewIndex={getReviewIndex}
-              setClickReviewItem={setClickReviewItem}
-              getUpdateReview={getUpdateReview}
+              getReviewData={getReviewData}
             />
           ))}
         </D.ReviewContainer>

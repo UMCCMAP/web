@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import * as L from './styles/MapListBar.style';
 import MapCafeDetail from './MapCafeDetail';
 import RegisterReview from './MapReview/RegisterReview';
+import ReadReview from './MapReview/ReadReview';
 import UpdateReview from './MapReview/UpdateReview';
 import { ReactComponent as Open } from '../../assets/images/openSearchbar.svg';
 import { ReactComponent as Close } from '../../assets/images/closeSearchbar.svg';
@@ -10,8 +11,8 @@ import search from '../../pages/dummy/Search';
 function MapListBar({ color }) {
   const [isOpen, setIsOpen] = useState(false);
   const [detailId, setDetailId] = useState(0);
-  const [reviewRU, setReviewRU] = useState(0);
-  const [updateReviewData, setUpdateReviewData] = useState([]);
+  const [reviewCRU, setReviewCRU] = useState(0);
+  const [reviewData, setReviewData] = useState([]);
   const [searchText, setSearchText] = useState('');
 
   const handleInputText = (e) => {
@@ -27,15 +28,18 @@ function MapListBar({ color }) {
   };
 
   const handleReviewIndexClick = (index) => {
-    setReviewRU(index);
+    setReviewCRU(index);
   };
 
-  const handleUpdateReviewData = (data) => {
-    setUpdateReviewData(data);
+  const handleReviewData = (data) => {
+    setReviewData(data);
   };
+
   return (
     <>
-      <L.SearchBarContainer className={isOpen && reviewRU !== 1 && reviewRU !== 2 ? 'show' : ''}>
+      <L.SearchBarContainer
+        className={isOpen && reviewCRU !== 1 && reviewCRU !== 2 && reviewCRU !== 3 ? 'show' : ''}
+      >
         <div>
           <L.SearchInput
             type="text"
@@ -77,18 +81,21 @@ function MapListBar({ color }) {
           getReviewIndex={handleReviewIndexClick}
           color={color}
           data={search[detailId - 1]}
-          getUpdateReview={handleUpdateReviewData}
+          getReviewData={handleReviewData}
         />
       )}
-      {detailId !== 0 && reviewRU === 1 ? (
+      {detailId !== 0 && reviewCRU === 1 ? (
         <RegisterReview closeReview={handleReviewIndexClick} color={color} />
+      ) : detailId !== 0 && reviewCRU === 2 ? (
+        <UpdateReview closeReview={handleReviewIndexClick} color={color} reviewData={reviewData} />
       ) : (
         detailId !== 0 &&
-        reviewRU === 2 && (
-          <UpdateReview
+        reviewCRU === 3 && (
+          <ReadReview
             closeReview={handleReviewIndexClick}
             color={color}
-            reviewData={updateReviewData}
+            data={reviewData}
+            getReviewIndex={handleReviewIndexClick}
           />
         )
       )}

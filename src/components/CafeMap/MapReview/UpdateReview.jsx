@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as R from './styles/ReviewModal.style';
+import * as R from './styles/ReviewCU.style';
 import ImgDragDrop from './ImgDragDrop';
 import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
 
@@ -8,7 +8,7 @@ function UpdateReview({ closeReview, color, reviewData }) {
   const [updateReviewImg, setUpdateReviewImg] = useState([]);
   const [updateReviewContent, setUpdateReviewContent] = useState(reviewData.content);
   const [updateReviewSubContent, setUpdateReviewSubContent] = useState(reviewData.subContent);
-  const [addReviewScope, setAddReviewScope] = useState(reviewData.scope);
+  const [updateReviewScope, setUpdateReviewScope] = useState(reviewData.scope);
 
   const handleInputTitle = (e) => {
     setUpdateReviewTitle(e.target.value);
@@ -20,7 +20,7 @@ function UpdateReview({ closeReview, color, reviewData }) {
     setUpdateReviewSubContent(e.target.value);
   };
   const handleClickScope = (id) => {
-    setAddReviewScope(id);
+    setUpdateReviewScope(id);
   };
 
   const sendUpdateReview = () => {
@@ -28,7 +28,7 @@ function UpdateReview({ closeReview, color, reviewData }) {
     console.log('이미지: ' + updateReviewImg);
     console.log('내용: ' + updateReviewContent);
     console.log('해시태크: ' + updateReviewSubContent);
-    console.log('별점 ' + addReviewScope);
+    console.log('별점 ' + updateReviewScope);
   };
 
   return (
@@ -69,7 +69,7 @@ function UpdateReview({ closeReview, color, reviewData }) {
             key={id}
             className="reviewscope"
             id={id}
-            fill={id <= addReviewScope ? color : '#F1F1F1'}
+            fill={id <= updateReviewScope ? color : '#F1F1F1'}
             onClick={() => handleClickScope(id)}
           />
         ))}

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import Map from '../../components/Map';
 import MapNavbar from '../../components/CafeMap/MapNavbar';
 import MapListBar from '../../components/CafeMap/MapListBar';
 import SelectThemeModal from './components/SelectThemeModal';
+import * as C from '../../styles/PageContainer.style';
 
 function RecommendCafePage() {
   const [selectModalOpen, setSelectModalOpen] = useState(true);
@@ -13,9 +13,9 @@ function RecommendCafePage() {
   };
 
   return (
-    <RecommendContainer>
+    <C.Container>
       {selectModalOpen && <SelectThemeModal closeAction={handleModalClick} />}
-      <Map markerImg="src/assets/images/cmapmark.svg" />
+      <Map markerImg="src/assets/images/cmapLogoB.svg" />
       <MapNavbar
         content="recommend"
         logoImg="src/assets/images/cmapLogoB.svg"
@@ -23,13 +23,8 @@ function RecommendCafePage() {
         hovercolor="rgba(117, 177, 226, 0.812)"
       />
       <MapListBar color="rgba(96, 167, 225, 1)" />
-    </RecommendContainer>
+    </C.Container>
   );
 }
 
 export default RecommendCafePage;
-
-const RecommendContainer = styled.div`
-  display: flex;
-  height: 100vh;
-`;

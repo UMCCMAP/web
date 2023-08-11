@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import * as R from './styles/ReviewModal.style';
 import * as M from '../../../styles/Modal.style';
 import * as S from './styles/SaveCafe.style';
 
@@ -17,7 +16,7 @@ function SaveCafe({ color, closeAction }) {
         <M.CloseReviewModal onClick={closeAction}>
           <img src="src/assets/images/close.svg" alt="close" />
         </M.CloseReviewModal>
-        <R.ReviewContainer>
+        <S.ReviewContainer>
           <S.AddBtnContainer>
             <S.AddBtn
               color={color}
@@ -41,7 +40,7 @@ function SaveCafe({ color, closeAction }) {
           <S.SaveBtn color={color} onClick={sendSaveType}>
             저장
           </S.SaveBtn>
-        </R.ReviewContainer>
+        </S.ReviewContainer>
       </M.ModalContainer>
     </M.ModalBackground>
   );

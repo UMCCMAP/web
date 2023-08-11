@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as R from './styles/ReviewModal.style';
+import * as R from './styles/ReviewCU.style';
 import ImgDragDrop from './ImgDragDrop';
 import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
 
