@@ -1,0 +1,6 @@
+FROM node:18-alpine
+WORKDIR /web
+COPY package*.json yarn.lock /web/
+RUN yarn install --ignore-platform
+COPY . .
+CMD [ "yarn", "dev" ]
