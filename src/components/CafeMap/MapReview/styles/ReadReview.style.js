@@ -1,52 +1,124 @@
 import styled from 'styled-components';
 
-export const InfoContainer = styled.div`
-  width: 430px;
+export const ReadReviewContainer = styled.div`
+  position: relative;
+  width: 650px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 20px 0;
+  box-sizing: border-box;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  > hr {
+    width: 90%;
+    border: 1px solid rgba(147, 147, 147, 1);
+    margin: 25px 0 10px 0;
+  }
+`;
+
+export const Title = styled.div`
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
-`;
-
-export const WriterContainer = styled.div`
-  font-size: 10px;
-  > span:first-child {
-    font-weight: 700;
-    margin-right: 5px;
+  > p {
+    font-family: 'Pretendard';
+    font-size: 40px;
+    font-weight: 500;
+    text-align: center;
+    color: ${(props) => props.color};
   }
-  > span:last-child:before {
-    content: '•';
-    margin-right: 5px;
+  > img {
+    width: 26px;
+    height: 26px;
   }
 `;
 
-export const BtnContainer = styled.div`
-  width: 70px;
+export const SubContentWrap = styled.div`
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+export const SubContent = styled.h3`
+  font-family: 'Pretendard';
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  color: rgba(54, 54, 54, 1);
+`;
+export const Scope = styled.div`
+  width: 20%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-export const ReviewBox = styled.div`
-  width: 430px;
-  height: 325px;
-  border-radius: 20px;
-  border: 1px solid black;
-  font-size: 20px;
+export const UserInfoWrap = styled.div`
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 50px;
+`;
+export const Date = styled.div`
+  font-family: 'Pretendard';
+  font-size: 13px;
+  text-align: center;
+  color: rgba(147, 147, 147, 1);
+`;
+export const UserInfo = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
+  align-items: flex-end;
+  > p {
+    font-family: 'Pretendard';
+    font-size: 12px;
+    text-align: center;
+    color: rgba(147, 147, 147, 1);
+    margin-right: 10px;
+  }
+  > img {
+    padding: 3px;
+    box-sizing: border-box;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: rgba(217, 217, 217, 1);
+    object-fit: contain;
+  }
 `;
 
-export const ReviewImgBox = styled.div`
-  width: 430px;
-  height: 70px;
-  border-radius: 20px;
-  border: 1px solid black;
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
+export const ImgWrap = styled.div`
+  background-color: yellow;
+  width: 80%;
+  height: 310px;
+  border-radius: 21px;
+  overflow: hidden;
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  margin-bottom: 30px;
+`;
+
+export const Content = styled.div`
+  flex: 1;
+  width: 80%;
+  padding: 20px 30px;
+  box-sizing: border-box;
+  font-family: 'Pretendard';
+  font-size: 12px;
+  text-align: center;
+  color: rgba(55, 55, 55, 1);
+  line-height: 1.6;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

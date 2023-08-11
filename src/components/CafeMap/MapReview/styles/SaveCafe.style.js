@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+export const ReviewContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 90%;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const AddBtnContainer = styled.div`
   display: flex;
   justify-content: space-between;

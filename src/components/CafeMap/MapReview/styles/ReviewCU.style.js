@@ -10,6 +10,7 @@ export const ReviewWriteContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: rgba(255, 255, 255, 1);
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
   padding: 20px 0;
   box-sizing: border-box;
 `;
@@ -139,16 +140,4 @@ export const ReviewBtn = styled.button`
   font-size: 16px;
   color: rgba(249, 255, 253, 1);
   cursor: pointer;
-`;
-
-/* 리뷰 조회, 저장 */
-export const ReviewContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 90%;
-  bottom: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
