@@ -7,11 +7,12 @@ function ErrorPage() {
   return (
     <ErrorContainer>
       <img src="src/assets/icon/CMAP.svg" alt="로고" />
-      <ErrorCode>404</ErrorCode>
-      <hr />
+      <ErrorCode>
+        <img src="src/assets/images/404error.svg" alt="404" />
+      </ErrorCode>
       <ErrorMsg>
-        찾을 수 없는 페이지 입니다. <br />
-        요청하신 페이지가 사라졌거나, 잘못된 경로로 접근하셨습니다.
+        이런! <br />
+        요청하신 페이지가 사라졌거나, 잘못된 경로입니다.
       </ErrorMsg>
       <ErrorBtn onClick={() => navigate(-1)}>뒤로 가기</ErrorBtn>
     </ErrorContainer>
@@ -29,34 +30,29 @@ const ErrorContainer = styled.div`
   > img {
     width: 12rem;
   }
-  > hr {
-    width: 833px;
-  }
 `;
-const ErrorCode = styled.h1`
-  font-family: 'Yanone Kaffeesatz', sans-serif;
-  font-size: 250px;
-  color: #000000;
+const ErrorCode = styled.div`
+  margin-top: 30px;
 `;
 const ErrorMsg = styled.p`
-  font-family: 'Lexend', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   font-size: 24px;
-  color: #000000;
+  color: rgba(55, 55, 55, 1);
   text-align: center;
-  font-weight: thin;
-  margin: 20px 0;
+  margin-top: 150px;
   line-height: 1.3;
 `;
 const ErrorBtn = styled.button`
-  font-family: 'Lexend', sans-serif;
-  width: 250px;
-  border: 5px solid black;
+  font-family: 'Pretendard', sans-serif;
+  width: 153px;
+  border: 1px solid rgba(147, 147, 147, 1);
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 32px;
-  font-weight: bold;
+  font-size: 22px;
   text-align: center;
-  padding: 8px 10px;
+  color: rgba(147, 147, 147, 1);
+  padding: 10px 30px;
   background-color: transparent;
-  margin-top: 60px;
+  margin-top: 80px;
   box-sizing: border-box;
 `;
