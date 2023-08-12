@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState } from 'react';
 import Map from '../../components/Map';
 import MapNavbar from '../../components/CafeMap/MapNavbar';
 import MapListBar from '../../components/CafeMap/MapListBar';
@@ -7,9 +7,10 @@ import ListModal from './components/ListModal';
 import * as C from '../../styles/PageContainer.style';
 
 function CmapPage() {
+  const [modal, setModal] = useState('none');
   return (
     <C.Container>
-      <ListModal></ListModal>
+      {modal !== 'none' && <ListModal modal={modal} setModal={setModal}></ListModal>}
       <Map markerImg="src/assets/images/cmapLogoR.svg" />
       <MapNavbar
         content="search"
@@ -18,7 +19,7 @@ function CmapPage() {
         hovercolor="rgb(245, 173, 173)"
       />
       <MapListBar color="rgba(255, 104, 104, 1)" />
-      <MapUserBar />
+      <MapUserBar setModal={setModal} />
     </C.Container>
   );
 }
