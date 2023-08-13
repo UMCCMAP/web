@@ -10,26 +10,35 @@ function MapUserBar({ setModal }) {
           <img src={Arrow} width="100%" />
         </U.UserMenuArrow>
       </U.UserMenu>
-      <U.IconBox>
-        <U.LogoIcon>
-          <img src="src/assets/images/cmapLogoR.svg" />
-        </U.LogoIcon>
-      </U.IconBox>
+      <U.IconWrapper>
+        <U.IconCon>
+          <U.IconBox>
+            <U.LogoIcon>
+              <img src="src/assets/images/cmapLogoR.svg" width="100%" />
+            </U.LogoIcon>
+            <U.IconText>WANT</U.IconText>
+          </U.IconBox>
+        </U.IconCon>
+      </U.IconWrapper>
       <U.WantButton
-        margin="18"
+        margin="16"
         onClick={() => {
           setModal('WANT');
         }}
       >
         WANT
+        <br />
+        List
       </U.WantButton>
       <U.WantButton
-        margin="16"
+        margin="8"
         onClick={() => {
           setModal('WENT');
         }}
       >
         WENT
+        <br />
+        List
       </U.WantButton>
     </U.UserBarWrapper>
   );
