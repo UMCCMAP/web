@@ -6,6 +6,7 @@ import Header from '../../components/Header';
 import Footer from './components/Footer';
 import * as C from './styles/Common.style';
 import boards from './dummy/Boards';
+import baseAxios from '../../apis/baseAxios';
 import { Link, useNavigate } from 'react-router-dom';
 const BoardWrap = styled.div`
   width: 100%;
@@ -196,6 +197,33 @@ function BoardList() {
 
     return pageButtons;
   };
+  async function fetchData() {
+    try {
+      const tagIdx = '1';
+      const page = 1;
+
+      // 쿼리 파라미터를 문자열로 만들기
+      const queryParams = new URLSearchParams({
+        tagIdx: tagIdx,
+        page: page.toString(),
+      }).toString();
+      console.log(queryParams);
+      // 백엔드 URL 생성
+      const backendUrl = `/board?${queryParams}`;
+
+      // 요청 보내기
+      const response = await baseAxios.get(backendUrl);
+      console.log(response);
+      // 응답 데이터 활용
+      console.log(response.data);
+      // ... 데이터를 활용한 작업
+    } catch (error) {
+      console.error('데이터 요청 중 오류 발생:', error);
+    }
+  }
+
+  // fetchData 함수 호출
+  fetchData();
 
   return (
     <C.Wrap>

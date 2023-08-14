@@ -6,12 +6,14 @@ import * as C from './styles/Common.style';
 import Editor from './components/Editor';
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import baseAxios from '../../apis/baseAxios';
 
 function BoardWrite() {
   const [value, setValue] = useState('');
   const [data, setData] = useState({});
   const [title, setTitle] = useState('');
   const [cafeTitle, setCafeTitle] = useState('');
+  const [img, setImg] = useState([]);
   const [themes] = useState([
     '질문해요',
     '추천해요',
@@ -21,6 +23,7 @@ function BoardWrite() {
     '음료',
     'CMAP',
   ]);
+
   // 상태를 관리할 변수와 업데이트 함수
   const [activeButton, setActiveButton] = useState([]);
   const handleButtonClick = useCallback((theme) => {
@@ -40,6 +43,7 @@ function BoardWrite() {
         title: title,
         cafeTitle: cafeTitle,
         themes: activeButton,
+        img: img,
         // 기타 다른 필요한 데이터들을 추가로 넣을 수 있습니다.
       };
       setData(dataToSend);
@@ -71,7 +75,7 @@ function BoardWrite() {
             ></Button>
           </B.InputWrap>
           <B.ContentsInput>
-            <Editor value={value} setValue={setValue} />
+            <Editor value={value} setValue={setValue} img={img} setImg={setImg} />
           </B.ContentsInput>
           <B.CafeNameInput
             placeholder="카페 이름"
