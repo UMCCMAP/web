@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import Map from '../../components/Map';
 import MapNavbar from '../../components/CafeMap/MapNavbar';
-// import MapListBar from '../../components/CafeMap/MapListBar';
 import SelectThemeModal from './components/SelectThemeModal';
-import * as C from '../../styles/PageContainer.style';
 import MapCafeDetail from '../../components/CafeMap/MapCafeDetail';
 import RegisterReview from '../../components/CafeMap/MapReview/RegisterReview';
 import ReadReview from '../../components/CafeMap/MapReview/ReadReview';
 import UpdateReview from '../../components/CafeMap/MapReview/UpdateReview';
+import * as C from '../../styles/PageContainer.style';
 import search from '../../pages/dummy/Search'; // 임시 데이터
 
 function RecommendCafePage() {
