@@ -3,6 +3,9 @@ export const BoardWrap = styled.div`
   width: 100%;
   height: fit-content;
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 export const BoardKeywordWrap = styled.div`
   width: 100%;
@@ -49,7 +52,10 @@ export const BoardContentsWrap = styled.div`
   height: fit-content;
   flex-direction: column;
   display: flex;
-  margin-top: 5px;
+  width: 100%;
+  @media (max-width: 1100px) {
+    width: 90%;
+  }
 `;
 export const Board = styled.div`
   display: flex;

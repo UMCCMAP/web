@@ -1,212 +1,43 @@
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import Header from '../../components/Header';
-import { styled } from 'styled-components';
 import Button from '../../components/Button';
 import LocationImg from '../../assets/icon/locationIcon.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import tempImg from '../../assets/temp/tempcafeimg2.png';
 import tempImg2 from '../../assets/temp/tempcafeimg.jpg';
 import reviewIcon from '../../assets/icon/reviewIcon.png';
 import reviewHeart from '../../assets/icon/reviewHeart.png';
 import Footer from './components/Footer';
 import * as C from './styles/Common.style';
+import * as B from './styles/BoardView.style';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import baseAxios from '../../apis/baseAxios';
 
-const BoardWrap = styled.div`
-  width: 58rem;
-  height: fit-content;
-  margin-top: 45px;
-`;
-const ButtonsWrap = styled.div`
-  width: 30rem;
-  display: flex;
-  gap: 15px;
-`;
-const TitleWrap = styled.div`
-  width: 100%;
-  height: auto;
-  display: flex;
-  margin-top: 16px;
-  align-items: flex-end;
-  justify-content: space-between;
-`;
-const BoardTitle = styled.div`
-  width: 50%;
-  font-family: Pretendard;
-  font-size: 40px;
-  font-weight: 700;
-  line-height: 48px;
-  letter-spacing: -0.02em;
-  text-align: left;
-  height: 54%;
-`;
-const InfoWrap = styled.div`
-  width: 20%;
-  height: 54%;
-  display: flex;
-  justify-content: space-between;
-`;
-const Info = styled.div`
-  width: 60%;
-  height: 100%;
-  text-align: right;
-  color: #939393;
-`;
-const Date = styled.div`
-  width: 100%;
-  height: 50%;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0em;
-`;
-const User = styled.div`
-  width: 100%;
-  height: 50%;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 24px;
-  letter-spacing: 0em;
-`;
-const Icon = styled.div`
-  width: 33%;
-  padding-bottom: 32%;
-  border-radius: 100%;
-  background-color: #d9d9d9;
-`;
-const CafeTitle = styled.div`
-  width: 100%;
-  height: 4rem;
-  margin-top: 26px;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  border-radius: 32px;
-  gap: 7px;
-  background-color: #f1f1f1;
-  font-family: Pretendard;
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 29px;
-  letter-spacing: -0.02em;
-  text-align: center;
-  color: #939393;
-`;
-const BoardContentsWrap = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 45px;
-  margin-bottom: 360px;
-`;
-const BoardContent = styled.div`
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-  font-family: Pretendard;
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 29px;
-  letter-spacing: -0.02em;
-  text-align: center;
-`;
-const Word = styled.div`
-  width: 100%;
-  word-wrap: break-word;
-  margin-top: 45px;
-  margin-bottom: 45px;
-`;
-const BoardImg = styled.div`
-  width: 100%;
-`;
-const ReviewWrap = styled.div`
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-const ReviewInfo = styled.div`
-  width: fit-content;
-  gap: 5px;
-  height: 2.5rem;
-  display: flex;
-  align-items: flex-end;
-  gap: 20px;
-`;
-
-const ReviewIconWrap = styled.div`
-  width: 50%;
-  height: 100%;
-  display: flex;
-  gap: 8px;
-`;
-const ReviewNumber = styled.div`
-  width: 50%;
-  font-family: Pretendard;
-  font-size: 30px;
-  font-weight: 700;
-  line-height: 36px;
-  letter-spacing: -0.02em;
-  text-align: center;
-  color: ${(props) => props.color};
-`;
-const ReviewContentsWrap = styled.div`
-  width: 100%;
-  display: flex;
-  height: fit-content;
-  flex-direction: column;
-  gap: 16px;
-`;
-const Review = styled.div`
-  margin-top: 40px;
-  width: 100%;
-  height: fit-content;
-  flex-direction: column;
-  display: flex;
-  gap: 16px;
-`;
-
-const ReviewDate = styled.div`
-  width: 100%;
-  font-family: Pretendard;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 14px;
-  letter-spacing: -0.02em;
-  text-align: left;
-`;
-const ReviewUser = styled.div`
-  width: 100%;
-  color: black;
-  font-family: Pretendard;
-  font-size: 30px;
-  font-weight: 400;
-  line-height: 36px;
-  letter-spacing: -0.02em;
-  text-align: left;
-`;
-const ReviewUserInfo = styled.div`
-  width: 60%;
-  height: 100%;
-  text-align: left;
-  color: #939393;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-`;
-const ReviewContent = styled.div`
-  width: 100%;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: -0.02em;
-  text-align: left;
-`;
-const CafeIcon = styled.div``;
 function BoardView() {
+  const { idx } = useParams();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.state);
+  const [data] = useState(location.state.boardData.boardContent);
+  console.log(data);
+  useEffect(() => {
+    baseAxios
+      .get(`/board/${idx}`, {
+        headers: {
+          Authorization: 'token value',
+        },
+      })
+      .then((response) => {
+        // 서버 응답 처리 로직을 작성합니다
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // 에러 처리 로직을 작성합니다
+        console.error(error);
+      });
+  }, []);
   const [board] = useState({
     themes: ['추천해요', '한강 뷰', '조용한', '빵 맛집', '주차관리'],
     title: '성수동 카페 뷰 맛집!',
@@ -253,81 +84,91 @@ function BoardView() {
       },
     ],
   });
+
   return (
     <C.Wrap>
       <C.ContentsWrap height="fit-content">
         <Header />
-        <BoardWrap>
-          <ButtonsWrap>
-            {board.themes.map((a) => {
-              return <Button key={a} width="5rem" height="2rem" name={a} />;
-            })}
-          </ButtonsWrap>
-          <TitleWrap>
-            <BoardTitle>{board.title}</BoardTitle>
-            <InfoWrap>
-              <Info>
-                <Date>{board.date}</Date>
-                <User>{board.user}</User>
-              </Info>
-              <Icon></Icon>
-            </InfoWrap>
-          </TitleWrap>
+        <B.BoardWrap>
+          <B.ButtonsWrap>
+            <B.ThemesWrap>
+              {board.themes.map((a) => {
+                return <Button key={a} width="5rem" height="2rem" name={a} />;
+              })}
+            </B.ThemesWrap>
+            <B.ModDeleteWrap>
+              <Button
+                width="5rem"
+                height="2rem"
+                name="편집하기"
+                clickHandler={() => {
+                  navigate(`/board/modify/${idx}`);
+                }}
+              />
+              <Button
+                width="5rem"
+                height="2rem"
+                name="삭제하기"
+                background="#60A7E1"
+                color="#fff"
+              />
+            </B.ModDeleteWrap>
+          </B.ButtonsWrap>
+          <B.TitleWrap>
+            <B.BoardTitle>{board.title}</B.BoardTitle>
+            <B.InfoWrap>
+              <B.Info>
+                <B.Date>{board.date}</B.Date>
+                <B.User>{board.user}</B.User>
+              </B.Info>
+              <B.Icon></B.Icon>
+            </B.InfoWrap>
+          </B.TitleWrap>
           <C.Line top="26"></C.Line>
 
-          <CafeTitle>
-            <CafeIcon>
+          <B.CafeTitle>
+            <B.CafeIcon>
               <img src={LocationImg} />
-            </CafeIcon>
+            </B.CafeIcon>
             {board.cafeName}
-          </CafeTitle>
-          <BoardContentsWrap>
-            {board.content.map((post, index) => (
-              <BoardContent key={index}>
-                <Word>
-                  {/* 내용을 split으로 나누어 배열의 요소들로 분리, 그 map으로 순회하며 br삽입 */}
-                  {post.content.split('\n').map((line, index) => (
-                    <span key={index}>
-                      {line}
-                      <br />
-                    </span>
-                  ))}
-                </Word>
-                <BoardImg>
-                  {post.image && <img width="100%" src={`${post.image}`} alt={`게시물 ${index}`} />}
-                </BoardImg>
-              </BoardContent>
-            ))}
-          </BoardContentsWrap>
-          <ReviewWrap>
-            <ReviewInfo>
-              <ReviewIconWrap>
+          </B.CafeTitle>
+          <B.BoardContentsWrap>
+            <div
+              className="ql-editor"
+              dangerouslySetInnerHTML={{
+                __html: data,
+              }}
+            />
+          </B.BoardContentsWrap>
+          <B.ReviewWrap>
+            <B.ReviewInfo>
+              <B.ReviewIconWrap>
                 <img src={reviewHeart} />
-                <ReviewNumber color="#FF6868">{board.heart}</ReviewNumber>
-              </ReviewIconWrap>
+                <B.ReviewNumber color="#FF6868">{board.heart}</B.ReviewNumber>
+              </B.ReviewIconWrap>
 
-              <ReviewIconWrap>
+              <B.ReviewIconWrap>
                 <img src={reviewIcon} />
-                <ReviewNumber color="#60A7E1">{board.review.length}</ReviewNumber>
-              </ReviewIconWrap>
-            </ReviewInfo>
+                <B.ReviewNumber color="#60A7E1">{board.review.length}</B.ReviewNumber>
+              </B.ReviewIconWrap>
+            </B.ReviewInfo>
             <C.Line top="8"></C.Line>
-            <ReviewContentsWrap>
+            <B.ReviewContentsWrap>
               {board.review.map((a, i) => (
-                <Review key={i}>
-                  <InfoWrap>
-                    <Icon></Icon>
-                    <ReviewUserInfo>
-                      <ReviewUser>{a.user}</ReviewUser>
-                      <ReviewDate>{a.date}</ReviewDate>
-                    </ReviewUserInfo>
-                  </InfoWrap>
-                  <ReviewContent>{a.content}</ReviewContent>
-                </Review>
+                <B.Review key={i}>
+                  <B.InfoWrap>
+                    <B.Icon></B.Icon>
+                    <B.ReviewUserInfo>
+                      <B.ReviewUser>{a.user}</B.ReviewUser>
+                      <B.ReviewDate>{a.date}</B.ReviewDate>
+                    </B.ReviewUserInfo>
+                  </B.InfoWrap>
+                  <B.ReviewContent>{a.content}</B.ReviewContent>
+                </B.Review>
               ))}
-            </ReviewContentsWrap>
-          </ReviewWrap>
-        </BoardWrap>
+            </B.ReviewContentsWrap>
+          </B.ReviewWrap>
+        </B.BoardWrap>
       </C.ContentsWrap>
       <Footer top="260px" />
     </C.Wrap>

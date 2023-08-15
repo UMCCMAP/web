@@ -1,4 +1,5 @@
 import './App.css';
+import 'react-quill/dist/quill.snow.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Intropage from './pages/Intropage';
 import Homepage from './pages/Homepage/Homepage';
@@ -26,8 +27,8 @@ const router = createBrowserRouter([
       { path: '/recommend', element: <RecommendCafePage /> },
       { path: '/cmap', element: <CmapPage /> },
       { path: '/board', element: <BoardList /> },
-      { path: '/board/modify', element: <BoardModify /> },
-      { path: '/board/view', element: <BoardView /> },
+      { path: '/board/modify/:idx', element: <BoardModify /> },
+      { path: '/board/:idx', element: <BoardView /> },
       { path: '/board/write', element: <BoardWrite /> },
     ],
   },

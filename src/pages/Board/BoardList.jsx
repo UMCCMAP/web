@@ -135,7 +135,7 @@ function BoardList() {
               currentData.map((a) => (
                 <B.Board
                   onClick={() => {
-                    navigate('/board/view');
+                    navigate(`/board/${a.idx}`);
                   }}
                   key={a.idx}
                 >

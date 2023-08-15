@@ -5,7 +5,7 @@ import * as B from './styles/BoardCU.style';
 import * as C from './styles/Common.style';
 import Editor from './components/Editor';
 import { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import baseAxios from '../../apis/baseAxios';
 
 function BoardWrite() {
@@ -14,6 +14,7 @@ function BoardWrite() {
   const [title, setTitle] = useState('');
   const [cafeTitle, setCafeTitle] = useState('');
   const [img, setImg] = useState([]);
+  const navigate = useNavigate();
   const [themes] = useState([
     '질문해요',
     '추천해요',
@@ -103,6 +104,7 @@ function BoardWrite() {
   useEffect(() => {
     console.log(activeButton);
   }, [activeButton]);
+
   const sendDataToServer = async () => {
     let imageUrl = await handleImageUpload(img);
 
@@ -120,13 +122,20 @@ function BoardWrite() {
         // 기타 다른 필요한 데이터들을 추가로 넣을 수 있습니다.
       };
       // POST 요청을 보냅니다.
-      const response = await baseAxios.post('/board', dataToSend);
+      console.log(dataToSend);
 
-      if (response.status === 200) {
-        console.log(response.data);
-      } else {
-        throw new Error('Failed to send data to server');
-      }
+      // const response = await baseAxios.post('/board', dataToSend);
+
+      // if (response.status === 200) {
+      //   console.log(response.data);
+      // } else {
+      //   throw new Error('Failed to send data to server');
+      // }
+      navigate('/board/0', {
+        state: {
+          boardData: dataToSend,
+        },
+      });
     } catch (error) {
       console.error(error);
     }
