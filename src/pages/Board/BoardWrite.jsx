@@ -100,6 +100,9 @@ function BoardWrite() {
 
     return newBody.innerHTML; // 수정된 <body> 내용 반환
   };
+  useEffect(() => {
+    console.log(activeButton);
+  }, [activeButton]);
   const sendDataToServer = async () => {
     let imageUrl = await handleImageUpload(img);
 
@@ -108,14 +111,22 @@ function BoardWrite() {
     try {
       // 서버에 보낼 데이터를 객체 형태로 만듭니다.
       const dataToSend = {
-        content: contentWithReplacedImages,
-        title: title,
-        cafeTitle: cafeTitle,
-        themes: activeButton,
-        img: imageUrl,
+        cafeIdx: 0,
+        boardContent: contentWithReplacedImages,
+        boardTitle: title,
+
+        tagList: activeButton.sort(),
+        imgList: imageUrl,
         // 기타 다른 필요한 데이터들을 추가로 넣을 수 있습니다.
       };
-      setData(dataToSend);
+      // POST 요청을 보냅니다.
+      const response = await baseAxios.post('/board', dataToSend);
+
+      if (response.status === 200) {
+        console.log(response.data);
+      } else {
+        throw new Error('Failed to send data to server');
+      }
     } catch (error) {
       console.error(error);
     }
@@ -176,10 +187,10 @@ function BoardWrite() {
                   key={i}
                   width="80px"
                   height="40px"
-                  background={activeButton.includes(a) ? '#FF6868' : '#F1F1F1'}
-                  color={activeButton.includes(a) ? '#F1F1F1' : '#373737'}
+                  background={activeButton.includes(i + 1) ? '#FF6868' : '#F1F1F1'}
+                  color={activeButton.includes(i + 1) ? '#F1F1F1' : '#373737'}
                   name={a}
-                  clickHandler={() => handleButtonClick(a)}
+                  clickHandler={() => handleButtonClick(i + 1)}
                 ></Button>
               ))}
             </B.ThemesWrap>
