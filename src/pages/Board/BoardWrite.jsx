@@ -34,16 +34,85 @@ function BoardWrite() {
           : [...prevActive, theme], // 선택되지 않은 테마라면 추가
     );
   }, []);
-  const sendDataToServer = () => {
-    console.log('클릭됨');
+  function dataURLtoFile(dataUrl, filename) {
+    const arr = dataUrl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename + `.${mime.split('/')[1]}`, { type: mime });
+  }
+  function generateRandomFilename() {
+    const randomId = Math.floor(Math.random() * 100000);
+    return `image_${randomId}`;
+  }
+  const handleImageUpload = async (fileList) => {
+    try {
+      const uploadPromises = fileList.map(async (file) => {
+        const randomFilename = generateRandomFilename();
+        const data = dataURLtoFile(file, randomFilename);
+        const formData = new FormData();
+        formData.append('multipartFile', data);
+
+        const response = await baseAxios.post('/s3/file', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        if (response.status === 201) {
+          return response.data[0];
+        } else {
+          console.error('이미지 업로드 실패:', response);
+          return null;
+        }
+      });
+
+      const imageUrls = await Promise.all(uploadPromises);
+      return imageUrls.filter((imageUrl) => imageUrl !== null);
+    } catch (error) {
+      console.error('이미지 업로드 오류:', error);
+      return [];
+    }
+  };
+  const parseAndReplaceImages = (htmlContent, imageUrls) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, 'text/html');
+    const bodyContent = doc.body.innerHTML; // <body> 내용만 추출
+
+    const newBody = document.createElement('div');
+    newBody.innerHTML = bodyContent;
+
+    const imageTags = newBody.getElementsByTagName('img');
+
+    for (let i = 0; i < imageTags.length; i++) {
+      const imgTag = imageTags[i];
+      const src = imgTag.getAttribute('src');
+      if (src) {
+        imgTag.setAttribute('src', imageUrls[i] || src);
+      }
+    }
+
+    return newBody.innerHTML; // 수정된 <body> 내용 반환
+  };
+  const sendDataToServer = async () => {
+    let imageUrl = await handleImageUpload(img);
+
+    console.log(imageUrl);
+    const contentWithReplacedImages = parseAndReplaceImages(value, imageUrl);
     try {
       // 서버에 보낼 데이터를 객체 형태로 만듭니다.
       const dataToSend = {
-        content: value,
+        content: contentWithReplacedImages,
         title: title,
         cafeTitle: cafeTitle,
         themes: activeButton,
-        img: img,
+        img: imageUrl,
         // 기타 다른 필요한 데이터들을 추가로 넣을 수 있습니다.
       };
       setData(dataToSend);
@@ -86,9 +155,18 @@ function BoardWrite() {
           <B.DragDropWrap>
             <B.DragDropTitle></B.DragDropTitle>
             <B.DragDropImages>
-              <B.Image></B.Image>
-              <B.Image></B.Image>
-              <B.Image></B.Image>
+              {img.map((a, i) => (
+                <B.Image key={i}>
+                  <img
+                    src={a}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: '7px',
+                    }}
+                  />
+                </B.Image>
+              ))}
             </B.DragDropImages>
           </B.DragDropWrap>
           <B.ThemeSelectWrap>

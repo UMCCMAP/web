@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const BoardWrap = styled.div`
   width: 100%;
@@ -81,12 +81,28 @@ export const DragDropImages = styled.div`
   height: 6.25rem;
   display: flex;
   gap: 10px;
+  justify-content: flex-end;
+  margin-right: 15px;
+`;
+const zoomInAnimation = keyframes`
+  0%, 100% {
+    transform: scale(0.8); /* 작은 크기로 시작과 끝 */
+  }
+  50% {
+    transform: scale(1.2); /* 큰 크기로 중간에 확대 */
+  }
 `;
 export const Image = styled.div`
   width: 6.25rem;
   height: 6.25rem;
   background-color: #f1f1f1;
   border-radius: 32px;
+  &:hover {
+    transform: scale(2);
+    z-index: 999;
+    transition: 0.2s;
+  }
+  animation: ${zoomInAnimation} 0.5s ease-in-out;
 `;
 export const ThemeSelectWrap = styled.div`
   width: 100%;
