@@ -123,7 +123,9 @@ function BoardList() {
             </B.BoardKeyWords>
             <B.BoardWriteButton
               onClick={() => {
-                navigate('/board/write');
+                navigate('/board/write', {
+                  state: keyWords,
+                });
               }}
             >
               <img src={WriteImg} alt="logo image" />

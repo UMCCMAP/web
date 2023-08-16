@@ -65,7 +65,7 @@ function Header({ name }) {
   `;
   const SearchFilter = styled.div`
     width: 20%;
-    height: calc(3.5rem - 2px);
+    height: 3.5rem;
     border-radius: 32px;
     border: 1px solid #000000;
     position: absolute;
@@ -113,7 +113,7 @@ function Header({ name }) {
     position: absolute;
     left: 0;
     width: 100%;
-    bottom: -5%;
+    bottom: -10%;
   `;
 
   const DropdownList = styled.ul`

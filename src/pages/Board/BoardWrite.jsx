@@ -5,7 +5,7 @@ import * as B from './styles/BoardCU.style';
 import * as C from './styles/Common.style';
 import Editor from './components/Editor';
 import { useState, useEffect, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import baseAxios from '../../apis/baseAxios';
 
 function BoardWrite() {
@@ -15,6 +15,7 @@ function BoardWrite() {
   const [cafeTitle, setCafeTitle] = useState('');
   const [img, setImg] = useState([]);
   const navigate = useNavigate();
+
   const [themes] = useState([
     '질문해요',
     '추천해요',
@@ -24,8 +25,9 @@ function BoardWrite() {
     '음료',
     'CMAP',
   ]);
-
+  const location = useLocation();
   // 상태를 관리할 변수와 업데이트 함수
+  console.log(location.state);
   const [activeButton, setActiveButton] = useState([]);
   const handleButtonClick = useCallback((theme) => {
     setActiveButton(
@@ -105,6 +107,39 @@ function BoardWrite() {
     console.log(activeButton);
   }, [activeButton]);
 
+  function checkEmptyValuesAndShowAlert(data) {
+    let isEmpty = false;
+    let emptyKeys = [];
+    if (!data.boardTitle) {
+      isEmpty = true;
+      emptyKeys.push('제목');
+    }
+    if (!data.boardContent) {
+      isEmpty = true;
+      emptyKeys.push('내용');
+    }
+    if (data.cafeIdx === undefined || data.cafeIdx === null || data.cafeIdx === '') {
+      isEmpty = true;
+      emptyKeys.push('카페이름');
+    }
+
+    if (!Array.isArray(data.tagList) || data.tagList.length === 0) {
+      isEmpty = true;
+      emptyKeys.push('해시태그');
+    }
+
+    if (!data.imgList) {
+      // imgList는 비어있어도 됨
+    }
+
+    if (isEmpty) {
+      alert(`${emptyKeys.join(', ')}부분을 채워주세요!`);
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   const sendDataToServer = async () => {
     let imageUrl = await handleImageUpload(img);
 
@@ -113,7 +148,7 @@ function BoardWrite() {
     try {
       // 서버에 보낼 데이터를 객체 형태로 만듭니다.
       const dataToSend = {
-        cafeIdx: 0,
+        cafeIdx: 1,
         boardContent: contentWithReplacedImages,
         boardTitle: title,
 
@@ -123,23 +158,27 @@ function BoardWrite() {
       };
       // POST 요청을 보냅니다.
       console.log(dataToSend);
+      if (checkEmptyValuesAndShowAlert(dataToSend)) {
+        // const response = await baseAxios.post('/board', dataToSend);
 
-      // const response = await baseAxios.post('/board', dataToSend);
-
-      // if (response.status === 200) {
-      //   console.log(response.data);
-      // } else {
-      //   throw new Error('Failed to send data to server');
-      // }
-      navigate('/board/0', {
-        state: {
-          boardData: dataToSend,
-        },
-      });
+        // if (response.status === 200) {
+        //   console.log(response.data);
+        // } else {
+        //   throw new Error('Failed to send data to server');
+        // }
+        navigate('/board/0', {
+          state: {
+            boardData: dataToSend,
+          },
+        });
+      } else {
+        return;
+      }
     } catch (error) {
       console.error(error);
     }
   };
+
   useEffect(() => {
     console.log(data);
   }, [data]);
@@ -191,15 +230,15 @@ function BoardWrite() {
           </B.DragDropWrap>
           <B.ThemeSelectWrap>
             <B.ThemesWrap>
-              {themes.map((a, i) => (
+              {location.state.map((a) => (
                 <Button
-                  key={i}
+                  key={a.tagIdx}
                   width="80px"
                   height="40px"
-                  background={activeButton.includes(i + 1) ? '#FF6868' : '#F1F1F1'}
-                  color={activeButton.includes(i + 1) ? '#F1F1F1' : '#373737'}
-                  name={a}
-                  clickHandler={() => handleButtonClick(i + 1)}
+                  background={activeButton.includes(a.tagIdx) ? '#FF6868' : '#F1F1F1'}
+                  color={activeButton.includes(a.tagIdx) ? '#F1F1F1' : '#373737'}
+                  name={a.tagName}
+                  clickHandler={() => handleButtonClick(a.tagIdx)}
                 ></Button>
               ))}
             </B.ThemesWrap>

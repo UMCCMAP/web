@@ -20,7 +20,7 @@ function BoardView() {
   const navigate = useNavigate();
   const location = useLocation();
   console.log(location.state);
-  const [data] = useState(location.state.boardData.boardContent);
+  const [data] = useState(location.state.boardData);
   console.log(data);
   useEffect(() => {
     baseAxios
@@ -92,7 +92,7 @@ function BoardView() {
         <B.BoardWrap>
           <B.ButtonsWrap>
             <B.ThemesWrap>
-              {board.themes.map((a) => {
+              {data.tagList.map((a) => {
                 return <Button key={a} width="5rem" height="2rem" name={a} />;
               })}
             </B.ThemesWrap>
@@ -102,7 +102,9 @@ function BoardView() {
                 height="2rem"
                 name="편집하기"
                 clickHandler={() => {
-                  navigate(`/board/modify/${idx}`);
+                  navigate(`/board/modify/${idx}`, {
+                    state: { data },
+                  });
                 }}
               />
               <Button
@@ -115,7 +117,7 @@ function BoardView() {
             </B.ModDeleteWrap>
           </B.ButtonsWrap>
           <B.TitleWrap>
-            <B.BoardTitle>{board.title}</B.BoardTitle>
+            <B.BoardTitle>{data.boardTitle}</B.BoardTitle>
             <B.InfoWrap>
               <B.Info>
                 <B.Date>{board.date}</B.Date>
@@ -136,7 +138,7 @@ function BoardView() {
             <div
               className="ql-editor"
               dangerouslySetInnerHTML={{
-                __html: data,
+                __html: data.boardContent,
               }}
             />
           </B.BoardContentsWrap>

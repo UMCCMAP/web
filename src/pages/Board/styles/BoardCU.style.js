@@ -119,7 +119,7 @@ export const ThemesWrap = styled.div`
   height: fit-content;
   display: flex;
   margin-left: 10px;
-  gap: 10px;
+  gap: 15px;
   align-items: center;
   flex-wrap: wrap;
   margin: 5px;
