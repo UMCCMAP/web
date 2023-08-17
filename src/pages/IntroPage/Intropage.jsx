@@ -31,8 +31,8 @@ function Intropage() {
       <S.CafeIntroWholeDiv>
         <S.IntroDiv height="781px">
           <S.FirstIntroTextDiv>
-            <S.IntrotextBold>내가 찾던 안성맞춤 카페</S.IntrotextBold>
-            <S.Introtextmedium>
+            <S.IntrotextBold align="left">내가 찾던 안성맞춤 카페</S.IntrotextBold>
+            <S.Introtextmedium align="left">
               지도를 통해 카페 위치부터 리뷰까지 붙어있는 스티커로 원하는 테마의 카페도 한 번에
               찾아보세요!
             </S.Introtextmedium>
@@ -57,8 +57,8 @@ function Intropage() {
             ></S.BackImg>
           </S.MainimgDiv>
           <S.SecAndThirdIntroTextDiv>
-            <S.IntrotextBold align="right">하나뿐인 나만의 카페 지도</S.IntrotextBold>
-            <S.Introtextmedium align="right">
+            <S.IntrotextBold>하나뿐인 나만의 카페 지도</S.IntrotextBold>
+            <S.Introtextmedium>
               가봤던 카페와 가보고 싶은 카페를 저장해서 나만의 지도를 만들고 기록해보세요!
             </S.Introtextmedium>
           </S.SecAndThirdIntroTextDiv>
@@ -81,8 +81,8 @@ function Intropage() {
             ></S.BackImg>
           </S.MainimgDiv>
           <S.SecAndThirdIntroTextDiv>
-            <S.IntrotextBold align="right">나에게 딱 맞는 카페 추천</S.IntrotextBold>
-            <S.Introtextmedium align="right">
+            <S.IntrotextBold>나에게 딱 맞는 카페 추천</S.IntrotextBold>
+            <S.Introtextmedium>
               무슨 카페를 갈지 고민될 때 안성맞춤 카페를 추천해드려요!
             </S.Introtextmedium>
           </S.SecAndThirdIntroTextDiv>
