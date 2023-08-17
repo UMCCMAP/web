@@ -27,6 +27,15 @@ export const SelectThemeTitle = styled.h2`
   margin-bottom: 20px;
 `;
 
+export const SelectThemeList = styled.div`
+  width: 100%;
+  max-height: 200px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
 export const LocationSearch = styled.input`
   width: 100%;
   border-radius: 32px;
@@ -74,6 +83,88 @@ export const ThemeAddBtn = styled.button`
   color: rgba(241, 241, 241, 1);
   text-align: center;
   padding: 8px 20px 8px 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+`;
+
+export const SelectTheme = styled.div`
+  background-color: white;
+  position: absolute;
+  width: 470px;
+  height: 310px;
+  top: 115px;
+  left: -45px;
+  border-radius: 32px;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  &.show {
+    visibility: visible;
+    opacity: 1;
+  }
+  &.hide {
+    visibility: hidden;
+    opacity: 0;
+  }
+`;
+
+export const CloseImgWrap = styled.div`
+  width: 95%;
+  > img {
+    float: right;
+    cursor: pointer;
+  }
+`;
+
+export const ThemeListWrap = styled.div`
+  width: 80%;
+  height: 55%;
+  margin: 0 auto;
+  padding: 5px 20px 15px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    > div {
+      > label {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+      > input {
+        position: absolute;
+        clip: rect(0 0 0 0);
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+    }
+  }
+`;
+
+export const SelectBtn = styled.button`
+  width: 116px;
+  border-radius: 32px;
+  background-color: rgba(96, 167, 225, 1);
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: Inter;
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  padding: 8px 44px;
   box-sizing: border-box;
   cursor: pointer;
 `;

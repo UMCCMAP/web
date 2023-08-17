@@ -1,7 +1,27 @@
 import React from 'react';
 import * as R from './styles/ReadReview.style';
 import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
-import CommonBtn from '../../CommonBtn';
+import { ReactComponent as Next } from '../../../assets/images/next.svg';
+import { ReactComponent as Prev } from '../../../assets/images/prev.svg';
+// import CommonBtn from '../../CommonBtn';
+
+const settings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  nextArrow: (
+    <R.ArrowNextDiv>
+      <Next />
+    </R.ArrowNextDiv>
+  ),
+  prevArrow: (
+    <R.ArrowPrevDiv>
+      <Prev />
+    </R.ArrowPrevDiv>
+  ),
+};
 
 function ReadReview({ data, color, closeReview, getReviewIndex }) {
   const [year, month, day] = data.data.split('-');
@@ -38,28 +58,28 @@ function ReadReview({ data, color, closeReview, getReviewIndex }) {
         </R.UserInfo>
       </R.UserInfoWrap>
       <R.ImgWrap>
-        <img src={data.images[0]} alt="image" />
+        <R.StyledSlider {...settings}>
+          {data.images?.map((img, index) => (
+            <div key={index}>
+              <R.SliderImg src={img} alt="image" />
+            </div>
+          ))}
+        </R.StyledSlider>
       </R.ImgWrap>
       <R.Content>{data.content}</R.Content>
+      <R.UDWrap>
+        <div
+          onClick={() => {
+            getReviewIndex(2);
+          }}
+        >
+          수정
+        </div>
+        <hr />
+        <div>삭제</div>
+      </R.UDWrap>
     </R.ReadReviewContainer>
   );
 }
 
 export default ReadReview;
-{
-  /* <CommonBtn
-name="수정"
-width="30px"
-color="rgba(0, 0, 0, 1)"
-background="rgba(217, 217, 217, 1)"
-style={{
-  lineHeight: '1',
-  fontSize: '10px',
-  fontWeight: '400',
-  padding: '3px',
-}}
-clickEvent={() => {
-  getReviewIndex(2);
-}}
-/> */
-}

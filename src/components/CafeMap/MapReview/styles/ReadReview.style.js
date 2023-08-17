@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 export const ReadReviewContainer = styled.div`
   position: relative;
@@ -63,7 +66,7 @@ export const UserInfoWrap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
 export const Date = styled.div`
   font-family: 'Pretendard';
@@ -94,23 +97,51 @@ export const UserInfo = styled.div`
 `;
 
 export const ImgWrap = styled.div`
-  background-color: yellow;
   width: 80%;
   height: 310px;
   border-radius: 21px;
   overflow: hidden;
-  > img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  margin-bottom: 20px;
+`;
+export const StyledSlider = styled(Slider)`
+  height: 100%;
+  width: 100%;
+  position: relative;
+  .slick-prev::before,
+  .slick-next::before {
+    opacity: 0;
+    display: none;
   }
-  margin-bottom: 30px;
+  .slick-prev,
+  .slick-next {
+    display: none;
+  }
+`;
+
+export const SliderImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+`;
+export const ArrowNextDiv = styled.div`
+  position: absolute;
+  right: 20px;
+  z-index: 99;
+  text-align: right;
+`;
+export const ArrowPrevDiv = styled.div`
+  position: absolute;
+  left: 20px;
+  z-index: 99;
+  text-align: left;
 `;
 
 export const Content = styled.div`
   flex: 1;
   width: 80%;
   padding: 20px 30px;
+  margin-bottom: 20px;
   box-sizing: border-box;
   font-family: 'Pretendard';
   font-size: 12px;
@@ -120,5 +151,29 @@ export const Content = styled.div`
   overflow: auto;
   &::-webkit-scrollbar {
     display: none;
+  }
+`;
+
+export const UDWrap = styled.div`
+  width: 90%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  > div {
+    font-family: 'Pretendard';
+    font-size: 16px;
+    text-align: center;
+    color: rgba(147, 147, 147, 1);
+    margin: 0 10px;
+    position: relative;
+    cursor: pointer;
+    &:first-child {
+      margin-left: 0px;
+    }
+  }
+  > hr {
+    margin: 0;
+    height: 20px;
+    border: 1px solid rgba(147, 147, 147, 1);
   }
 `;
