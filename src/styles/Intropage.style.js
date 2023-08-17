@@ -70,6 +70,8 @@ export const LoginBtn = styled.button`
 export const CafeIntroWholeDiv = styled.div`
   width: 100%;
   height: fit-content;
+  display: flex;
+  align-items: center;
   flex-direction: column;
 `;
 export const IntroDiv = styled.div`
@@ -79,21 +81,38 @@ export const IntroDiv = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-export const Mainimg1 = styled.img`
-  width: 1900px;
-  height: 781px;
+export const MainimgDiv = styled.div`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   display: flex;
-  margin-left: -150px;
+  position: relative;
+  margin-bottom: ${(props) => (props.margin ? props.margin : 'none')};
+`;
+export const Mainimg1 = styled.img`
+  width: 950px;
+  height: 579px;
+`;
+export const FrontImg = styled.img`
+  width: ${(props) => props.width};
+  height: fit-content;
+  position: absolute;
+  top: ${(props) => (props.top ? props.top : 'none')};
+  bottom: ${(props) => (props.bottom ? props.bottom : 'none')};
+  left: ${(props) => (props.left ? props.left : 'none')};
+  right: ${(props) => (props.right ? props.right : 'none')};
+  z-index: 60;
+`;
+export const BackImg = styled.img`
+  width: ${(props) => props.width};
+  height: fit-content;
+  position: absolute;
+  top: ${(props) => (props.top ? props.top : 'none')};
+  bottom: ${(props) => (props.bottom ? props.bottom : 'none')};
+  left: ${(props) => (props.left ? props.left : 'none')};
+  right: ${(props) => (props.right ? props.right : 'none')};
   z-index: 1;
 `;
-export const Mainimg2 = styled.img`
-  width: 1500px;
-  height: 655px;
-`;
-export const Mainimg3 = styled.img`
-  width: 62%;
-  height: 505px;
-`;
+
 export const IntroTextDiv = styled.div`
   width: 800px;
   height: fit-content;
@@ -112,25 +131,15 @@ export const ShareIntroTextCss = css`
 export const FirstIntroTextDiv = styled.div`
   ${ShareIntroTextCss};
   position: relative;
-  left: 80px;
+  left: 40px;
   display: flex;
 `;
 export const SecAndThirdIntroTextDiv = styled.div`
   ${ShareIntroTextCss};
   position: relative;
-  right: 80px;
+  right: 40px;
   display: flex;
-`;
-export const Mainimg4 = styled.div`
-  background: url(${Examimg});
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-size: cover;
-  width: 100%;
-  height: 749px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: flex-end;
 `;
 
 export const IntrotextBold = styled.div`
@@ -142,16 +151,17 @@ export const IntrotextBold = styled.div`
   line-height: 76.8px;
   color: #1e1e1e;
   margin-bottom: 20px;
-  align-items: ${(props) => (props.align ? props.align : 'left')};
+  text-align: ${(props) => (props.align ? props.align : 'right')};
 `;
 export const Introtextmedium = styled.div`
   height: 68px;
+  width: 600px;
   font-weight: 300;
   font-family: Apple SD Gothic Neo;
   font-size: 28px;
   line-height: 33.6px;
   color: #1e1e1e;
-  align-items: ${(props) => (props.align ? props.align : 'left')};
+  text-align: ${(props) => (props.align ? props.align : 'right')};
 `;
 export const LasttextBold = styled.div`
   width: 1300px;
