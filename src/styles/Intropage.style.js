@@ -31,6 +31,7 @@ export const Logo = styled.img`
 export const Titletext = styled.div`
   height: 76px;
   max-width: 1000px;
+  font-family: Pretendard;
   font-size: 64px;
   font-weight: ${(props) => props.fontWeight || '400'};
   line-height: 76.38px;
@@ -41,6 +42,7 @@ export const Titletext = styled.div`
 export const SubTitletext = styled.div`
   width: 360px;
   height: 66px;
+  font-family: Pretendard;
   font-weight: 400;
   font-size: 28px;
   line-height: 33.41px;
@@ -53,9 +55,17 @@ export const LoginBtn = styled.button`
 
   margin-top: 60px;
   border-radius: 32px;
-  color: #939393;
-  background-color: rgba(255, 255, 255, 1);
+  border: none;
+  color: #ffffff;
+  background-color: #939393;
   cursor: pointer;
+
+  font-family: Apple SD Gothic Neo;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
 `;
 export const CafeIntroWholeDiv = styled.div`
   width: 100%;
@@ -126,6 +136,7 @@ export const Mainimg4 = styled.div`
 export const IntrotextBold = styled.div`
   width: 800px;
   height: 70px;
+  font-family: Apple SD Gothic Neo;
   font-weight: 700;
   font-size: 64px;
   line-height: 76.8px;
@@ -136,6 +147,7 @@ export const IntrotextBold = styled.div`
 export const Introtextmedium = styled.div`
   height: 68px;
   font-weight: 300;
+  font-family: Apple SD Gothic Neo;
   font-size: 28px;
   line-height: 33.6px;
   color: #1e1e1e;
@@ -144,6 +156,7 @@ export const Introtextmedium = styled.div`
 export const LasttextBold = styled.div`
   width: 1300px;
   height: 77px;
+  font-family: Apple SD Gothic Neo;
   align: center;
   display: flex;
   align-items: center;
@@ -159,6 +172,7 @@ export const LasttextBold = styled.div`
 export const Lasttextmedium = styled.div`
   width: 490px;
   height: 102px;
+  font-family: Apple SD Gothic Neo;
   align: center;
   display: flex;
   justify-content: center;

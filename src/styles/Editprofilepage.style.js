@@ -35,22 +35,60 @@ export const ProfileBtn = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #d9d9d9;
+  background-color: #60a7e1;
   font-size: 16px;
   font-weight: 400;
   line-height: 19.36px;
   text-decoration: none;
-  color: #000000;
+  color: #ffffff;
   cursor: pointer;
 `;
-
-export const IntroText = styled.textarea`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
+export const IntroTextDiv = styled.div`
+  width: 335px;
+  height: 386px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+export const CafeIntroTitle = styled.input`
+  width: 335px;
+  height: 45px;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  border-bottom: transparent;
+  outline: none;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  padding-top: 5px;
+  padding-left: 5px;
+`;
+export const CafeIntroText = styled.textarea`
+  width: 335px;
+  height: 336px;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  border-top: transparent;
+  outline: none;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 19.1px;
+  letter-spacing: 0em;
+  padding-top: 5px;
+  padding-left: 5px;
+`;
+export const MyIntroText = styled.textarea`
+  width: 540px;
+  height: 158px;
   margin-bottom: 10px;
   background-color: #ffffff;
-  border-radius: ${(props) => (props.radius ? props.radius : '0px')};
+  border-radius: 0px;
   border: 1px solid #000000;
+
   outline: none;
   font-size: 20px;
   font-weight: 700;
@@ -59,16 +97,16 @@ export const IntroText = styled.textarea`
 `;
 
 export const ShareTxt = styled.div`
-  width: 813px;
+  width: 820px;
   height: 40px;
-  background-color: #d9d9d9;
+  background-color: #60a7e1;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
   font-weight: 700;
   line-height: 24.2px;
-  color: #000000;
+  color: #ffffff;
 `;
 
 export const FavoriteCafe = styled.div`
@@ -78,7 +116,22 @@ export const FavoriteCafe = styled.div`
   justify-content: space-between;
 
   img {
-    width: 466px;
-    height: 383px;
+    width: 465px;
+    height: 386px;
   }
+`;
+export const OutBtn = styled.button`
+  width: 145px;
+  height: 40px;
+  border: 2px solid #60a7e1;
+  border-radius: 16px;
+  background-color: #ffffff;
+  margin-top: 80px;
+  cursor: pointer;
+
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+  color: #60a7e1;
 `;

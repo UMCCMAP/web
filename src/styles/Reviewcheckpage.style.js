@@ -134,7 +134,7 @@ export const NextOrSearchBtn = styled.button`
   }
 `;
 
-export const PageNumberstDiv = styled.div`
+export const PageNumbersDiv = styled.div`
   width: 320px;
   height: 100%;
   display: flex;

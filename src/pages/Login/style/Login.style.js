@@ -20,7 +20,7 @@ export const Hr = styled.div`
   width: 100%;
   align: center;
   height: 1px;
-  background: #939393;
+  background-color: #939393;
 `;
 export const WholeDiv = styled.div`
   width: 833px;
