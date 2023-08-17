@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
+import { format } from 'date-fns';
 import * as C from './styles/CafeReview.style';
+import baseAxios from '../../apis/baseAxios';
 
 function CafeReview({ data, getReviewIndex, getReviewData }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleToggleExpand = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const getReviewItem = async () => {
+    try {
+      const response = await baseAxios.get(`map/place/cafe-reviews/${data.idx}`);
+      getReviewData(response.data);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -16,7 +27,8 @@ function CafeReview({ data, getReviewIndex, getReviewData }) {
           isexpanded={isExpanded ? 'initial' : '4'}
           onClick={() => {
             getReviewIndex(3);
-            getReviewData(data);
+            // getReviewData(data.idx);
+            getReviewItem();
           }}
         >
           {data.content}
@@ -25,18 +37,16 @@ function CafeReview({ data, getReviewIndex, getReviewData }) {
           {!isExpanded ? <MdKeyboardArrowDown size="25" /> : <MdKeyboardArrowUp size="25" />}
         </button>
         <C.ReviewImgWrap>
-          <img src={`${data.images[0]}`} alt="리뷰 사진" />
-          <div>{data.images.length}</div>
+          <img src={`${data.imageUrl}`} alt="리뷰 사진" />
+          <div>{data.imageCnt}</div>
         </C.ReviewImgWrap>
       </C.ReviewItem>
       <C.ReviewWriter>
-        <img src={`${data.userImg}`} alt="profile" />
+        <img src={`${data.userInfo.userImg}`} alt="profile" />
         <div>
-          <C.WriterName>{data.user}</C.WriterName>
+          <C.WriterName>{data.userInfo.userNickname}</C.WriterName>
           <C.WriterInfo>
-            <span>{data.data}</span>
-            <span>{data.visit}</span>
-            <span>영수증</span>
+            <span>{format(new Date(data.createdAt), 'yyyy-MM-dd')}</span>
           </C.WriterInfo>
         </div>
       </C.ReviewWriter>

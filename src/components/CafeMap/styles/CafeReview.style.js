@@ -5,7 +5,7 @@ export const ReviewContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 85%;
-  padding: 15px 0 10px 10px;
+  padding: 15px 0 5px 5px;
   box-sizing: border-box;
   margin-top: 10px;
   border-top: 0.8px solid black;
@@ -68,14 +68,13 @@ export const ReviewWriter = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px 0;
+  margin-top: 5px;
   > img {
     padding: 3px;
     box-sizing: border-box;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: green;
     margin-right: 10px;
     object-fit: contain;
   }

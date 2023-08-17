@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as D from './styles/MapCafeDetail.style';
 import ThemeBtn from '../ThemeBtn';
 import CommonBtn from '../CommonBtn';
@@ -7,11 +7,13 @@ import { MdOutlinePhotoCamera } from 'react-icons/md';
 import CafeReview from './CafeReview';
 import { ReactComponent as Scope } from '../../assets/images/scope.svg';
 import SaveCafe from './MapReview/SaveCafe';
+import baseAxios from '../../apis/baseAxios';
 
 const fontColor = 'rgba(249, 255, 253, 1)';
 
 function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data }) {
   const [saveModalOpen, setSaveModalOpen] = useState(false);
+  const [reviewList, setReviewList] = useState([]);
 
   const openDetailHandler = () => {
     closeAction();
@@ -21,6 +23,19 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
   const handleModalClick = () => {
     setSaveModalOpen(false);
   };
+
+  const allReviewList = async () => {
+    try {
+      const response = await baseAxios.get('map/place/4/preview');
+      setReviewList(response.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    allReviewList();
+  }, []);
 
   const getImgCount = () => {
     const numImages = data.images.length;
@@ -40,6 +55,7 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
     }
   };
   let remainer = data.images.length - 5;
+
   return (
     <>
       <D.DetailWrapper>
@@ -105,7 +121,7 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
           />
         </D.SaveBtnContainer>
         <D.ReviewContainer>
-          {data.reviews.map((data, index) => (
+          {reviewList?.map((data, index) => (
             <CafeReview
               key={index}
               data={data}
