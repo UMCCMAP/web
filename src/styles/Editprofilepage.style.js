@@ -126,7 +126,7 @@ export const OutBtn = styled.button`
   border: 2px solid #60a7e1;
   border-radius: 16px;
   background-color: #ffffff;
-  margin-top: 80px;
+  margin-top: 70px;
   cursor: pointer;
 
   font-size: 20px;
