@@ -1,6 +1,12 @@
 import React from 'react';
 import Icon from '../../assets/CMAPwhite.png';
-import Examimg from '../../assets/IntroIcon/ex5.png';
+import main1 from './assets/main1.png';
+import main2_1 from './assets/b1.png';
+import main2_2 from './assets/b2.png';
+import main3_1 from './assets/c1.png';
+import main3_2 from './assets/c2.png';
+import main4_1 from './assets/d1.png';
+import main4_2 from './assets/d2.png';
 import Footer from '../../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import * as S from '../../styles/Intropage.style';
@@ -31,10 +37,25 @@ function Intropage() {
               찾아보세요!
             </S.Introtextmedium>
           </S.FirstIntroTextDiv>
-          <S.Mainimg1 src={Examimg}></S.Mainimg1>
+          <S.Mainimg1 src={main1}></S.Mainimg1>
         </S.IntroDiv>
         <S.IntroDiv>
-          <S.Mainimg2 src={Examimg}></S.Mainimg2>
+          <S.MainimgDiv width="1000px" height="680px">
+            <S.FrontImg
+              width="479px"
+              height="fit-content"
+              top="0px"
+              left="0px"
+              src={main2_1}
+            ></S.FrontImg>
+            <S.BackImg
+              width="817px"
+              height="fit-content"
+              bottom="0px"
+              right="0px"
+              src={main2_2}
+            ></S.BackImg>
+          </S.MainimgDiv>
           <S.SecAndThirdIntroTextDiv>
             <S.IntrotextBold align="right">하나뿐인 나만의 카페 지도</S.IntrotextBold>
             <S.Introtextmedium align="right">
@@ -43,7 +64,22 @@ function Intropage() {
           </S.SecAndThirdIntroTextDiv>
         </S.IntroDiv>
         <S.IntroDiv>
-          <S.Mainimg3 src={Examimg}></S.Mainimg3>
+          <S.MainimgDiv width="1000px" height="680px">
+            <S.FrontImg
+              width="663px"
+              height="fit-content"
+              top="0px"
+              right="0px"
+              src={main3_1}
+            ></S.FrontImg>
+            <S.BackImg
+              width="845px"
+              height="fit-content"
+              bottom="0px"
+              left="0px"
+              src={main3_2}
+            ></S.BackImg>
+          </S.MainimgDiv>
           <S.SecAndThirdIntroTextDiv>
             <S.IntrotextBold align="right">나에게 딱 맞는 카페 추천</S.IntrotextBold>
             <S.Introtextmedium align="right">
@@ -51,15 +87,22 @@ function Intropage() {
             </S.Introtextmedium>
           </S.SecAndThirdIntroTextDiv>
         </S.IntroDiv>
-        <S.Mainimg4 src={Examimg}>
-          <S.IntroTextDiv>
-            <S.LasttextBold>추억을 공유할 수 있는 리뷰기능</S.LasttextBold>
-            <S.Lasttextmedium>
-              다른 사람들에게도 추천할 수 있도록 내가 가본 카페 리뷰를 작성하고 추억도 만들어
-              보세요!
-            </S.Lasttextmedium>
-          </S.IntroTextDiv>
-        </S.Mainimg4>
+        <S.IntroTextDiv>
+          <S.LasttextBold>추억을 공유할 수 있는 리뷰기능</S.LasttextBold>
+          <S.Lasttextmedium>
+            다른 사람들에게도 추천할 수 있도록 내가 가본 카페 리뷰를 작성하고 추억도 만들어 보세요!
+          </S.Lasttextmedium>
+        </S.IntroTextDiv>
+        <S.MainimgDiv width="1600px" height="670px" margin="80px">
+          <S.FrontImg
+            width="805px"
+            height="fit-content"
+            right="0px"
+            top="100px"
+            src={main4_1}
+          ></S.FrontImg>
+          <S.BackImg width="964px" height="fit-content" left="0px" src={main4_2}></S.BackImg>
+        </S.MainimgDiv>
       </S.CafeIntroWholeDiv>
       <Footer></Footer>
     </W.LongWrapper>
