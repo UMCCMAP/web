@@ -1,4 +1,5 @@
 import React from 'react';
+import { format } from 'date-fns';
 import * as R from './styles/ReadReview.style';
 import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
 import { ReactComponent as Next } from '../../../assets/images/next.svg';
@@ -24,17 +25,17 @@ const settings = {
 };
 
 function ReadReview({ data, color, closeReview, getReviewIndex }) {
-  const [year, month, day] = data.data.split('-');
+  const date = data.createdAt ? format(new Date(data.createdAt), 'yyyy.MM.dd') : null;
 
   return (
     <R.ReadReviewContainer>
       <R.Title color={color}>
-        <p>{data.title}</p>
+        <p>{data?.title}</p>
         <img src="src/assets/images/close.svg" alt="close" onClick={() => closeReview(0)} />
       </R.Title>
       <hr />
       <R.SubContentWrap>
-        <R.SubContent>{data.subContent}</R.SubContent>
+        <R.SubContent>{data?.keyword}</R.SubContent>
         <R.Scope>
           {[1, 2, 3, 4, 5].map((id) => (
             <ReviewStar
@@ -43,30 +44,28 @@ function ReadReview({ data, color, closeReview, getReviewIndex }) {
               id={id}
               width="16px"
               height="16px"
-              fill={id <= data.scope ? color : '#F1F1F1'}
+              fill={id <= data?.score ? color : '#F1F1F1'}
             />
           ))}
         </R.Scope>
       </R.SubContentWrap>
       <R.UserInfoWrap>
-        <R.Date>
-          {year}.{month}.{day}
-        </R.Date>
+        <R.Date>{date}</R.Date>
         <R.UserInfo>
-          <p>{data.user}</p>
-          <img src={data.userImg} alt="user" />
+          <p>{data?.userInfo?.userNickname}</p>
+          <img src={data?.userInfo?.userImg} alt="user" />
         </R.UserInfo>
       </R.UserInfoWrap>
       <R.ImgWrap>
         <R.StyledSlider {...settings}>
-          {data.images?.map((img, index) => (
+          {data?.imageUrls?.map((img, index) => (
             <div key={index}>
               <R.SliderImg src={img} alt="image" />
             </div>
           ))}
         </R.StyledSlider>
       </R.ImgWrap>
-      <R.Content>{data.content}</R.Content>
+      <R.Content>{data?.content}</R.Content>
       <R.UDWrap>
         <div
           onClick={() => {
