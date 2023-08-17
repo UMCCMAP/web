@@ -123,7 +123,7 @@ export const CafeText = styled.div`
   height: 25px;
   margin: ${(props) => (props.margin ? props.margin : 'none')};
   font-size: ${(props) => (props.size ? props.size : '20px')};
-  font-weight: ${(props) => (props.weight ? props.weight : '700')};
+  font-weight: ${(props) => (props.weight ? props.weight : '600')};
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
