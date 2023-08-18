@@ -4,9 +4,10 @@ import Footer from './components/Footer';
 import * as B from './styles/BoardCU.style';
 import * as C from './styles/Common.style';
 import Editor from './components/Editor';
-import { useState, useEffect, useCallback } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import baseAxios from '../../apis/baseAxios';
+import token from './dummy/token';
 
 function BoardWrite() {
   const [value, setValue] = useState('');
@@ -15,8 +16,10 @@ function BoardWrite() {
   const [cafeTitle, setCafeTitle] = useState('');
   const [img, setImg] = useState([]);
   const navigate = useNavigate();
-
-  const [themes] = useState([
+  const options = [
+    '게시글',
+    '작성자',
+    '카페',
     '질문해요',
     '추천해요',
     '디저트',
@@ -24,8 +27,12 @@ function BoardWrite() {
     '드립커피',
     '음료',
     'CMAP',
-  ]);
+  ];
   const location = useLocation();
+  const [themes, setThemes] = useState([location.state]);
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('게시글');
   // 상태를 관리할 변수와 업데이트 함수
   console.log(location.state);
   const [activeButton, setActiveButton] = useState([]);
@@ -64,6 +71,7 @@ function BoardWrite() {
 
         const response = await baseAxios.post('/s3/file', formData, {
           headers: {
+            Authorization: token, // 헤더에 Authorization 추가
             'Content-Type': 'multipart/form-data',
           },
         });
@@ -159,18 +167,19 @@ function BoardWrite() {
       // POST 요청을 보냅니다.
       console.log(dataToSend);
       if (checkEmptyValuesAndShowAlert(dataToSend)) {
-        // const response = await baseAxios.post('/board', dataToSend);
-
-        // if (response.status === 200) {
-        //   console.log(response.data);
-        // } else {
-        //   throw new Error('Failed to send data to server');
-        // }
-        navigate('/board/0', {
-          state: {
-            boardData: dataToSend,
+        const response = await baseAxios.post('board', dataToSend, {
+          headers: {
+            Authorization: token, // 헤더에 Authorization 추가
           },
         });
+
+        if (response.status === 200) {
+          console.log(response.data);
+          alert('글이 작성되었습니다!');
+          navigate('/board');
+        } else {
+          throw new Error('Failed to send data to server');
+        }
       } else {
         return;
       }
@@ -182,6 +191,29 @@ function BoardWrite() {
   useEffect(() => {
     console.log(data);
   }, [data]);
+  const handleOptionSelect = (option) => {
+    setCafeTitle(option);
+    setIsDropdownOpen(false);
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setCafeTitle(value);
+    setIsDropdownOpen(true); // 입력 중에는 dropdown 메뉴를 보이도록 설정
+  };
+
+  const handleOutsideClick = (e) => {
+    if (!e.target.closest('.B.CafeWrap')) {
+      setIsDropdownOpen(false); // 입력 창 밖을 클릭하면 dropdown 메뉴를 숨김
+    }
+  };
+
+  React.useEffect(() => {
+    window.addEventListener('click', handleOutsideClick);
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
   return (
     <C.Wrap>
       <C.ContentsWrap>
@@ -205,12 +237,24 @@ function BoardWrite() {
           <B.ContentsInput>
             <Editor value={value} setValue={setValue} img={img} setImg={setImg} />
           </B.ContentsInput>
-          <B.CafeNameInput
-            placeholder="카페 이름"
-            onChange={(e) => {
-              setCafeTitle(e.target.value);
-            }}
-          />
+          <B.CafeWrap>
+            <B.CafeNameInput
+              placeholder="카페 이름"
+              value={cafeTitle}
+              onChange={handleInputChange}
+            />
+            <B.DropdownMenu>
+              {isDropdownOpen && (
+                <B.DropdownList>
+                  {options.map((option, index) => (
+                    <B.DropdownItem key={index} onClick={() => handleOptionSelect(option)}>
+                      {option}
+                    </B.DropdownItem>
+                  ))}
+                </B.DropdownList>
+              )}
+            </B.DropdownMenu>
+          </B.CafeWrap>
           <B.DragDropWrap>
             <B.DragDropTitle></B.DragDropTitle>
             <B.DragDropImages>

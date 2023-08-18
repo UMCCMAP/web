@@ -26,7 +26,7 @@ export const TitleWrap = styled.div`
   justify-content: space-between;
 `;
 export const BoardTitle = styled.div`
-  width: 50%;
+  width: 100%;
   font-family: Pretendard;
   font-size: 40px;
   font-weight: 700;
@@ -36,10 +36,10 @@ export const BoardTitle = styled.div`
   height: 54%;
 `;
 export const InfoWrap = styled.div`
-  width: 20%;
+  width: 100%;
   height: 54%;
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
 `;
 export const Info = styled.div`
   width: 60%;
@@ -55,6 +55,7 @@ export const Date = styled.div`
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0em;
+  margin-left: 4px;
 `;
 export const User = styled.div`
   width: 100%;
@@ -65,11 +66,20 @@ export const User = styled.div`
   line-height: 24px;
   letter-spacing: 0em;
 `;
+export const UserInfoWrap = styled.div`
+  width: 100%;
+  height: 54%;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+`;
 export const Icon = styled.div`
-  width: 33%;
-  padding-bottom: 32%;
-  border-radius: 100%;
-  background-color: #d9d9d9;
+  width: 80px; /* 조금 작게 설정 */
+  height: 80px; /* 1:1 비율 */
+  border-radius: 50%; /* 원 모양 */
+  background-image: url(${(props) => props.background});
+  background-size: cover; /* 이미지 크기 조절 */
+  background-position: center;
 `;
 export const CafeTitle = styled.div`
   width: 100%;
@@ -173,6 +183,7 @@ export const ReviewDate = styled.div`
   line-height: 14px;
   letter-spacing: -0.02em;
   text-align: left;
+  margin-left: 4px;
 `;
 export const ReviewUser = styled.div`
   width: 100%;
@@ -208,3 +219,55 @@ export const ModDeleteWrap = styled.div`
   gap: 15px;
 `;
 export const CafeIcon = styled.div``;
+export const WriteUser = styled.div`
+  font-family: Pretendard;
+  letter-spacing: -0.02em;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  color: #939393;
+  margin-top: 15px;
+  margin-left: 22px;
+`;
+
+export const WriteText = styled.textarea`
+  font-family: Pretendard;
+  letter-spacing: -0.02em;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 24px;
+  border: none;
+  outline: none;
+  resize: none;
+  margin: 9px 22px;
+  height: 70px;
+  width: 95%;
+`;
+
+export const WriteButton = styled.div`
+  font-family: Pretendard;
+  letter-spacing: -0.02em;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+  color: #939393;
+  cursor: pointer;
+  position: absolute;
+  bottom: 11px;
+  right: 11px;
+`;
+export const ReviewWriteWrap = styled.div`
+  width: 100%;
+  height: 170px;
+  border: 1px solid #939393;
+  border-radius: 16px;
+  margin-top: 40px;
+  position: relative;
+`;
+export const ReviewButtons = styled.div`
+  display: flex;
+  width: 30%;
+  justify-content: flex-end;
+  gap: 20px;
+`;

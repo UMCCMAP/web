@@ -26,7 +26,7 @@ export const BoardKeyWords = styled.div`
 
 export const BoardWriteButton = styled.div`
   background: #60a7e1;
-  width: 108px;
+  width: 148px;
   height: 41px;
   padding: 10px 16px 10px 16px;
   border-radius: 32px;
@@ -111,7 +111,7 @@ export const BoardImage = styled.div`
 export const PageButtons = styled.div`
   width: 150px;
   height: 20px;
-  margin-top: 43px;
+  margin-top: 100px;
   margin-bottom: 12px;
   display: flex;
   justify-content: center;

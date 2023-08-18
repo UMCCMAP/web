@@ -39,9 +39,13 @@ export const ContentsInput = styled.div`
   font-size: 20px;
   overflow: auto;
 `;
-export const CafeNameInput = styled.input`
-  width: calc(100%-20px);
+export const CafeWrap = styled.div`
+  width: 100%;
   height: 3rem;
+  margin-top: 16px;
+  position: relative;
+`;
+export const CafeNameInput = styled.input`
   outline: none;
   background: #f1f1f1;
   border-radius: 32px;
@@ -52,8 +56,8 @@ export const CafeNameInput = styled.input`
   line-height: 29px;
   letter-spacing: -0.02em;
   text-align: center;
-  margin-top: 16px;
-  padding-left: 20px;
+  width: 100%;
+  height: 100%;
 `;
 export const DragDropWrap = styled.div`
   margin-top: 16px;
@@ -123,4 +127,39 @@ export const ThemesWrap = styled.div`
   align-items: center;
   flex-wrap: wrap;
   margin: 5px;
+  z-index: 0;
+`;
+export const DropdownMenu = styled.div`
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: -5%;
+  max-height: 220px;
+`;
+
+export const DropdownList = styled.ul`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 100;
+  text-align: center;
+  border-radius: 16px;
+  box-shadow: 0px 4px 12px 0px #00000040;
+
+  max-height: 220px;
+  overflow: auto;
+`;
+
+export const DropdownItem = styled.li`
+  background-color: white;
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
 `;

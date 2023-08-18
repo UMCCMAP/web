@@ -4,17 +4,20 @@ import Footer from './components/Footer';
 import * as B from './styles/BoardCU.style';
 import * as C from './styles/Common.style';
 import Editor from './components/Editor';
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import baseAxios from '../../apis/baseAxios';
+import token from './dummy/token';
 import { useLocation, useNavigate } from 'react-router-dom';
 function BoardModify() {
   const location = useLocation();
 
   const [data, setData] = useState(location.state.data);
   const [value, setValue] = useState(location.state.data.boardContent);
-  const [title, setTitle] = useState('');
-  const [cafeTitle, setCafeTitle] = useState('');
+  console.log(data);
+  const [title, setTitle] = useState(location.state.data.boardTitle);
+  const [cafeTitle, setCafeTitle] = useState();
   const [img, setImg] = useState([]);
+  const [prevImg, setPrevImg] = useState([]);
   const navigate = useNavigate();
   const [themes] = useState([
     '질문해요',
@@ -25,9 +28,45 @@ function BoardModify() {
     '음료',
     'CMAP',
   ]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('게시글');
+  const options = [
+    '게시글',
+    '작성자',
+    '카페',
+    '질문해요',
+    '추천해요',
+    '디저트',
+    '파스타',
+    '드립커피',
+    '음료',
+    'CMAP',
+  ];
+  const [activeButton, setActiveButton] = useState();
+  useEffect(() => {
+    // tagList 배열의 각 객체의 key 값을 추출하여 새로운 배열을 만듭니다.
+    const keys = data.tagList.map((tagObj) => parseInt(Object.keys(tagObj)[0]));
+    setActiveButton(keys);
+    getImgs(data.boardContent);
+  }, []);
 
-  // 상태를 관리할 변수와 업데이트 함수
-  const [activeButton, setActiveButton] = useState([]);
+  function getImgs(content) {
+    // 정규식을 사용하여 <img> 태그의 src 속성 추출
+    const imgSrcRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/g;
+    const matches = content.match(imgSrcRegex);
+
+    if (matches) {
+      const srcList = matches.map((match) => {
+        const srcAttr = /src=["']([^"']+)["']/.exec(match);
+        return srcAttr ? srcAttr[1] : null;
+      });
+
+      setPrevImg(srcList);
+    } else {
+      console.log('No <img> tags found in the input string.');
+    }
+  }
+  console.log(activeButton);
   const handleButtonClick = useCallback((theme) => {
     setActiveButton(
       (prevActive) =>
@@ -102,52 +141,74 @@ function BoardModify() {
 
     return newBody.innerHTML; // 수정된 <body> 내용 반환
   };
-  useEffect(() => {
-    console.log(activeButton);
-  }, [activeButton]);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setCafeTitle(value);
+    setIsDropdownOpen(true); // 입력 중에는 dropdown 메뉴를 보이도록 설정
+  };
+  const handleOutsideClick = (e) => {
+    if (!e.target.closest('.B.CafeWrap')) {
+      setIsDropdownOpen(false); // 입력 창 밖을 클릭하면 dropdown 메뉴를 숨김
+    }
+  };
+  const handleOptionSelect = (option) => {
+    setCafeTitle(option);
+    setIsDropdownOpen(false);
+  };
 
+  React.useEffect(() => {
+    window.addEventListener('click', handleOutsideClick);
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
   const sendDataToServer = async () => {
-    let imageUrl = await handleImageUpload(img);
+    const uniqueImages = img.filter((imgItem) => !prevImg.includes(imgItem));
 
-    console.log(imageUrl);
-    const contentWithReplacedImages = parseAndReplaceImages(value, imageUrl);
+    let imageUrl = await handleImageUpload(uniqueImages);
+
+    // handleImageUpload 함수로부터 받은 imageUrl 배열과 이미지 필터(uniqueImages)를 합쳐서 모든 이미지를 포함하는 imgList 배열 생성
+    const imgList = [...prevImg, ...imageUrl];
+
+    console.log(imgList); // 전체 이미지 배열 출력
+
+    // 나머지 작업을 수행합니다.
+    const contentWithReplacedImages = parseAndReplaceImages(value, imgList);
     try {
       // 서버에 보낼 데이터를 객체 형태로 만듭니다.
       const dataToSend = {
-        cafeIdx: 0,
+        cafeIdx: 11,
         boardContent: contentWithReplacedImages,
         boardTitle: title,
 
         tagList: activeButton.sort(),
-        imgList: imageUrl,
+        imgList: imgList,
         // 기타 다른 필요한 데이터들을 추가로 넣을 수 있습니다.
       };
       // POST 요청을 보냅니다.
       console.log(dataToSend);
 
-      // const response = await baseAxios.post('/board', dataToSend);
-
-      // if (response.status === 200) {
-      //   console.log(response.data);
-      // } else {
-      //   throw new Error('Failed to send data to server');
-      // }
-      navigate('/board/0', {
-        state: {
-          boardData: dataToSend,
+      const response = await baseAxios.patch(`/board/${data.idx}`, dataToSend, {
+        headers: {
+          Authorization: token,
         },
       });
+
+      if (response.status === 200) {
+        console.log(response.data);
+      } else {
+        throw new Error('Failed to send data to server');
+      }
+      navigate(`/board/${data.idx}`);
     } catch (error) {
       console.error(error);
     }
   };
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+
   return (
     <C.Wrap>
       <C.ContentsWrap>
-        <Header name="글쓰기" />
+        <Header name="글 수정" />
         <B.BoardWrap>
           <C.Line top="0"></C.Line>
           <B.InputWrap>
@@ -156,7 +217,7 @@ function BoardModify() {
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
-              value={data.boardTitle}
+              value={title}
             />
             <Button
               width="6rem"
@@ -168,12 +229,24 @@ function BoardModify() {
           <B.ContentsInput>
             <Editor value={value} setValue={setValue} img={img} setImg={setImg} />
           </B.ContentsInput>
-          <B.CafeNameInput
-            placeholder="카페 이름"
-            onChange={(e) => {
-              setCafeTitle(e.target.value);
-            }}
-          />
+          <B.CafeWrap>
+            <B.CafeNameInput
+              placeholder="카페 이름"
+              value={cafeTitle}
+              onChange={handleInputChange}
+            />
+            <B.DropdownMenu>
+              {isDropdownOpen && (
+                <B.DropdownList>
+                  {options.map((option, index) => (
+                    <B.DropdownItem key={index} onClick={() => handleOptionSelect(option)}>
+                      {option}
+                    </B.DropdownItem>
+                  ))}
+                </B.DropdownList>
+              )}
+            </B.DropdownMenu>
+          </B.CafeWrap>
           <B.DragDropWrap>
             <B.DragDropTitle></B.DragDropTitle>
             <B.DragDropImages>
@@ -193,15 +266,15 @@ function BoardModify() {
           </B.DragDropWrap>
           <B.ThemeSelectWrap>
             <B.ThemesWrap>
-              {themes.map((a, i) => (
+              {Object.values(location.state.keyWords).map((a, i) => (
                 <Button
                   key={i}
                   width="80px"
                   height="40px"
-                  background={activeButton.includes(i + 1) ? '#FF6868' : '#F1F1F1'}
-                  color={activeButton.includes(i + 1) ? '#F1F1F1' : '#373737'}
-                  name={a}
-                  clickHandler={() => handleButtonClick(i + 1)}
+                  background={activeButton?.includes(a.tagIdx) ? '#FF6868' : '#F1F1F1'}
+                  color={activeButton?.includes(a.tagIdx) ? '#F1F1F1' : '#373737'}
+                  name={a.tagName}
+                  clickHandler={() => handleButtonClick(a.tagIdx)}
                 ></Button>
               ))}
             </B.ThemesWrap>

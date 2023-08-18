@@ -7,8 +7,10 @@ import Footer from './components/Footer';
 import * as C from './styles/Common.style';
 import boards from './dummy/Boards';
 import baseAxios from '../../apis/baseAxios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as B from './styles/BoardList.style';
+import token from './dummy/token';
+
 function BoardList() {
   const [keyWords, setKeyWords] = useState([]);
   const navigate = useNavigate();
@@ -18,6 +20,7 @@ function BoardList() {
   const [activeButton, setActiveButton] = useState([]);
   const [currentData, setCurrentData] = useState([]);
   const [pageCount, setPageCount] = useState(5);
+  const [search, setSearch] = useState({ page: currentPage, searchType: 'cafe', keyword: '' });
   const handleButtonClick = useCallback((theme) => {
     setActiveButton(
       (prevActive) =>
@@ -35,16 +38,16 @@ function BoardList() {
   };
 
   const handleNextPage = () => {
-    setCurrentPage((prevPage) => 5 * Math.floor((prevPage + PAGE_RANGE_DISPLAY - 1) / 5) + 1);
+    setCurrentPage((prevPage) => 5 * Math.floor((prevPage + PAGE_RANGE_DISPLAY - 1) / 5));
   };
 
   const handlePrevPage = () => {
-    setCurrentPage((prevPage) => 5 * Math.floor((prevPage - PAGE_RANGE_DISPLAY - 1) / 5) + 1);
+    setCurrentPage((prevPage) => 5 * Math.floor((prevPage - PAGE_RANGE_DISPLAY - 1) / 5));
   };
 
   const isNextDisabled =
     Math.floor((currentPage - 1) / PAGE_RANGE_DISPLAY) ===
-    Math.floor(pageCount / PAGE_RANGE_DISPLAY);
+    Math.floor((pageCount - 1) / PAGE_RANGE_DISPLAY);
 
   const isPrevDisabled = Math.floor((currentPage - 1) / PAGE_RANGE_DISPLAY) === 0;
 
@@ -71,21 +74,37 @@ function BoardList() {
 
     return pageButtons;
   };
-  async function fetchData(activeButton, currentPage) {
+  async function fetchData(activeButton, currentPage, search) {
     try {
       const tagIdx = activeButton.join(','); // 배열의 요소를 문자열로 추출하고 쉼표로 구분하여 저장
 
       // 쿼리 파라미터를 문자열로 만들기
-      const queryParams = new URLSearchParams({
+      let queryParams = new URLSearchParams({
         tagIdx: tagIdx,
-        page: currentPage.toString(),
+        page: (currentPage - 1).toString(),
       }).toString();
-      console.log(queryParams);
-      // 백엔드 URL 생성
-      const backendUrl = `/board?${queryParams}`;
 
+      // 백엔드 URL 생성
+      let backendUrl = '/board';
+      if (search.keyword !== '') {
+        backendUrl = '/board/search';
+        queryParams = new URLSearchParams({
+          // tagIdx: tagIdx,
+          page: (currentPage - 1).toString(),
+          searchType: search.searchType,
+          keyword: search.keyword,
+        }).toString();
+      }
+
+      backendUrl += `?${queryParams}`;
+      console.log(backendUrl);
+      console.log(token);
       // 요청 보내기
-      const response = await baseAxios.get(backendUrl);
+      const response = await baseAxios.get(backendUrl, {
+        headers: {
+          Authorization: token,
+        },
+      });
       setCurrentData(response.data.result.boardResponses.content);
       setKeyWords(response.data.result.tagNames);
       setPageCount(response.data.result.boardResponses.totalPages);
@@ -95,16 +114,24 @@ function BoardList() {
       console.error('데이터 요청 중 오류 발생:', error);
     }
   }
+  // HTML 태그를 제거하는 함수
+  const removeHtmlTags = (str) => {
+    const div = document.createElement('div');
+    div.innerHTML = str;
+    return div.textContent || div.innerText || '';
+  };
 
   // fetchData 함수 호출
   useEffect(() => {
-    fetchData(activeButton, currentPage);
-  }, [activeButton, currentPage]);
+    console.log(search);
+    console.log(currentPage);
+    fetchData(activeButton, currentPage, search);
+  }, [activeButton, currentPage, search]);
 
   return (
     <C.Wrap>
       <C.ContentsWrap height="fit-content">
-        <Header name="검색" />
+        <Header name="검색" value={search} set={setSearch} />
         <B.BoardWrap>
           <B.BoardKeywordWrap>
             <B.BoardKeyWords>
@@ -137,34 +164,36 @@ function BoardList() {
               currentData.map((a) => (
                 <B.Board
                   onClick={() => {
-                    navigate(`/board/${a.idx}`);
+                    navigate(`/board/${a.idx}`, {
+                      state: keyWords,
+                    });
                   }}
                   key={a.idx}
                 >
                   <B.BoardWords>
                     <B.Title>{a.boardTitle}</B.Title>
-                    <B.Content>{a.boardContent}</B.Content>
+                    <B.Content>{removeHtmlTags(a.boardContent)}</B.Content>
                     <B.Themes>
-                      {/* {Object.values(a.tagList).map((obj) => {
-            const tag = Object.values(obj)[0];
-            return (
-              <Button
-                key={tag}
-                width="80px"
-                height="30px"
-                background="#f1f1f1"
-                font="13px"
-                name={tag}
-              ></Button>
-            );
-          })} */}
+                      {Object.values(a.tagList).map((obj) => {
+                        const tag = Object.values(obj)[0];
+                        return (
+                          <Button
+                            key={tag}
+                            width="80px"
+                            height="30px"
+                            background="#f1f1f1"
+                            font="13px"
+                            name={tag}
+                          ></Button>
+                        );
+                      })}
                     </B.Themes>
                   </B.BoardWords>
-                  {/* <B.BoardImagesWrap>
-        {a.image.map((a) => (
-          <B.BoardImage key={a} background={a}></B.BoardImage>
-        ))}
-      </B.BoardImagesWrap> */}
+                  <B.BoardImagesWrap>
+                    {Object.values(a.imgList).map((a) => (
+                      <B.BoardImage key={a} background={a}></B.BoardImage>
+                    ))}
+                  </B.BoardImagesWrap>
                 </B.Board>
               ))
             ) : (
