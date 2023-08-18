@@ -5,8 +5,8 @@ import ImgDragDrop from './ImgDragDrop';
 import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
 
 function UpdateReview({ closeReview, color, reviewData }) {
+  const form = new FormData();
   const token = localStorage.getItem('accessToken');
-
   const [updateReviewTitle, setUpdateReviewTitle] = useState(reviewData.data.title);
   const [updateReviewImg, setUpdateReviewImg] = useState([]);
   const [updateReviewContent, setUpdateReviewContent] = useState(reviewData.data.content);
@@ -26,7 +26,29 @@ function UpdateReview({ closeReview, color, reviewData }) {
     setUpdateReviewScope(id);
   };
 
-  const sendUpdateReview = async () => {
+  const blobUrlToFile = async () => {
+    for (let index = 0; index < updateReviewImg.length; index++) {
+      const file = updateReviewImg[index];
+      const response = await fetch(file, { mode: 'cors' });
+
+      const blob = await response.blob();
+
+      const imgFile = new File([blob], `image${index}.png`, { type: 'image/png' });
+      form.append('multipartFile', imgFile);
+    }
+    await baseAxios
+      .post('s3/file', form, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then(function (response) {
+        sendUpdateReview(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
+
+  const sendUpdateReview = async (imgData) => {
     await baseAxios
       .put(
         `map/place/cafe-reviews/${reviewData.reviewIdx}`,
@@ -35,17 +57,18 @@ function UpdateReview({ closeReview, color, reviewData }) {
           content: updateReviewContent,
           keyword: updateReviewSubContent,
           score: updateReviewScope,
-          imageUrls: updateReviewImg,
+          imageUrls: imgData,
         },
         {
           headers: {
             Authorization: token,
           },
+          'Content-Type': 'application/json',
         },
       )
       .then(function (response) {
         if (response.status === 204) {
-          closeReview(0);
+          location.reload();
         }
       })
       .catch(function (error) {
@@ -97,7 +120,7 @@ function UpdateReview({ closeReview, color, reviewData }) {
         ))}
       </R.ReviewScopeWrapper>
       <R.ReviewBtnWrapper>
-        <R.ReviewBtn color={color} onClick={() => sendUpdateReview()}>
+        <R.ReviewBtn color={color} onClick={() => blobUrlToFile()}>
           수정하기
         </R.ReviewBtn>
       </R.ReviewBtnWrapper>

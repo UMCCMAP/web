@@ -5,8 +5,8 @@ import ImgDragDrop from './ImgDragDrop';
 import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
 
 function RegisterReview({ closeReview, color }) {
+  const form = new FormData();
   const token = localStorage.getItem('accessToken');
-
   const [addReviewTitle, setAddReviewTitle] = useState('');
   const [addReviewImg, setAddReviewImg] = useState([]);
   const [addReviewContent, setAddReviewContent] = useState('');
@@ -26,7 +26,27 @@ function RegisterReview({ closeReview, color }) {
     setAddReviewScope(id);
   };
 
-  const sendRegisterReview = async () => {
+  const blobUrlToFile = async () => {
+    for (let index = 0; index < addReviewImg.length; index++) {
+      const file = addReviewImg[index];
+      const response = await fetch(file);
+      const blob = await response.blob();
+      const imgFile = new File([blob], `image${index}.png`, { type: 'image/png' });
+      form.append('multipartFile', imgFile);
+    }
+    await baseAxios
+      .post('s3/file', form, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then(function (response) {
+        sendRegisterReview(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
+
+  const sendRegisterReview = async (imgData) => {
     await baseAxios
       .post(
         'map/place/4/review',
@@ -35,7 +55,7 @@ function RegisterReview({ closeReview, color }) {
           title: addReviewTitle,
           content: addReviewContent,
           keyword: addReviewSubContent,
-          imageUrls: addReviewImg,
+          imageUrls: imgData,
         },
         {
           headers: {
@@ -99,7 +119,7 @@ function RegisterReview({ closeReview, color }) {
         ))}
       </R.ReviewScopeWrapper>
       <R.ReviewBtnWrapper>
-        <R.ReviewBtn color={color} onClick={() => sendRegisterReview()}>
+        <R.ReviewBtn color={color} onClick={() => blobUrlToFile()}>
           작성하기
         </R.ReviewBtn>
       </R.ReviewBtnWrapper>

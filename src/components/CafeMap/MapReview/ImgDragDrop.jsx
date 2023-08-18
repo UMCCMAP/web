@@ -23,9 +23,7 @@ function ImgDragDrop({ color, addImg, data }) {
   };
 
   useEffect(() => {
-    files.forEach((file) => {
-      addImg((prev) => [...prev, file]);
-    });
+    addImg(files);
     // return () => {
     //   files.forEach((file) => URL.revokeObjectURL(file));
     // };
