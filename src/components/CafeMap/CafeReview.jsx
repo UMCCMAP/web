@@ -14,7 +14,10 @@ function CafeReview({ data, getReviewIndex, getReviewData }) {
   const getReviewItem = async () => {
     try {
       const response = await baseAxios.get(`map/place/cafe-reviews/${data.idx}`);
-      getReviewData(response.data);
+      getReviewData({
+        reviewIdx: data.idx,
+        data: response.data,
+      });
     } catch (e) {
       console.error(e);
     }

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import baseAxios from '../../../apis/baseAxios';
 import * as R from './styles/ReviewCU.style';
 import ImgDragDrop from './ImgDragDrop';
 import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
 
 function RegisterReview({ closeReview, color }) {
+  const token = localStorage.getItem('accessToken');
+
   const [addReviewTitle, setAddReviewTitle] = useState('');
   const [addReviewImg, setAddReviewImg] = useState([]);
   const [addReviewContent, setAddReviewContent] = useState('');
@@ -23,12 +26,32 @@ function RegisterReview({ closeReview, color }) {
     setAddReviewScope(id);
   };
 
-  const sendRegisterReview = () => {
-    console.log('제목: ' + addReviewTitle);
-    console.log('이미지: ' + addReviewImg);
-    console.log('내용: ' + addReviewContent);
-    console.log('해시태크: ' + addReviewSubContent);
-    console.log('별점 ' + addReviewScope);
+  const sendRegisterReview = async () => {
+    await baseAxios
+      .post(
+        'map/place/4/review',
+        {
+          score: addReviewScope,
+          title: addReviewTitle,
+          content: addReviewContent,
+          keyword: addReviewSubContent,
+          imageUrls: addReviewImg,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+          'Content-Type': 'application/json',
+        },
+      )
+      .then(function (response) {
+        if (response.status === 201) {
+          location.reload();
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   };
 
   return (

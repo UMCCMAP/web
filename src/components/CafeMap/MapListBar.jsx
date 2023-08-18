@@ -7,13 +7,15 @@ import UpdateReview from './MapReview/UpdateReview';
 import { ReactComponent as Open } from '../../assets/images/openSearchbar.svg';
 import { ReactComponent as Close } from '../../assets/images/closeSearchbar.svg';
 import search from '../../pages/dummy/Search';
-import baseAxios from '../../apis/baseAxios';
 
 function MapListBar({ color }) {
   const [isOpen, setIsOpen] = useState(false);
   const [detailId, setDetailId] = useState(0);
   const [reviewCRU, setReviewCRU] = useState(0);
-  const [reviewData, setReviewData] = useState([]);
+  const [reviewData, setReviewData] = useState({
+    reviewIdx: -1,
+    data: [],
+  });
   const [searchText, setSearchText] = useState('');
 
   const handleInputText = (e) => {
@@ -95,7 +97,7 @@ function MapListBar({ color }) {
           <ReadReview
             closeReview={handleReviewIndexClick}
             color={color}
-            data={reviewData}
+            reviewData={reviewData}
             getReviewIndex={handleReviewIndexClick}
           />
         )
