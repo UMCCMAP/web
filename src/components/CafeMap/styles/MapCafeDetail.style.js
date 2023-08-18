@@ -96,9 +96,6 @@ export const DetailWrapper = styled.div`
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.25);
   transition: all 0.2s;
   animation: ${fadeIn} 0.3s ease-in-out;
-  // &.zIndex {
-  //   z-index: 1;
-  // }
 `;
 
 export const DetailCafeName = styled.h2`
@@ -149,4 +146,17 @@ export const ReviewContainer = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+export const Loading = styled.div`
+  margin-top: 5px;
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+export const MoreReview = styled.div`
+  cursor: pointer;
+  margin-top: 5px;
+  font-size: 16px;
+  font-weight: 500;
 `;

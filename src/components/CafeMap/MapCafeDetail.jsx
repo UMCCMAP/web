@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as D from './styles/MapCafeDetail.style';
 import ThemeBtn from '../ThemeBtn';
 import CommonBtn from '../CommonBtn';
@@ -14,6 +14,9 @@ const fontColor = 'rgba(249, 255, 253, 1)';
 function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data }) {
   const [saveModalOpen, setSaveModalOpen] = useState(false);
   const [reviewList, setReviewList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const reviewContainerRef = useRef(null);
 
   const openDetailHandler = () => {
     closeAction();
@@ -24,17 +27,21 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
     setSaveModalOpen(false);
   };
 
-  const allReviewList = async () => {
+  const allReviewList = async (pageNumber) => {
     try {
-      const response = await baseAxios.get('map/place/4/preview');
-      setReviewList(response.data);
+      const response = await baseAxios.get(`map/place/4/preview?size=10&page=${pageNumber}`);
+      setReviewList((prevReviews) => [...prevReviews, ...response.data]);
+      setPage(pageNumber + 1);
     } catch (e) {
       console.error(e);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    allReviewList();
+    setPage(0);
+    setIsLoading(true);
+    allReviewList(page);
   }, []);
 
   const getImgCount = () => {
@@ -120,7 +127,7 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
             }}
           />
         </D.SaveBtnContainer>
-        <D.ReviewContainer>
+        <D.ReviewContainer ref={reviewContainerRef}>
           {reviewList?.map((data, index) => (
             <CafeReview
               key={index}
@@ -130,6 +137,18 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
               getReviewData={getReviewData}
             />
           ))}
+          {isLoading ? (
+            <D.Loading>Loading...</D.Loading>
+          ) : (
+            <D.MoreReview
+              onClick={() => {
+                setIsLoading(true);
+                allReviewList(page);
+              }}
+            >
+              더보기
+            </D.MoreReview>
+          )}
         </D.ReviewContainer>
       </D.DetailWrapper>
       {saveModalOpen && <SaveCafe color={color} closeAction={handleModalClick} />}

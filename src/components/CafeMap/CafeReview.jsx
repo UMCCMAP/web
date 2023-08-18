@@ -7,6 +7,8 @@ import baseAxios from '../../apis/baseAxios';
 function CafeReview({ data, getReviewIndex, getReviewData }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const date = data.createdAt ? format(new Date(data.createdAt), 'yyyy.MM.dd') : null;
+
   const handleToggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
@@ -30,26 +32,25 @@ function CafeReview({ data, getReviewIndex, getReviewData }) {
           isexpanded={isExpanded ? 'initial' : '4'}
           onClick={() => {
             getReviewIndex(3);
-            // getReviewData(data.idx);
             getReviewItem();
           }}
         >
-          {data.content}
+          {data?.content}
         </C.ReviewContent>
         <button onClick={handleToggleExpand}>
           {!isExpanded ? <MdKeyboardArrowDown size="25" /> : <MdKeyboardArrowUp size="25" />}
         </button>
         <C.ReviewImgWrap>
-          <img src={`${data.imageUrl}`} alt="리뷰 사진" />
-          <div>{data.imageCnt}</div>
+          <img src={`${data?.imageUrl}`} alt="리뷰 사진" />
+          <div>{data?.imageCnt}</div>
         </C.ReviewImgWrap>
       </C.ReviewItem>
       <C.ReviewWriter>
-        <img src={`${data.userInfo.userImg}`} alt="profile" />
+        <img src={`${data?.userInfo?.userImg}`} alt="profile" />
         <div>
-          <C.WriterName>{data.userInfo.userNickname}</C.WriterName>
+          <C.WriterName>{data?.userInfo?.userNickname}</C.WriterName>
           <C.WriterInfo>
-            <span>{format(new Date(data.createdAt), 'yyyy-MM-dd')}</span>
+            <span>{date}</span>
           </C.WriterInfo>
         </div>
       </C.ReviewWriter>
