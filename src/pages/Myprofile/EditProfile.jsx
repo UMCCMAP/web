@@ -8,11 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import './profile.css';
 import * as S from '../../styles/Editprofilepage.style';
 import * as W from '../../styles/Wapper.style';
+import baseAxios from '../../apis/baseAxios';
 
 function EditProfile() {
   const navigate = useNavigate();
 
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState('hana');
   const [myIntro, setMyIntro] = useState('');
   const [cafeIntroTitle, setCafeIntroTitle] = useState('');
   const [cafeIntro, setCafeIntro] = useState('');
@@ -37,107 +38,112 @@ function EditProfile() {
     }
   };
 
-  const dataToServer = () => {
+  // 사진 제외 데이터 받는거 확인 => alert창에서는 안 나오는데 콘솔에서는 이미지 이름 확인됨 (주소로 받아와지지 X)
+  // const dataToServer = () => {
+  //   const formData = new FormData();
+  //   formData.append('userNickname', userName);
+  //   formData.append('userInfo', myIntro);
+  //   formData.append('cafeTitle', cafeIntroTitle);
+  //   formData.append('cafeInfo', cafeIntro);
+
+  //   if (userImage) {
+  //     formData.append('userImage', userImage);
+  //   }
+
+  //   if (cafeImage) {
+  //     formData.append('cafeImage', cafeImage);
+  //   }
+  //   try {
+  //     setData(formData);
+  //     const formDataAsString = JSON.stringify([...formData.entries()]);
+  //     alert(formDataAsString);
+  //     // eslint-disable-next-line no-console
+  //     console.log(
+  //       userImage,
+  //       '\n',
+  //       userName,
+  //       '\n',
+  //       myIntro,
+  //       '\n',
+  //       cafeIntroTitle,
+  //       '\n',
+  //       cafeIntro,
+  //       '\n',
+  //       cafeImage,
+  //     );
+
+  //     navigate('/profile');
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // 이미지 url 받아오기 -> 이미지 url
+  const uploadImageToServer = async (image) => {
     const formData = new FormData();
-    formData.append('userNickname', userName);
-    formData.append('userInfo', myIntro);
-    formData.append('cafeTitle', cafeIntroTitle);
-    formData.append('cafeInfo', cafeIntro);
+    formData.append('multipartFile', image); // 이미지 데이터만 FormData에 추가
 
-    if (userImage) {
-      formData.append('userImage', userImage);
-    }
-
-    if (cafeImage) {
-      formData.append('cafeImage', cafeImage);
-    }
     try {
-      setData(formData);
-      const formDataAsString = JSON.stringify([...formData.entries()]);
-      alert(formDataAsString);
-      // eslint-disable-next-line no-console
-      console.log(
-        userImage,
-        '\n',
-        userName,
-        '\n',
-        myIntro,
-        '\n',
-        cafeIntroTitle,
-        '\n',
-        cafeIntro,
-        '\n',
-        cafeImage,
-      );
+      const response = await baseAxios.post('s3/file', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // FormData 사용 시 Content-Type 설정
+        },
+      });
 
-      navigate('/profile');
+      if (response.status === 201) {
+        console.log(response.data);
+        const imageUrl = response.data; // 이미지 URL을 서버 응답 데이터에서 가져옴
+        console.log('Uploaded Image URL:', imageUrl);
+
+        return imageUrl;
+      } else {
+        console.error('Error uploading image to server.');
+      }
     } catch (error) {
-      console.error(error);
+      console.error('Error uploading image to server:', error);
     }
   };
 
-  // const uploadImageToServer = async (image) => {
-  //   const formData = new FormData();
-  //   formData.append('multipartFile', image); // 이미지 데이터만을 FormData에 추가
+  // 서버에 request 보내기 -> 프로필 수정
 
-  //   try {
-  //     const response = await axios.post('http://localhost:8080/s3/file', formData, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data', // FormData 사용 시 Content-Type 설정
-  //       },
-  //     });
+  const dataToServer = async (imageUrl) => {
+    const userImgUrl = userImage ? await uploadImageToServer(userImage) : '';
+    const cafeImgUrl = cafeImage ? await uploadImageToServer(cafeImage) : '';
+    console.log(userImgUrl);
+    console.log(cafeImgUrl);
+    const userData = {
+      userNickname: userName,
+      userImg: userImgUrl[0],
+      userInfo: myIntro,
+      cafeTitle: cafeIntroTitle,
+      cafeInfo: cafeIntro,
+      cafeImg: cafeImgUrl[0],
+    };
+    console.log(userData);
+    try {
+      const response = await baseAxios.patch(`users/profile/${userName}`, userData, {
+        headers: {
+          Authorization:
+            'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoZzU5MjU2QGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjkyMzc3NTE5LCJleHAiOjE2OTM2OTE1MTl9.dN2cKmQDO2vEB4CQ1K7obrzQZTSz07abmQhrmzVGNWc4rGeH8DIsdjPXGCJbvMFI', // 본인의 토큰 값으로 변경
+        },
+        'Content-Type': 'application/json',
+      });
+      console.log(response.data);
+      // if (response.status === 200) {
+      //   const responseData = response.data;
 
-  //     if (response.status === 201) {
-  //       const imageUrl = response.data.imageUrl; // 이미지 URL을 서버 응답 데이터에서 가져옴
-  //       console.log('Uploaded Image URL:', imageUrl);
-
-  //       return imageUrl;
-  //     } else {
-  //       console.error('Error uploading image to server.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error uploading image to server:', error);
-  //   }
-  // };
-
-  // const dataToServer = async (imageUrl) => {
-  //   const userImgUrl = userImage ? await uploadImageToServer(userImage) : '';
-  //   const cafeImgUrl = cafeImage ? await uploadImageToServer(cafeImage) : '';
-  //   const userData = {
-  //     userNickname: userName,
-  //     userInfo: myIntro,
-  //     cafeTitle: cafeIntroTitle,
-  //     cafeInfo: cafeIntro,
-  //   };
-
-  //   try {
-  //     const response = await axios.patch(
-  //       `http://localhost:8080/users/profile/${userName}`,
-  //       userData,
-  //       {
-  //         headers: {
-  //           Authorization: 'Bearer token-value', // 본인의 토큰 값으로 변경
-  //         },
-  //       },
-  //     );
-
-  //     if (response.status === 200) {
-  //       const responseData = response.data;
-
-  //       if (responseData.success && responseData.nicknameChanged) {
-  //         navigate(`/users/profile/${responseData.newNickname}`);
-  //       } else if (responseData.success) {
-  //         navigate(`/users/profile/${userName}`);
-  //       } else {
-  //         console.error('Profile update failed:', responseData.errorMessage);
-  //       }
-  //     } else {
-  //       console.error('Error updating profile:', response.statusText);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error updating profile:', error);
-  //   }
-  // };
+      //   if (responseData.success) {
+      //     navigate('/profile');
+      //   } else {
+      //     console.error('Profile update failed:', responseData.errorMessage);
+      //   }
+      // } else {
+      //   console.error('Error updating profile:', response.statusText);
+      // }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
 
   return (
     <W.Wrapper>
