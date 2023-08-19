@@ -1,4 +1,15 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const fadeInOut = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 export const UserBarWrapper = styled.div`
   width: 120px;
@@ -22,8 +33,10 @@ export const UserMenu = styled.div`
   align-items: center;
   justify-content: space-evenly;
   margin-right: 8px;
-  position: relative;
+  position: absolute;
   flex-direction: column;
+  z-index: 100;
+  transition: 0.5s;
 `;
 export const UserMenuArrow = styled.div`
   width: 15px;
@@ -49,7 +62,7 @@ export const UserNameWrap = styled.div`
 export const IconWrapper = styled.div`
   width: 87px;
   height: 170px;
-  margin-top: 20px;
+  margin-top: 90px;
   background: #ffffff;
 
   flex-direction: column;
@@ -67,12 +80,16 @@ export const IconCon = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: flex-${(props) => props.flex};
+  transition: flex 0.3s ease-in-out, top 0.3s ease-in-out;
+  animation: ${fadeInOut} 0.3s ease-in-out;
 `;
 export const IconBox = styled.div`
   width: 74px;
   height: 74px;
   border-radius: 100%;
-  box-shadow: 0px 1px 1px 0px #00000040;
+  box-shadow: 0px ${(props) => props.shadow}1px 1px 0px #00000040;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,7 +100,7 @@ export const LogoIcon = styled.div`
 `;
 export const IconText = styled.div`
   position: absolute;
-  bottom: 19px;
+  ${(props) => props.position}: 19px;
   font-family: Pretendard;
   font-size: 16px;
   font-weight: 700;
@@ -110,11 +127,14 @@ export const WantButton = styled.div`
   cursor: pointer;
   color: #ffffff;
   margin-right: -10px;
+  z-index: 2;
 `;
 export const DropdownMenu = styled.div`
   width: 100%;
   max-height: 250px;
   margin: 5px 0 11px 0;
+  overflow: auto;
+  z-index: 100;
 `;
 
 export const DropdownList = styled.ul`

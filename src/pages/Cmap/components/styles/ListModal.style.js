@@ -112,7 +112,7 @@ export const CafesWrapper = styled.div`
   width: 47%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   overflow: auto;
   &::-webkit-scrollbar {
     display: none;

@@ -67,10 +67,12 @@ function ListModal({ modal, setModal }) {
   useEffect(() => {
     console.log(activeButton);
   }, [activeButton]);
+  const nickname = 'cd';
   useEffect(() => {
     const fetchWantList = async () => {
       try {
-        const response = await baseAxios.get('map/nickname/want-list', {
+        const req = modal == 'WENT' ? 'went' : 'default';
+        const response = await baseAxios.get(`cmap/user-${req}`, {
           headers: {
             // 여기에 실제 토큰 값을 넣어야 합니다
             Authorization: Token,
@@ -86,6 +88,7 @@ function ListModal({ modal, setModal }) {
 
     fetchWantList();
   }, []);
+
   const handleButtonClick = useCallback((theme) => {
     setActiveButton(
       (prevActive) =>

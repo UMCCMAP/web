@@ -33,12 +33,30 @@ const mapItems = [
     longitude: 126.999292,
   },
 ];
-function Map({ markerImg }) {
+function Map({ cmapList, markerImg }) {
   const navermaps = useNavermaps();
   const [location, setLocation] = useState({ latitude: 37.566535, longitude: 126.9779692 });
   const [map, setMap] = useState(null);
   const [clickedMarkerId, setClickedMarkerId] = useState(null);
+  const [mapList, setMapList] = useState([]);
+  // 새로운 state 업데이트 함수 정의
+  const updateLists = () => {
+    const updatedList = cmapList?.map((cmapItem, i) => {
+      const mapItem = {
+        id: i,
+        station: cmapItem.cafeName,
+        latitude: cmapItem.cafeLatitude, // 수정: cmapItem.latitude -> cmapItem.cafeLatitude
+        longitude: cmapItem.cafeLongitude, // 수정: cmapItem.longitude -> cmapItem.cafeLongitude
+      };
+      return mapItem; // 수정: mapList.push(mapItem) -> return mapItem
+    });
+    setMapList(updatedList); // cmapList state 업데이트
+  };
 
+  useEffect(() => {
+    updateLists();
+    console.log(mapList);
+  }, [cmapList]);
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
