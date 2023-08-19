@@ -12,9 +12,9 @@ export const UserBarWrapper = styled.div`
 `;
 export const UserMenu = styled.div`
   width: 113px;
-  height: 38px;
+  height: fit-content;
   margin-top: 10px;
-  border-radius: 50px;
+  border-radius: 16px;
   border: 1px solid #000000;
   color: black;
   background-color: white;
@@ -22,6 +22,8 @@ export const UserMenu = styled.div`
   align-items: center;
   justify-content: space-evenly;
   margin-right: 8px;
+  position: relative;
+  flex-direction: column;
 `;
 export const UserMenuArrow = styled.div`
   width: 15px;
@@ -36,6 +38,13 @@ export const UserName = styled.div`
   line-height: 19px;
   letter-spacing: -0.02em;
   text-align: center;
+`;
+export const UserNameWrap = styled.div`
+  display: flex;
+  height: 40px;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
 `;
 export const IconWrapper = styled.div`
   width: 87px;
@@ -101,4 +110,34 @@ export const WantButton = styled.div`
   cursor: pointer;
   color: #ffffff;
   margin-right: -10px;
+`;
+export const DropdownMenu = styled.div`
+  width: 100%;
+  max-height: 250px;
+  margin: 5px 0 11px 0;
+`;
+
+export const DropdownList = styled.ul`
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 100;
+  text-align: center;
+`;
+
+export const DropdownItem = styled.li`
+  background-color: white;
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
+`;
+export const Line = styled.div`
+  width: 90%;
+  height: 0.063rem;
+  background: #939393;
+  margin-top: ${(props) => props.top}px;
 `;

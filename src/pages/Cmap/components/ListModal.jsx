@@ -9,7 +9,8 @@ import { ReactComponent as ParkingIcon } from '../../../assets/icon/CmapModalICo
 import { ReactComponent as BreadIcon } from '../../../assets/icon/CmapModalICon/bread.svg';
 import { ReactComponent as CameraIcon } from '../../../assets/icon/CmapModalICon/camera.svg';
 import { ReactComponent as DesertIcon } from '../../../assets/icon/CmapModalICon/desert.svg';
-
+import Token from '../../dummy/Token';
+import baseAxios from '../../../apis/baseAxios';
 import tempImg1 from '../../../assets/temp/tempcafeimg.jpg';
 import tempImg2 from '../../../assets/temp/tempcafeimg2.png';
 import tempImg3 from '../../../assets/temp/tempcafeimg3.jpg';
@@ -66,6 +67,25 @@ function ListModal({ modal, setModal }) {
   useEffect(() => {
     console.log(activeButton);
   }, [activeButton]);
+  useEffect(() => {
+    const fetchWantList = async () => {
+      try {
+        const response = await baseAxios.get('map/nickname/want-list', {
+          headers: {
+            // 여기에 실제 토큰 값을 넣어야 합니다
+            Authorization: Token,
+          },
+        });
+
+        // response 처리 로직 추가
+        console.log(response.data); // 예시로 응답 데이터를 로그에 출력
+      } catch (error) {
+        console.error('Error fetching want list:', error);
+      }
+    };
+
+    fetchWantList();
+  }, []);
   const handleButtonClick = useCallback((theme) => {
     setActiveButton(
       (prevActive) =>
