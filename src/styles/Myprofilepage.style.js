@@ -116,7 +116,6 @@ export const FavCafe = styled.div`
   font-size: 32px;
   font-weight: 700;
   line-height: 24.2px;
-  color: #000000;
 `;
 export const CafeText = styled.div`
   width: 100%;
