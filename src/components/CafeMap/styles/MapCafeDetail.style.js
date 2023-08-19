@@ -105,10 +105,21 @@ export const DetailCafeName = styled.h2`
 `;
 
 export const ThemeBtnContainer = styled.div`
-  width: 150px;
+  width: 200px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  overflow-x: auto;
+  > div {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const SaveBtnContainer = styled.div`

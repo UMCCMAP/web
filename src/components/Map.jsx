@@ -9,7 +9,7 @@ function Map({ markerImg, mapItems }) {
 
   useEffect(() => {
     if (mapItems.length === 0) return;
-    console.log('ss');
+
     if (Array.isArray(mapItems)) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
