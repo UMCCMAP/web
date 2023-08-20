@@ -118,7 +118,11 @@ function MapListBar({ color, cafeItems, mapItems }) {
         />
       )}
       {detailCafe.length !== 0 && reviewCRU === 1 ? (
-        <RegisterReview closeReview={handleReviewIndexClick} color={color} />
+        <RegisterReview
+          closeReview={handleReviewIndexClick}
+          color={color}
+          dataId={detailCafe.idx}
+        />
       ) : detailCafe.length !== 0 && reviewCRU === 2 ? (
         <UpdateReview closeReview={handleReviewIndexClick} color={color} reviewData={reviewData} />
       ) : (

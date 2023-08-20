@@ -35,6 +35,19 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
   const handleModalClick = () => {
     setSaveModalOpen(false);
   };
+
+  useEffect(() => {
+    if (data.idx) {
+      setPage(0);
+      setReviewList([]);
+      setIsLoading(true);
+      allReviewList(0);
+    }
+    setThemeList([]);
+    const newThemeList = data.cafeThemes.map((theme) => theme.themeName);
+    setThemeList(newThemeList);
+  }, [data]);
+
   const allReviewList = async (pageNumber) => {
     try {
       const response = await baseAxios.get(
@@ -47,23 +60,14 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
     }
     setIsLoading(false);
   };
-
-  useEffect(() => {
-    setPage(0);
-    setReviewList([]);
-    setIsLoading(true);
-    setThemeList([]);
-    allReviewList(0);
-    const newThemeList = data.cafeThemes.map((theme) => theme.themeName);
-    setThemeList(newThemeList);
-  }, [data]);
+  console.log(reviewList);
 
   const navItems = [
     {
       id: 1,
       name: '독서',
       theme: 'book',
-      image: <Book fill={color} width="24" />,
+      image: <Book fill={color} />,
     },
     {
       id: 2,
@@ -218,7 +222,9 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
           )}
         </D.ReviewContainer>
       </D.DetailWrapper>
-      {saveModalOpen && <SaveCafe color={color} closeAction={handleModalClick} />}
+      {saveModalOpen && (
+        <SaveCafe color={color} closeAction={handleModalClick} dataId={data?.idx} />
+      )}
     </>
   );
 }
