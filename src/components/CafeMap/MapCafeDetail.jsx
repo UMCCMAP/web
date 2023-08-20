@@ -60,7 +60,6 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
     }
     setIsLoading(false);
   };
-  console.log(reviewList);
 
   const navItems = [
     {

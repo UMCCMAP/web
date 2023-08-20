@@ -33,7 +33,6 @@ function SearchPage() {
     }
   }, [selectThemeData, searchCafeData]);
 
-  localStorage.setItem('userIdx', 25);
   return (
     <C.Container>
       <Map markerImg="src/assets/images/cmapLogoG.svg" mapItems={mapItemList} />

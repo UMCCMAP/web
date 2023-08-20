@@ -26,7 +26,7 @@ const settings = {
 };
 
 function ReadReview({ reviewData, color, closeReview, getReviewIndex }) {
-  const userIdx = Number(localStorage.getItem('userIdx'));
+  const userNickname = localStorage.getItem('nickname');
 
   const date = reviewData.data.createdAt
     ? format(new Date(reviewData.data.createdAt), 'yyyy.MM.dd')
@@ -92,7 +92,7 @@ function ReadReview({ reviewData, color, closeReview, getReviewIndex }) {
         </R.StyledSlider>
       </R.ImgWrap>
       <R.Content>{reviewData.data?.content}</R.Content>
-      {userIdx === reviewData.data.userInfo?.userIdx ? (
+      {userNickname === reviewData.data.userInfo?.userNickname ? (
         <R.UDWrap>
           <div
             onClick={() => {
