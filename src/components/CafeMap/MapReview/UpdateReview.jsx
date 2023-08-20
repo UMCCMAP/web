@@ -6,7 +6,6 @@ import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.
 
 function UpdateReview({ closeReview, color, reviewData }) {
   const form = new FormData();
-  const token = localStorage.getItem('accessToken');
   const [updateReviewTitle, setUpdateReviewTitle] = useState(reviewData.data.title);
   const [updateReviewImg, setUpdateReviewImg] = useState([]);
   const [updateReviewContent, setUpdateReviewContent] = useState(reviewData.data.content);
@@ -29,13 +28,12 @@ function UpdateReview({ closeReview, color, reviewData }) {
   const blobUrlToFile = async () => {
     for (let index = 0; index < updateReviewImg.length; index++) {
       const file = updateReviewImg[index];
-      const response = await fetch(file, { mode: 'cors' });
-
+      const response = await fetch(file);
       const blob = await response.blob();
-
       const imgFile = new File([blob], `image${index}.png`, { type: 'image/png' });
       form.append('multipartFile', imgFile);
     }
+
     await baseAxios
       .post('s3/file', form, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -60,9 +58,6 @@ function UpdateReview({ closeReview, color, reviewData }) {
           imageUrls: imgData,
         },
         {
-          headers: {
-            Authorization: token,
-          },
           'Content-Type': 'application/json',
         },
       )

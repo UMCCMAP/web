@@ -6,7 +6,6 @@ import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.
 
 function RegisterReview({ closeReview, color, dataId }) {
   const form = new FormData();
-  const token = localStorage.getItem('accessToken');
   const [addReviewTitle, setAddReviewTitle] = useState('');
   const [addReviewImg, setAddReviewImg] = useState([]);
   const [addReviewContent, setAddReviewContent] = useState('');
@@ -58,9 +57,6 @@ function RegisterReview({ closeReview, color, dataId }) {
           imageUrls: imgData,
         },
         {
-          headers: {
-            Authorization: token,
-          },
           'Content-Type': 'application/json',
         },
       )

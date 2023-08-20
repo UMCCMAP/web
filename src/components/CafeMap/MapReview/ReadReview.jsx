@@ -26,7 +26,6 @@ const settings = {
 };
 
 function ReadReview({ reviewData, color, closeReview, getReviewIndex }) {
-  const token = localStorage.getItem('accessToken');
   const userIdx = Number(localStorage.getItem('userIdx'));
 
   const date = reviewData.data.createdAt
@@ -42,11 +41,7 @@ function ReadReview({ reviewData, color, closeReview, getReviewIndex }) {
   };
   const deleteReview = async () => {
     await baseAxios
-      .delete(`map/place/cafe-reviews/${reviewData.reviewIdx}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
+      .delete(`map/place/cafe-reviews/${reviewData.reviewIdx}`, {})
       .then(function (response) {
         if (response.status === 204) {
           alert('삭제되었습니다.');

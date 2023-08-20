@@ -9,7 +9,6 @@ import { ReactComponent as Open } from '../../assets/images/openSearchbar.svg';
 import { ReactComponent as Close } from '../../assets/images/closeSearchbar.svg';
 
 function MapListBar({ color, cafeItems, mapItems }) {
-  // const token = localStorage.getItem('accessToken');
   const [isOpen, setIsOpen] = useState(false);
   const [detailCafe, setDetailCafe] = useState([]);
   const [reviewCRU, setReviewCRU] = useState(0);
