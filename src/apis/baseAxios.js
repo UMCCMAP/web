@@ -7,7 +7,7 @@ const baseAxios = axios.create({
 baseAxios.interceptors.request.use(
   (config) => {
     if (!config.headers['Authorization']) {
-      config.headers['Authorization'] = 'localStorage에 있는 토큰 값 넣으면 됨';
+      config.headers['Authorization'] = localStorage.getItem('token');
     }
     return config;
   },
@@ -24,20 +24,17 @@ baseAxios.interceptors.request.use(
 //     console.log(error);
 
 //     if (error.response?.status === 401) {
-//       const refreshToken =
-//         'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJidWRsYWxzd2wxMTI5QGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjkyMzQxNTQ2LCJleHAiOjE2OTQ5Njk1NDZ9.pg0Y2a5XrD1Zmcy-_gydrwiqDQ-lwi0lXUBViYD_KsvsHhSRdYUcWT3U-mxxItLr';
+//       const refreshToken = localStorage.getItem('refreshToken');
 //       if (refreshToken != null) {
 //         const refreshedAccessToken = await updateAccessToken(refreshToken);
-
 //         if (refreshedAccessToken !== null && refreshedAccessToken !== undefined) {
-//           originalRequest.headers.access = `Bearer ${refreshedAccessToken}`;
-
-//           // localStorage.setItem('accessToken', refreshedAccessToken);
+//           originalRequest.headers['Authorization'] = refreshedAccessToken;
+//           localStorage.setItem('token', refreshedAccessToken);
 //           return await baseAxios(originalRequest);
 //         }
 //       }
 //     }
-//     // sessionStorage.clear();
+//     localStorage.clear();
 //     alert('로그인 정보 만료');
 //     window.location.href = '/';
 //     return await Promise.reject(error);
@@ -45,8 +42,8 @@ baseAxios.interceptors.request.use(
 // );
 
 // export const updateAccessToken = async (refreshToken) => {
-//   const response = await baseAxios.post("")
-//   return response.data.access
-// }
+//   const response = await baseAxios.post('');
+//   return response.data.access;
+// };
 
 export default baseAxios;
