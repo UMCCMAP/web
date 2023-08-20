@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const ChooseLogintext = styled.div`
@@ -19,7 +20,7 @@ export const BtnCollect = styled.div`
   margin-top: 20px;
 `;
 
-export const LoginBtn = styled.button`
+export const LoginBtn = styled(Link)`
   width: 191px;
   height: 132px;
 
@@ -27,6 +28,7 @@ export const LoginBtn = styled.button`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  text-decoration-line: none;
 
   background-color: #f9f9f9;
   padding: 16px 32px 16px 32px;

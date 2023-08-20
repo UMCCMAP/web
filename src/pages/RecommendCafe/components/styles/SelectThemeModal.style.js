@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const SelectThemeContainer = styled.div`
-  width: 384px;
-  height: 514px;
+  width: 380px;
+  height: 400px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -92,7 +92,7 @@ export const SelectTheme = styled.div`
   position: absolute;
   width: 470px;
   height: 310px;
-  top: 115px;
+  top: 100px;
   left: -45px;
   border-radius: 32px;
   padding: 30px 20px;

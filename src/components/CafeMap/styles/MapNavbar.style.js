@@ -54,6 +54,7 @@ export const NavItem = styled.li`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  margin: 3px 0 0 0;
   > label {
     width: 100%;
     height: 100%;

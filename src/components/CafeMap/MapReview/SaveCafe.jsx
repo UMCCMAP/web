@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
+import baseAxios from '../../../apis/baseAxios';
 import * as M from '../../../styles/Modal.style';
 import * as S from './styles/SaveCafe.style';
 
-function SaveCafe({ color, closeAction }) {
+function SaveCafe({ color, closeAction, dataId }) {
   const [clickSave, setClickSave] = useState('');
 
-  const sendSaveType = () => {
-    console.log(clickSave);
-    closeAction();
+  const sendSaveType = async () => {
+    await baseAxios
+      .put(
+        `map/place/${dataId}`,
+        {
+          type: clickSave,
+        },
+        {
+          'Content-Type': 'application/json',
+        },
+      )
+      .then(function (res) {
+        if (res.status === 201) {
+          closeAction();
+        }
+      })
+      .catch(function (e) {
+        console.error(e);
+      });
   };
 
   return (
@@ -20,18 +37,18 @@ function SaveCafe({ color, closeAction }) {
           <S.AddBtnContainer>
             <S.AddBtn
               color={color}
-              onClick={() => setClickSave('want')}
-              className={clickSave === 'want' ? 'clicked' : ''}
+              onClick={() => setClickSave('WANT')}
+              className={clickSave === 'WANT' ? 'clicked' : ''}
             >
-              <h2 style={{ color: clickSave === 'want' ? 'white' : color }}>WANT</h2>
+              <h2 style={{ color: clickSave === 'WANT' ? 'white' : color }}>WANT</h2>
               <p>가보고 싶은 카페를 저장해요! 언제든지 지도에서 확인할 수 있어요.</p>
             </S.AddBtn>
             <S.AddBtn
               color={color}
-              onClick={() => setClickSave('went')}
-              className={clickSave === 'went' ? 'clicked' : ''}
+              onClick={() => setClickSave('WENT')}
+              className={clickSave === 'WENT' ? 'clicked' : ''}
             >
-              <h2 style={{ color: clickSave === 'went' ? 'white' : color }}>WENT</h2>
+              <h2 style={{ color: clickSave === 'WENT' ? 'white' : color }}>WENT</h2>
               <p>
                 카페가 마음에 들었거나 코멘트가 있으면 리뷰를 작성하거나 지도에 저장할 수 있어요.
               </p>
