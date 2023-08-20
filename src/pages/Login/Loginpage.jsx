@@ -19,11 +19,11 @@ function Loginpage() {
         <L.Hr></L.Hr>
         <S.ChooseLogintext>로그인 방식을 선택해 주세요</S.ChooseLogintext>
         <S.BtnCollect>
-          <S.LoginBtn to={baseUrl + '/oauth2/authorization/google?redirect_uri=' + redirect_uri}>
+          <S.LoginBtn to={baseUrl + 'oauth2/authorization/google?redirect_uri=' + redirect_uri}>
             <S.Icon src={GIcon}></S.Icon>
             <S.BtnText>구글 아이디로 로그인</S.BtnText>
           </S.LoginBtn>
-          <S.LoginBtn to={baseUrl + '/oauth2/authorization/naver?redirect_uri=' + redirect_uri}>
+          <S.LoginBtn to={baseUrl + 'oauth2/authorization/naver?redirect_uri=' + redirect_uri}>
             <S.Icon src={NIcon}></S.Icon>
             <S.BtnText>네이버 아이디로 로그인</S.BtnText>
           </S.LoginBtn>
