@@ -49,6 +49,7 @@ function RecommendCafePage() {
         logoImg="src/assets/images/cmapLogoB.svg"
         color="rgba(96, 167, 225, 1)"
         hovercolor="rgba(117, 177, 226, 0.812)"
+        cafeItems={recommendCafeList !== undefined ? recommendCafeList : []}
       />
       {detailId !== 0 && recommendCafeList !== undefined && (
         <MapCafeDetail

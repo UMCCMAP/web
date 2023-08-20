@@ -4,7 +4,7 @@ import * as R from './styles/ReviewCU.style';
 import ImgDragDrop from './ImgDragDrop';
 import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
 
-function RegisterReview({ closeReview, color }) {
+function RegisterReview({ closeReview, color, dataId }) {
   const form = new FormData();
   const token = localStorage.getItem('accessToken');
   const [addReviewTitle, setAddReviewTitle] = useState('');
@@ -49,7 +49,7 @@ function RegisterReview({ closeReview, color }) {
   const sendRegisterReview = async (imgData) => {
     await baseAxios
       .post(
-        'map/place/4/review',
+        `map/place/${dataId}/review`,
         {
           score: addReviewScope,
           title: addReviewTitle,

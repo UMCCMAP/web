@@ -79,6 +79,18 @@ function MapNavbar({ content, logoImg, color, hovercolor, cafeItems }) {
   };
 
   useEffect(() => {
+    if (content === 'recommend') {
+      const navItemNames = new Set(cafeItems?.cafeThemes?.map((item) => item.themeName));
+      const newCheckedList = navItems
+        .filter((data) => navItemNames.has(data.name))
+        .map((data) => data.id);
+      if (newCheckedList) {
+        setCheckedList((prev) => [...prev, ...newCheckedList]);
+      }
+    }
+  }, [cafeItems]);
+
+  useEffect(() => {
     const newSelectThemeList = [];
     for (let i = 0; i < navItems.length; i++) {
       if (checkedList.includes(navItems[i].id)) {
@@ -89,7 +101,9 @@ function MapNavbar({ content, logoImg, color, hovercolor, cafeItems }) {
   }, [checkedList]);
 
   useEffect(() => {
-    getThemeCafe();
+    if (content === 'search') {
+      getThemeCafe();
+    }
   }, [selectThemeList]);
 
   const getThemeCafe = async () => {
