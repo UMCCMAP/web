@@ -8,9 +8,15 @@ function SaveCafe({ color, closeAction, dataId }) {
 
   const sendSaveType = async () => {
     await baseAxios
-      .post(`map/place/${dataId}`, {
-        type: clickSave,
-      })
+      .put(
+        `map/place/${dataId}`,
+        {
+          type: clickSave,
+        },
+        {
+          'Content-Type': 'application/json',
+        },
+      )
       .then(function (res) {
         if (res.status === 201) {
           closeAction();

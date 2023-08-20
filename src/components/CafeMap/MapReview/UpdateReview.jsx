@@ -36,7 +36,7 @@ function UpdateReview({ closeReview, color, reviewData }) {
 
     await baseAxios
       .post('s3/file', form, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        'Content-Type': 'multipart/form-data',
       })
       .then(function (response) {
         sendUpdateReview(response.data);

@@ -35,7 +35,7 @@ function RegisterReview({ closeReview, color, dataId }) {
     }
     await baseAxios
       .post('s3/file', form, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        'Content-Type': 'multipart/form-data',
       })
       .then(function (response) {
         sendRegisterReview(response.data);
