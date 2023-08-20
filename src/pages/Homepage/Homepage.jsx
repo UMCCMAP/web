@@ -19,8 +19,10 @@ function Homepage() {
   const [randomBoardList, setRandomBoardList] = useState([]);
 
   const handleLogout = () => {
-    localStorage.clear();
-    navigate('/');
+    if (confirm('정말로 로그아웃을 하시겠습니까?')) {
+      localStorage.clear();
+      navigate('/');
+    }
   };
 
   const getRandomBoard = async () => {

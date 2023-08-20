@@ -17,6 +17,8 @@ import Root from './Root';
 import ErrorPage from './pages/ErrorPage';
 import CmapPage from './pages/CmapPage';
 import LoginCallbackPage from './pages/Login/LoginCallbackPage';
+import PublicPages from './components/access/PublicPages';
+import PrivatePages from './components/access/PrivatePages';
 
 const router = createBrowserRouter([
   {
@@ -24,17 +26,17 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      { path: '/', element: <Intropage /> },
-      { path: '/home', element: <Homepage /> },
-      { path: '/login', element: <Loginpage /> },
+      { path: '/', element: <PublicPages Component={Intropage} restricted={undefined} /> },
+      { path: '/home', element: <PrivatePages Component={Homepage} /> },
+      { path: '/login', element: <PublicPages Component={Loginpage} restricted /> },
       { path: '/oauth2/redirect', element: <LoginCallbackPage /> },
-      { path: '/register', element: <Registerpage /> },
+      { path: '/register', element: <PrivatePages Component={Registerpage} /> },
       // { path: '/profile', element: <MyprofilePage /> },
       // { path: '/profile/edit', element: <EditprofilePage /> },
       // { path: '/review', element: <ReviewCheckPage /> },
-      { path: '/search', element: <SearchPage /> },
-      { path: '/recommend', element: <RecommendCafePage /> },
-      { path: '/cmap', element: <CmapPage /> },
+      { path: '/search', element: <PrivatePages Component={SearchPage} /> },
+      { path: '/recommend', element: <PrivatePages Component={RecommendCafePage} /> },
+      { path: '/cmap', element: <PrivatePages Component={CmapPage} /> },
       { path: '/board', element: <BoardList /> },
       { path: '/board/modify', element: <BoardModify /> },
       { path: '/board/view', element: <BoardView /> },
