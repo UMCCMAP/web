@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import baseAxios from '../../apis/baseAxios';
 import * as L from './styles/MapListBar.style';
 import MapCafeDetail from './MapCafeDetail';
@@ -9,6 +10,10 @@ import { ReactComponent as Open } from '../../assets/images/openSearchbar.svg';
 import { ReactComponent as Close } from '../../assets/images/closeSearchbar.svg';
 
 function MapListBar({ color, cafeItems, mapItems }) {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const queryParamValue = queryParams.get('search');
+
   const [isOpen, setIsOpen] = useState(false);
   const [detailCafe, setDetailCafe] = useState([]);
   const [reviewCRU, setReviewCRU] = useState(0);
@@ -40,6 +45,16 @@ function MapListBar({ color, cafeItems, mapItems }) {
     setReviewData(data);
   };
 
+  const searchCafe = async () => {
+    try {
+      const response = await baseAxios.get(`cafes/name?name=${searchText}`);
+      setCafeData(response.data);
+      cafeItems(response.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       const searchCafe = async () => {
@@ -58,9 +73,17 @@ function MapListBar({ color, cafeItems, mapItems }) {
       clearTimeout(timeoutId);
     };
   }, [searchText]);
+
   useEffect(() => {
     setCafeData(mapItems);
   }, [mapItems]);
+
+  useEffect(() => {
+    if (queryParamValue) {
+      setSearchText(queryParamValue);
+      setIsOpen(true);
+    }
+  }, []);
 
   return (
     <>

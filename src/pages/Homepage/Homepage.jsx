@@ -17,6 +17,12 @@ function Homepage() {
   const navigate = useNavigate();
   const nickname = localStorage.getItem('nickname');
   const [randomBoardList, setRandomBoardList] = useState([]);
+  const [searchText, setSearchText] = useState('');
+
+  const handleSearchText = (e) => {
+    const inputText = e.target.value;
+    setSearchText(inputText);
+  };
 
   const handleLogout = () => {
     if (confirm('정말로 로그아웃을 하시겠습니까?')) {
@@ -31,6 +37,14 @@ function Homepage() {
       setRandomBoardList(response.data);
     } catch (e) {
       console.error(e);
+    }
+  };
+
+  const handleSearch = () => {
+    if (searchText !== '') {
+      navigate(`/search?search=${searchText}`);
+    } else {
+      alert('검색할 내용이 없습니다.');
     }
   };
 
@@ -51,8 +65,13 @@ function Homepage() {
         </S.TitleDiv>
       </S.HeadBg>
       <S.SearchDiv>
-        <input type="text" placeholder="카페 찾아보기"></input>
-        <S.SearchBtn>
+        <input
+          type="text"
+          placeholder="카페 찾아보기"
+          value={searchText}
+          onChange={handleSearchText}
+        />
+        <S.SearchBtn onClick={handleSearch}>
           <img src={Search} />
         </S.SearchBtn>
       </S.SearchDiv>
