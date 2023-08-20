@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import baseAxios from '../../apis/baseAxios';
 import * as L from './styles/MapListBar.style';
 import MapCafeDetail from './MapCafeDetail';
 import RegisterReview from './MapReview/RegisterReview';
@@ -6,20 +7,22 @@ import ReadReview from './MapReview/ReadReview';
 import UpdateReview from './MapReview/UpdateReview';
 import { ReactComponent as Open } from '../../assets/images/openSearchbar.svg';
 import { ReactComponent as Close } from '../../assets/images/closeSearchbar.svg';
-import search from '../../pages/dummy/Search';
 
-function MapListBar({ color }) {
+function MapListBar({ color, cafeItems, mapItems }) {
+  // const token = localStorage.getItem('accessToken');
   const [isOpen, setIsOpen] = useState(false);
-  const [detailId, setDetailId] = useState(0);
+  const [detailCafe, setDetailCafe] = useState([]);
   const [reviewCRU, setReviewCRU] = useState(0);
   const [reviewData, setReviewData] = useState({
     reviewIdx: -1,
     data: [],
   });
   const [searchText, setSearchText] = useState('');
+  const [cafeData, setCafeData] = useState(mapItems);
 
   const handleInputText = (e) => {
-    setSearchText(e.target.value);
+    const searchText = e.target.value;
+    setSearchText(searchText);
   };
 
   const handleClick = () => {
@@ -27,7 +30,7 @@ function MapListBar({ color }) {
   };
 
   const handleDetailClick = () => {
-    setDetailId(0);
+    setDetailCafe([]);
   };
 
   const handleReviewIndexClick = (index) => {
@@ -37,6 +40,28 @@ function MapListBar({ color }) {
   const handleReviewData = (data) => {
     setReviewData(data);
   };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const searchCafe = async () => {
+        try {
+          const response = await baseAxios.get(`cafes/name?name=${searchText}`);
+          setCafeData(response.data);
+          cafeItems(response.data);
+        } catch (e) {
+          console.error(e);
+        }
+      };
+      searchCafe();
+    }, 200);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [searchText]);
+  useEffect(() => {
+    setCafeData(mapItems);
+  }, [mapItems]);
 
   return (
     <>
@@ -55,44 +80,49 @@ function MapListBar({ color }) {
         </div>
         <hr />
         <ul>
-          {search.map((data, index) => (
-            <li key={index} onClick={() => setDetailId(data.id)}>
+          {cafeData.map((data, index) => (
+            <li
+              key={index}
+              onClick={() => {
+                setDetailCafe(data);
+              }}
+            >
               <L.SearchCafeImg>
-                <img src={data.images[0]} alt="카페 사진" />
+                <img src={data?.image} alt="카페 사진" />
               </L.SearchCafeImg>
-              <L.SearchCafeName color={color}>{data.title}</L.SearchCafeName>
-              <L.SearchCafe>{data.info}</L.SearchCafe>
+              <L.SearchCafeName color={color}>{data?.name}</L.SearchCafeName>
+              <L.SearchCafe>{data?.info}</L.SearchCafe>
               <L.SearchCafeScore>
-                <span>리뷰 {data.reviews.length}개</span>
+                <span>리뷰 {data.totalReviews}개</span>
                 <hr />
-                <span>평점 {data.scope}</span>
+                <span>평점 {data.averageRating}</span>
               </L.SearchCafeScore>
             </li>
           ))}
         </ul>
       </L.SearchBarContainer>
-      {detailId === 0 ? (
+      {detailCafe.length === 0 ? (
         <L.ShowSearchBar onClick={handleClick}>
           {!isOpen ? <Open fill={color} /> : <Close fill={color} />}
         </L.ShowSearchBar>
       ) : (
         <L.CloseSearchBar onClick={handleClick}></L.CloseSearchBar>
       )}
-      {detailId !== 0 && (
+      {detailCafe.length !== 0 && (
         <MapCafeDetail
           closeAction={handleDetailClick}
           getReviewIndex={handleReviewIndexClick}
           color={color}
-          data={search[detailId - 1]}
+          data={detailCafe}
           getReviewData={handleReviewData}
         />
       )}
-      {detailId !== 0 && reviewCRU === 1 ? (
+      {detailCafe.length !== 0 && reviewCRU === 1 ? (
         <RegisterReview closeReview={handleReviewIndexClick} color={color} />
-      ) : detailId !== 0 && reviewCRU === 2 ? (
+      ) : detailCafe.length !== 0 && reviewCRU === 2 ? (
         <UpdateReview closeReview={handleReviewIndexClick} color={color} reviewData={reviewData} />
       ) : (
-        detailId !== 0 &&
+        detailCafe.length !== 0 &&
         reviewCRU === 3 && (
           <ReadReview
             closeReview={handleReviewIndexClick}
