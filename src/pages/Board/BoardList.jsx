@@ -20,8 +20,8 @@ function BoardList() {
   const [activeButton, setActiveButton] = useState([]);
   const [currentData, setCurrentData] = useState([]);
   const [pageCount, setPageCount] = useState(5);
-  const [search, setSearch] = useState({ page: currentPage, searchType: 'cafe', keyword: '' });
-  const handleButtonClick = useCallback((theme) => {
+  const [search, setSearch] = useState({ page: currentPage, searchType: '카페', keyword: '' });
+  const handleButtonClick = (theme) => {
     setActiveButton(
       (prevActive) =>
         prevActive.includes(theme)
@@ -29,7 +29,11 @@ function BoardList() {
           : [...prevActive, theme], // 선택되지 않은 테마라면 추가
     );
     setCurrentPage(1);
-  }, []);
+    setSearch((prevSearch) => ({
+      ...prevSearch,
+      keyword: '',
+    }));
+  };
   // 현재 페이지에 해당하는 카페들을 가져오는 함수
   const getCurrentPageCafes = () => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -38,11 +42,11 @@ function BoardList() {
   };
 
   const handleNextPage = () => {
-    setCurrentPage((prevPage) => 5 * Math.floor((prevPage + PAGE_RANGE_DISPLAY - 1) / 5));
+    setCurrentPage((prevPage) => 5 * Math.floor((prevPage + PAGE_RANGE_DISPLAY - 1) / 5) + 1);
   };
 
   const handlePrevPage = () => {
-    setCurrentPage((prevPage) => 5 * Math.floor((prevPage - PAGE_RANGE_DISPLAY - 1) / 5));
+    setCurrentPage((prevPage) => 5 * Math.floor((prevPage - PAGE_RANGE_DISPLAY - 1) / 5) + 5);
   };
 
   const isNextDisabled =
@@ -88,10 +92,18 @@ function BoardList() {
       let backendUrl = '/board';
       if (search.keyword !== '') {
         backendUrl = '/board/search';
+        let searchTypeMapping = {
+          카페: 'cafe',
+          작성자: 'writer',
+          제목: 'title-content',
+        };
+
+        let transformedSearchType = searchTypeMapping[search.searchType] || search.searchType;
         queryParams = new URLSearchParams({
           // tagIdx: tagIdx,
+
           page: (currentPage - 1).toString(),
-          searchType: search.searchType,
+          searchType: transformedSearchType,
           keyword: search.keyword,
         }).toString();
       }
@@ -100,11 +112,7 @@ function BoardList() {
       console.log(backendUrl);
       console.log(token);
       // 요청 보내기
-      const response = await baseAxios.get(backendUrl, {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const response = await baseAxios.get(backendUrl);
       setCurrentData(response.data.result.boardResponses.content);
       setKeyWords(response.data.result.tagNames);
       setPageCount(response.data.result.boardResponses.totalPages);

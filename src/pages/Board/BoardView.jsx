@@ -13,8 +13,9 @@ import * as C from './styles/Common.style';
 import * as B from './styles/BoardView.style';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import baseAxios from '../../apis/baseAxios';
-import token from './dummy/token';
 import { ReactComponent as HeartIcon } from '../../assets/icon/reviewHeart.svg';
+import { ReactComponent as HeartFillIcon } from '../../assets/icon/reviewFillHeart.svg';
+import { ReactComponent as BoardReviewIcon } from '../../assets/icon/BoardReviewIcon.svg';
 
 function BoardView() {
   const { idx } = useParams();
@@ -32,21 +33,13 @@ function BoardView() {
   const handleClick = () => {
     const fetchData = async () => {
       try {
-        const response = await baseAxios.post(`/board/${idx}/comments`, review, {
-          headers: {
-            Authorization: token,
-          },
-        });
+        await baseAxios.post(`/board/${idx}/comments`, review);
 
-        console.log('Response data:', response.data?.result);
-        setData(response.data?.result);
+        const refreshData = await baseAxios.get(`/board/${idx}`);
+        const comment = await baseAxios.get(`/board/${idx}/comments`);
 
-        const comment = await baseAxios.get(`/board/${idx}/comments`, {
-          headers: {
-            Authorization: token,
-          },
-        });
         console.log('Comment data:', comment.data);
+        setData(refreshData.data?.result);
         setComment(comment.data); // 수정된 부분
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -63,20 +56,12 @@ function BoardView() {
   };
   const fetchData = async () => {
     try {
-      const response = await baseAxios.get(`/board/${idx}`, {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const response = await baseAxios.get(`/board/${idx}`);
 
       console.log('Response data:', response.data?.result);
       setData(response.data?.result);
 
-      const comment = await baseAxios.get(`/board/${idx}/comments`, {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const comment = await baseAxios.get(`/board/${idx}/comments`);
       console.log('Comment data:', comment.data);
       setComment(comment.data); // 수정된 부분
     } catch (error) {
@@ -86,9 +71,6 @@ function BoardView() {
   useEffect(() => {
     fetchData();
   }, [idx]);
-  useEffect(() => {
-    console.log(keyWords);
-  }, [keyWords]);
   return (
     <C.Wrap>
       <C.ContentsWrap height="fit-content">
@@ -127,11 +109,7 @@ function BoardView() {
                   const confirmed = window.confirm('정말로 삭제하시겠습니까?');
                   if (confirmed) {
                     try {
-                      await baseAxios.delete(`/board/${idx}`, {
-                        headers: {
-                          Authorization: token,
-                        },
-                      });
+                      await baseAxios.delete(`/board/${idx}`);
                       alert('삭제되었습니다.');
                       navigate('/board');
                     } catch (error) {
@@ -171,29 +149,34 @@ function BoardView() {
           <B.ReviewWrap>
             <B.ReviewInfo>
               <B.ReviewIconWrap>
-                <HeartIcon
-                  onClick={async () => {
-                    try {
-                      await baseAxios.post(
-                        `board/${idx}/like?type=${data?.like ? 0 : 1}`,
-                        {},
-                        {
-                          headers: {
-                            Authorization: token,
-                          },
-                        },
-                      );
-                      fetchData();
-                    } catch (error) {
-                      console.log(error);
-                    }
-                  }}
-                />
+                {data?.like ? (
+                  <HeartFillIcon
+                    onClick={async () => {
+                      try {
+                        await baseAxios.post(`board/${idx}/like?type=${data?.like ? 0 : 1}`, {});
+                        fetchData();
+                      } catch (error) {
+                        console.log(error);
+                      }
+                    }}
+                  />
+                ) : (
+                  <HeartIcon
+                    onClick={async () => {
+                      try {
+                        await baseAxios.post(`board/${idx}/like?type=${data?.like ? 0 : 1}`, {});
+                        fetchData();
+                      } catch (error) {
+                        console.log(error);
+                      }
+                    }}
+                  />
+                )}
                 <B.ReviewNumber color="#FF6868">{data?.cntLike}</B.ReviewNumber>
               </B.ReviewIconWrap>
 
               <B.ReviewIconWrap>
-                <img src={reviewIcon} />
+                <BoardReviewIcon />
                 <B.ReviewNumber color="#60A7E1">{comment?.length}</B.ReviewNumber>
               </B.ReviewIconWrap>
             </B.ReviewInfo>
@@ -211,13 +194,6 @@ function BoardView() {
                       <Button
                         width="5rem"
                         height="2rem"
-                        name="수정하기"
-                        background="#60A7E1"
-                        color="#fff"
-                      />
-                      <Button
-                        width="5rem"
-                        height="2rem"
                         name="삭제하기"
                         background="#60A7E1"
                         color="#fff"
@@ -225,17 +201,9 @@ function BoardView() {
                           const confirmed = window.confirm('정말로 삭제하시겠습니까?');
                           if (confirmed) {
                             try {
-                              await baseAxios.delete(`/board/post-comments/${a.commentIdx}`, {
-                                headers: {
-                                  Authorization: token,
-                                },
-                              });
+                              await baseAxios.delete(`/board/post-comments/${a.commentIdx}`);
                               alert('삭제되었습니다.');
-                              const comment = await baseAxios.get(`/board/${idx}/comments`, {
-                                headers: {
-                                  Authorization: token,
-                                },
-                              });
+                              const comment = await baseAxios.get(`/board/${idx}/comments`);
                               setComment(comment.data);
                             } catch (error) {
                               console.error('게시물 삭제 중 오류 발생:', error);

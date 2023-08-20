@@ -134,7 +134,7 @@ const DropdownItem = styled.li`
 `;
 function Header({ name, value, set }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const options = ['게시글', '작성자', '카페'];
+  const options = ['제목', '작성자', '카페'];
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -180,7 +180,7 @@ function Header({ name, value, set }) {
             </DropdownMenu>
           </SearchFilter>
           <SearchInput
-            value={value.keywords}
+            value={value.keyword}
             onChange={handleKeywordChange}
             placeholder="통합검색"
             type="text"

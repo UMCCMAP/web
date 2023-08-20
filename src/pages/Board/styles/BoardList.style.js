@@ -9,19 +9,20 @@ export const BoardWrap = styled.div`
 `;
 export const BoardKeywordWrap = styled.div`
   width: 100%;
-  height: 5rem;
+  height: fit-content;
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 export const BoardKeyWords = styled.div`
-  width: 35rem;
-  height: 100%;
+  max-width: 45rem;
+  height: fit-content;
   display: flex;
   align-items: center;
   margin-left: 2px;
   gap: 20px;
   z-index: 1;
+  flex-wrap: wrap;
 `;
 
 export const BoardWriteButton = styled.div`
@@ -53,6 +54,7 @@ export const BoardContentsWrap = styled.div`
   flex-direction: column;
   display: flex;
   width: 100%;
+  margin-top: 24px;
   @media (max-width: 1100px) {
     width: 90%;
   }
@@ -60,7 +62,7 @@ export const BoardContentsWrap = styled.div`
 export const Board = styled.div`
   display: flex;
   height: 15rem;
-  margin-top: 30px;
+  margin-top: 40px;
   cursor: pointer;
 `;
 export const BoardWords = styled.div`

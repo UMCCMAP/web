@@ -81,7 +81,7 @@ export const DragDropTitle = styled.div`
   color: #939393;
 `;
 export const DragDropImages = styled.div`
-  width: 21.25rem;
+  width: fit-content;
   height: 6.25rem;
   display: flex;
   gap: 10px;

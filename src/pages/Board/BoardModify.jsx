@@ -6,7 +6,6 @@ import * as C from './styles/Common.style';
 import Editor from './components/Editor';
 import React, { useState, useEffect, useCallback } from 'react';
 import baseAxios from '../../apis/baseAxios';
-import token from './dummy/token';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 function BoardModify() {
   const location = useLocation();
@@ -46,11 +45,7 @@ function BoardModify() {
 
   const fetchData = async () => {
     try {
-      const response = await baseAxios.get(`/board/${idx}`, {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const response = await baseAxios.get(`/board/${idx}`);
       setData(response.data?.result);
       setValue(response.data?.result.boardContent);
       setTitle(response.data?.result.boardTitle);
@@ -65,7 +60,8 @@ function BoardModify() {
 
   useEffect(() => {
     if (data) {
-      const keys = data.tagList.map((tagObj) => parseInt(Object.keys(tagObj)[0]));
+      const keys = data.tagList.map((tagObj) => Object.keys(tagObj)[0]);
+      console.log(keys);
       setActiveButton(keys);
       getImgs(data.boardContent);
     }
@@ -121,11 +117,7 @@ function BoardModify() {
         const formData = new FormData();
         formData.append('multipartFile', data);
 
-        const response = await baseAxios.post('/s3/file', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        const response = await baseAxios.post('/s3/file', formData);
 
         if (response.status === 201) {
           return response.data[0];
@@ -249,11 +241,7 @@ function BoardModify() {
       console.log(dataToSend);
 
       if (checkEmptyValuesAndShowAlert(dataToSend)) {
-        const response = await baseAxios.post('board', dataToSend, {
-          headers: {
-            Authorization: token, // 헤더에 Authorization 추가
-          },
-        });
+        const response = await baseAxios.post('board', dataToSend);
 
         if (response.status === 200) {
           console.log(response.data);

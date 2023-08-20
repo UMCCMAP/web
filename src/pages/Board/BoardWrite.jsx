@@ -7,7 +7,6 @@ import Editor from './components/Editor';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import baseAxios from '../../apis/baseAxios';
-import token from './dummy/token';
 
 function BoardWrite() {
   const [value, setValue] = useState('');
@@ -60,7 +59,6 @@ function BoardWrite() {
 
         const response = await baseAxios.post('/s3/file', formData, {
           headers: {
-            Authorization: token, // 헤더에 Authorization 추가
             'Content-Type': 'multipart/form-data',
           },
         });
@@ -161,11 +159,7 @@ function BoardWrite() {
       // POST 요청을 보냅니다.
       console.log(dataToSend);
       if (checkEmptyValuesAndShowAlert(dataToSend)) {
-        const response = await baseAxios.post('board', dataToSend, {
-          headers: {
-            Authorization: token, // 헤더에 Authorization 추가
-          },
-        });
+        const response = await baseAxios.post('board', dataToSend);
 
         if (response.status === 200) {
           console.log(response.data);
