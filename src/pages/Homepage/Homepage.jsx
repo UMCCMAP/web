@@ -15,10 +15,11 @@ import baseAxios from '../../apis/baseAxios';
 
 function Homepage() {
   const navigate = useNavigate();
+  const nickname = localStorage.getItem('nickname');
   const [randomBoardList, setRandomBoardList] = useState([]);
 
   const handleLogout = () => {
-    sessionStorage.clear();
+    localStorage.clear();
     navigate('/');
   };
 
@@ -39,7 +40,7 @@ function Homepage() {
     <W.LongWrapper height="1700px">
       <S.HeadBg>
         <S.HeaderBtnDiv>
-          <S.ProfileBtn to="/profile">Profile</S.ProfileBtn>
+          <S.ProfileBtn to="/profile">{nickname}</S.ProfileBtn>
           <S.LogoutBtn onClick={handleLogout}>Logout</S.LogoutBtn>
         </S.HeaderBtnDiv>
         <S.TitleDiv>
@@ -110,10 +111,14 @@ function Homepage() {
 
         <S.MainBtnDiv>
           <S.RecommendCommu>
-            <img src={randomBoardList[0].imageUrl} alt="게시판" />
+            {randomBoardList[0]?.imageUrl ? (
+              <img src={randomBoardList[0].imageUrl} alt="게시판" />
+            ) : null}
           </S.RecommendCommu>
           <S.RecommendCommu>
-            <img src={randomBoardList[1].imageUrl} alt="게시판" />
+            {randomBoardList[1]?.imageUrl ? (
+              <img src={randomBoardList[1].imageUrl} alt="게시판" />
+            ) : null}
           </S.RecommendCommu>
         </S.MainBtnDiv>
       </S.ContentWholeDiv>

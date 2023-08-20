@@ -31,7 +31,7 @@ function RegisterPage() {
         if (res.data === 'redirect:/main') {
           navigate('/home');
         } else {
-          alert('다시 입력해주세요!');
+          alert(res.data);
         }
       })
       .catch(function (e) {
