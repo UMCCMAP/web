@@ -17,12 +17,13 @@ function LoginCallbackPage() {
     try {
       const response = await baseAxios.get('users/login');
       if (response.data === 'redirect:/') {
-        navigate('/home');
+        alert('로그인 실패하셨습니다.');
+        navigate('/login');
       } else if (response.data === 'redirect:/users/nickname') {
         navigate('/register');
       } else {
-        alert('로그인 실패하셨습니다.');
-        navigate('/login');
+        localStorage.setItem('nickname', response.data);
+        navigate('/home');
       }
     } catch (e) {
       console.error(e);
