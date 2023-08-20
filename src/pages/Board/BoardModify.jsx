@@ -7,14 +7,14 @@ import Editor from './components/Editor';
 import React, { useState, useEffect, useCallback } from 'react';
 import baseAxios from '../../apis/baseAxios';
 import token from './dummy/token';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 function BoardModify() {
   const location = useLocation();
-
-  const [data, setData] = useState(location.state.data);
-  const [value, setValue] = useState(location.state.data.boardContent);
+  const { idx } = useParams();
+  const [data, setData] = useState();
+  const [value, setValue] = useState();
   console.log(data);
-  const [title, setTitle] = useState(location.state.data.boardTitle);
+  const [title, setTitle] = useState();
   const [cafeTitle, setCafeTitle] = useState();
   const [img, setImg] = useState([]);
   const [prevImg, setPrevImg] = useState([]);
@@ -43,12 +43,33 @@ function BoardModify() {
     'CMAP',
   ];
   const [activeButton, setActiveButton] = useState();
+
+  const fetchData = async () => {
+    try {
+      const response = await baseAxios.get(`/board/${idx}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setData(response.data?.result);
+      setValue(response.data?.result.boardContent);
+      setTitle(response.data?.result.boardTitle);
+      setCafeTitle(response.data?.result.cafeName);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   useEffect(() => {
-    // tagList 배열의 각 객체의 key 값을 추출하여 새로운 배열을 만듭니다.
-    const keys = data.tagList.map((tagObj) => parseInt(Object.keys(tagObj)[0]));
-    setActiveButton(keys);
-    getImgs(data.boardContent);
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      const keys = data.tagList.map((tagObj) => parseInt(Object.keys(tagObj)[0]));
+      setActiveButton(keys);
+      getImgs(data.boardContent);
+    }
+  }, [data]);
 
   function getImgs(content) {
     // 정규식을 사용하여 <img> 태그의 src 속성 추출
@@ -121,6 +142,7 @@ function BoardModify() {
       return [];
     }
   };
+
   const parseAndReplaceImages = (htmlContent, imageUrls) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlContent, 'text/html');
@@ -162,6 +184,44 @@ function BoardModify() {
       window.removeEventListener('click', handleOutsideClick);
     };
   }, []);
+
+  function checkEmptyValuesAndShowAlert(data) {
+    let isEmpty = false;
+    let emptyKeys = [];
+    if (!data.boardTitle) {
+      isEmpty = true;
+      emptyKeys.push('제목');
+    }
+    if (!data.boardContent) {
+      isEmpty = true;
+      emptyKeys.push('내용');
+    }
+    if (data.cafeIdx === undefined || data.cafeIdx === null || data.cafeIdx === '') {
+      isEmpty = true;
+      if (cafeTitle !== '') {
+        alert('존재하지 않는 카페이름입니다.');
+        return false;
+      } else {
+        emptyKeys.push('카페이름');
+      }
+    }
+
+    if (!Array.isArray(data.tagList) || data.tagList.length === 0) {
+      isEmpty = true;
+      emptyKeys.push('해시태그');
+    }
+
+    if (!data.imgList) {
+      // imgList는 비어있어도 됨
+    }
+
+    if (isEmpty) {
+      alert(`${emptyKeys.join(', ')}부분을 채워주세요!`);
+      return false;
+    } else {
+      return true;
+    }
+  }
   const sendDataToServer = async () => {
     const uniqueImages = img.filter((imgItem) => !prevImg.includes(imgItem));
 
@@ -188,18 +248,23 @@ function BoardModify() {
       // POST 요청을 보냅니다.
       console.log(dataToSend);
 
-      const response = await baseAxios.patch(`/board/${data.idx}`, dataToSend, {
-        headers: {
-          Authorization: token,
-        },
-      });
+      if (checkEmptyValuesAndShowAlert(dataToSend)) {
+        const response = await baseAxios.post('board', dataToSend, {
+          headers: {
+            Authorization: token, // 헤더에 Authorization 추가
+          },
+        });
 
-      if (response.status === 200) {
-        console.log(response.data);
+        if (response.status === 200) {
+          console.log(response.data);
+          alert('글이 수정되었습니다!');
+          navigate(`/board/${data.idx}`);
+        } else {
+          throw new Error('Failed to send data to server');
+        }
       } else {
-        throw new Error('Failed to send data to server');
+        return;
       }
-      navigate(`/board/${data.idx}`);
     } catch (error) {
       console.error(error);
     }
@@ -266,17 +331,22 @@ function BoardModify() {
           </B.DragDropWrap>
           <B.ThemeSelectWrap>
             <B.ThemesWrap>
-              {Object.values(location.state.keyWords).map((a, i) => (
-                <Button
-                  key={i}
-                  width="80px"
-                  height="40px"
-                  background={activeButton?.includes(a.tagIdx) ? '#FF6868' : '#F1F1F1'}
-                  color={activeButton?.includes(a.tagIdx) ? '#F1F1F1' : '#373737'}
-                  name={a.tagName}
-                  clickHandler={() => handleButtonClick(a.tagIdx)}
-                ></Button>
-              ))}
+              {data?.tagList.map((a) => {
+                const keys = Object.keys(a);
+                const value = Object.values(a);
+                console.log(value[0]);
+                return (
+                  <Button
+                    key={keys}
+                    width="80px"
+                    height="40px"
+                    background={activeButton?.includes(keys[0]) ? '#FF6868' : '#F1F1F1'}
+                    color={activeButton?.includes(keys[0]) ? '#F1F1F1' : '#373737'}
+                    name={value[0]}
+                    clickHandler={() => handleButtonClick(keys[0])}
+                  ></Button>
+                );
+              })}
             </B.ThemesWrap>
           </B.ThemeSelectWrap>
         </B.BoardWrap>

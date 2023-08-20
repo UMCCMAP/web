@@ -16,18 +16,7 @@ function BoardWrite() {
   const [cafeTitle, setCafeTitle] = useState('');
   const [img, setImg] = useState([]);
   const navigate = useNavigate();
-  const options = [
-    '게시글',
-    '작성자',
-    '카페',
-    '질문해요',
-    '추천해요',
-    '디저트',
-    '파스타',
-    '드립커피',
-    '음료',
-    'CMAP',
-  ];
+  const [options, setOptions] = useState([]);
   const location = useLocation();
   const [themes, setThemes] = useState([location.state]);
 
@@ -128,7 +117,12 @@ function BoardWrite() {
     }
     if (data.cafeIdx === undefined || data.cafeIdx === null || data.cafeIdx === '') {
       isEmpty = true;
-      emptyKeys.push('카페이름');
+      if (cafeTitle !== '') {
+        alert('존재하지 않는 카페이름입니다.');
+        return false;
+      } else {
+        emptyKeys.push('카페이름');
+      }
     }
 
     if (!Array.isArray(data.tagList) || data.tagList.length === 0) {
@@ -156,7 +150,7 @@ function BoardWrite() {
     try {
       // 서버에 보낼 데이터를 객체 형태로 만듭니다.
       const dataToSend = {
-        cafeIdx: 1,
+        cafeIdx: selectedOption.idx,
         boardContent: contentWithReplacedImages,
         boardTitle: title,
 
@@ -192,14 +186,25 @@ function BoardWrite() {
     console.log(data);
   }, [data]);
   const handleOptionSelect = (option) => {
-    setCafeTitle(option);
+    setCafeTitle(option.name);
     setIsDropdownOpen(false);
+    setSelectedOption(option);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     const value = e.target.value;
     setCafeTitle(value);
-    setIsDropdownOpen(true); // 입력 중에는 dropdown 메뉴를 보이도록 설정
+    try {
+      const response = await baseAxios.get(`/cafes/name?name=${value}`);
+      const data = response.data; // 이 부분은 서버에서 받은 데이터 구조에 따라 수정해야합니다.
+      setOptions(data); // 받은 데이터를 옵션 상태에 저장
+
+      setIsDropdownOpen(true); // 입력 중에는 dropdown 메뉴를 보이도록 설정
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching cafe data:', error);
+      // 에러 처리 로직을 추가할 수 있습니다.
+    }
   };
 
   const handleOutsideClick = (e) => {
@@ -241,14 +246,14 @@ function BoardWrite() {
             <B.CafeNameInput
               placeholder="카페 이름"
               value={cafeTitle}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e)}
             />
             <B.DropdownMenu>
               {isDropdownOpen && (
                 <B.DropdownList>
-                  {options.map((option, index) => (
-                    <B.DropdownItem key={index} onClick={() => handleOptionSelect(option)}>
-                      {option}
+                  {options.map((option) => (
+                    <B.DropdownItem key={option.idx} onClick={() => handleOptionSelect(option)}>
+                      {option.name}
                     </B.DropdownItem>
                   ))}
                 </B.DropdownList>

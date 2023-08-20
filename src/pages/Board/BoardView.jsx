@@ -1,3 +1,4 @@
+import './components/Editor.css';
 import 'react-quill/dist/quill.snow.css';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
@@ -25,7 +26,7 @@ function BoardView() {
   const [review, setReview] = useState({
     content: '',
   });
-  const [keyWords, setKeyWords] = useState(location.state);
+  const [keyWords, setKeyWords] = useState([]);
   const [like, setLike] = useState(0);
   console.log(location.state);
   const handleClick = () => {
@@ -85,6 +86,9 @@ function BoardView() {
   useEffect(() => {
     fetchData();
   }, [idx]);
+  useEffect(() => {
+    console.log(keyWords);
+  }, [keyWords]);
   return (
     <C.Wrap>
       <C.ContentsWrap height="fit-content">
