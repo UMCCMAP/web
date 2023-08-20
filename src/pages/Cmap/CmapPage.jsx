@@ -5,13 +5,12 @@ import MapListBar from '../../components/CafeMap/MapListBar';
 import MapUserBar from './components/MapUserBar';
 import ListModal from './components/ListModal';
 import * as C from '../../styles/PageContainer.style';
+import { useLocation, useParams } from 'react-router-dom';
 
 function CmapPage() {
+  const location = useLocation();
   const [modal, setModal] = useState('none');
   const [cmapList, setCmapList] = useState([]);
-  useEffect(() => {
-    console.log(cmapList);
-  }, [cmapList]);
   return (
     <C.Container>
       {modal !== 'none' && <ListModal modal={modal} setModal={setModal}></ListModal>}
@@ -23,7 +22,11 @@ function CmapPage() {
         hovercolor="rgb(245, 173, 173)"
       />
       <MapListBar color="rgba(255, 104, 104, 1)" />
-      <MapUserBar setModal={setModal} setCmapList={setCmapList} />
+      <MapUserBar
+        nick={location.state && location.state.userName ? location.state.userName : 'ME'}
+        setModal={setModal}
+        setCmapList={setCmapList}
+      />
     </C.Container>
   );
 }

@@ -3,27 +3,11 @@ import * as U from './styles/MapUserBar.style';
 import Arrow from '../../../assets/icon/Arrow.png';
 import Token from '../../dummy/Token';
 import baseAxios from '../../../apis/baseAxios';
-function MapUserBar({ setModal, setCmapList }) {
+function MapUserBar({ nick, setModal, setCmapList }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [options, setOptions] = useState([
-    '게시글',
-    '작성자',
-    '카페',
-    '게시글',
-    '작성자',
-    '카페',
-    '게시글',
-    '작성자',
-    '카페',
-    '게시글',
-    '작성자',
-    '카페',
-    '게시글',
-    '작성자',
-    '카페',
-  ]);
+  const [options, setOptions] = useState([]);
   const [cmapType, setcmapType] = useState('WANT');
-  const [user, setUser] = useState('ME');
+  const [user, setUser] = useState(nick);
   useEffect(() => {
     if (cmapType === 'WANT') {
       // 'WANT'인 경우 cmap/user-default로 API 요청
