@@ -1,5 +1,5 @@
-import React from 'react';
-import Footer from '../../components/footer';
+import React, { useEffect, useState } from 'react';
+import Footer from '../../components/Footer';
 import Redpin from '../../assets/HomepageIcon/MainLogo.png';
 import Logo from '../../assets/CMAPwhite.png';
 import Search from '../../assets/HomepageIcon/SearchLogo.png';
@@ -11,14 +11,30 @@ import { useNavigate } from 'react-router-dom';
 import './Homepage.css';
 import * as S from '../../styles/Homepage.style';
 import * as W from '../../styles/Wapper.style';
+import baseAxios from '../../apis/baseAxios';
 
 function Homepage() {
   const navigate = useNavigate();
+  const [randomBoardList, setRandomBoardList] = useState([]);
 
   const handleLogout = () => {
     sessionStorage.clear();
     navigate('/');
   };
+
+  const getRandomBoard = async () => {
+    try {
+      const response = await baseAxios.get('home');
+      setRandomBoardList(response.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    getRandomBoard();
+  }, []);
+
   return (
     <W.LongWrapper height="1700px">
       <S.HeadBg>
@@ -93,8 +109,12 @@ function Homepage() {
         </S.CommunityRecommendMent>
 
         <S.MainBtnDiv>
-          <S.RecommendCommu></S.RecommendCommu>
-          <S.RecommendCommu></S.RecommendCommu>
+          <S.RecommendCommu>
+            <img src={randomBoardList[0].imageUrl} alt="게시판" />
+          </S.RecommendCommu>
+          <S.RecommendCommu>
+            <img src={randomBoardList[1].imageUrl} alt="게시판" />
+          </S.RecommendCommu>
         </S.MainBtnDiv>
       </S.ContentWholeDiv>
       <Footer></Footer>
@@ -103,3 +123,5 @@ function Homepage() {
 }
 
 export default Homepage;
+
+// board 합친 후 onclick해야할듯...!
