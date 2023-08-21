@@ -28,6 +28,7 @@ function Homepage() {
     if (confirm('정말로 로그아웃을 하시겠습니까?')) {
       localStorage.clear();
       navigate('/');
+      location.reload();
     }
   };
 

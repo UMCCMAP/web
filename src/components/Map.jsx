@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Container as MapDiv, NaverMap, Marker, useNavermaps } from 'react-naver-maps';
 
-function Map({ markerImg, mapItems }) {
+function Map({ markerImg, mapItems, clickMarker }) {
   const navermaps = useNavermaps();
   const [location, setLocation] = useState({ latitude: 37.566535, longitude: 126.9779692 });
   const [map, setMap] = useState(null);
   const [clickedMarkerId, setClickedMarkerId] = useState(null);
-
   useEffect(() => {
     if (mapItems.length === 0) return;
 
@@ -44,6 +43,7 @@ function Map({ markerImg, mapItems }) {
     const clickPosition = new navermaps.LatLng(lat, long);
     map?.panTo(clickPosition);
     setClickedMarkerId(id);
+    clickMarker(id);
   };
 
   // marker 아이콘 커스텀

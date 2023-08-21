@@ -9,6 +9,7 @@ function SearchPage() {
   const [mapItemList, setMapItemList] = useState([]);
   const [selectThemeData, setSelectThemeData] = useState([]);
   const [searchCafeData, setSearchCafeData] = useState([]);
+  const [clickMarkerItem, setClickedMarkerItem] = useState(-1);
 
   useEffect(() => {
     const getCafeMapItem = async () => {
@@ -33,9 +34,17 @@ function SearchPage() {
     }
   }, [selectThemeData, searchCafeData]);
 
+  const clickedMapMarker = (id) => {
+    setClickedMarkerItem(id);
+  };
+
   return (
     <C.Container>
-      <Map markerImg="src/assets/images/cmapLogoG.svg" mapItems={mapItemList} />
+      <Map
+        markerImg="src/assets/images/cmapLogoG.svg"
+        mapItems={mapItemList}
+        clickMarker={clickedMapMarker}
+      />
       <MapNavbar
         content="search"
         logoImg="src/assets/images/cmapLogoG.svg"
@@ -43,7 +52,12 @@ function SearchPage() {
         hovercolor="rgb(154, 200, 154)"
         cafeItems={setSelectThemeData}
       />
-      <MapListBar color="rgb(33, 174, 33)" cafeItems={setSearchCafeData} mapItems={mapItemList} />
+      <MapListBar
+        color="rgb(33, 174, 33)"
+        cafeItems={setSearchCafeData}
+        mapItems={mapItemList}
+        clickMarker={clickMarkerItem}
+      />
     </C.Container>
   );
 }

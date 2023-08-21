@@ -56,12 +56,16 @@ function RecommendCafePage() {
           closeAction={handleDetailClick}
           getReviewIndex={handleReviewIndexClick}
           color="rgba(96, 167, 225, 1)"
-          data={recommendCafeList}
+          data={recommendCafeList?.idx}
           getReviewData={handleReviewData}
         />
       )}
       {detailId !== 0 && reviewCRU === 1 ? (
-        <RegisterReview closeReview={handleReviewIndexClick} color="rgba(96, 167, 225, 1)" />
+        <RegisterReview
+          closeReview={handleReviewIndexClick}
+          color="rgba(96, 167, 225, 1)"
+          dataId={recommendCafeList?.idx}
+        />
       ) : detailId !== 0 && reviewCRU === 2 ? (
         <UpdateReview
           closeReview={handleReviewIndexClick}

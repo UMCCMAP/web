@@ -20,6 +20,7 @@ import CmapPage from './pages/CmapPage';
 import LoginCallbackPage from './pages/Login/LoginCallbackPage';
 import PublicPages from './components/access/PublicPages';
 import PrivatePages from './components/access/PrivatePages';
+import isLogin from './components/access/isLogin';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,12 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      { path: '/', element: <PublicPages Component={Intropage} restricted={undefined} /> },
+      {
+        path: '/',
+        element: (
+          <PublicPages Component={isLogin() ? Homepage : Intropage} restricted={undefined} />
+        ),
+      },
       { path: '/home', element: <PrivatePages Component={Homepage} /> },
       { path: '/login', element: <PublicPages Component={Loginpage} restricted /> },
       { path: '/oauth2/redirect', element: <LoginCallbackPage /> },

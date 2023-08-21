@@ -96,7 +96,9 @@ function SelectThemeModal({ closeAction, getRecommendData }) {
   const getThemeCafeList = async () => {
     let theme = selectThemeList.join(',');
     try {
-      const response = await baseAxios.get(`cafes/filter?theme=${theme}`);
+      const response = await baseAxios.get(
+        `cafes/filter?district=영등포구&city=서울시&theme=${theme}`,
+      );
       if (response.status === 200) {
         getRecommendData(response.data);
         closeAction(false);

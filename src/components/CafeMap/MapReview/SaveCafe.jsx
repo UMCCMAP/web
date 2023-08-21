@@ -8,8 +8,8 @@ function SaveCafe({ color, closeAction, data }) {
 
   const sendSaveType = async () => {
     await baseAxios
-      .put(
-        `map/place/${data.idx}`,
+      .post(
+        `/map/place/${data.idx}`,
         {
           type: clickSave,
         },
@@ -19,7 +19,7 @@ function SaveCafe({ color, closeAction, data }) {
       )
       .then(function (res) {
         if (res.status === 201) {
-          closeAction();
+          location.reload();
         }
       })
       .catch(function (e) {

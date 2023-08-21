@@ -9,11 +9,10 @@ import UpdateReview from './MapReview/UpdateReview';
 import { ReactComponent as Open } from '../../assets/images/openSearchbar.svg';
 import { ReactComponent as Close } from '../../assets/images/closeSearchbar.svg';
 
-function MapListBar({ color, cafeItems, mapItems }) {
+function MapListBar({ color, cafeItems, mapItems, clickMarker }) {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const queryParamValue = queryParams.get('search');
-
   const [isOpen, setIsOpen] = useState(false);
   const [detailCafeIdx, setDetailCafeIdx] = useState(-1);
   const [reviewCRU, setReviewCRU] = useState(0);
@@ -69,6 +68,10 @@ function MapListBar({ color, cafeItems, mapItems }) {
   useEffect(() => {
     setCafeData(mapItems);
   }, [mapItems]);
+
+  useEffect(() => {
+    setDetailCafeIdx(clickMarker);
+  }, [clickMarker]);
 
   useEffect(() => {
     if (queryParamValue) {
