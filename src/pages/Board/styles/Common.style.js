@@ -8,13 +8,13 @@ export const Wrap = styled.div`
   align-items: center;
 `;
 export const ContentsWrap = styled.div`
-  width: 67rem;
+  width: 70rem;
   height: ${(props) => props.height || '90rem'};
   display: flex;
   align-items: center;
 
   flex-direction: column;
-  @media (max-width: 67rem) {
+  @media (max-width: 70rem) {
     width: 100%;
   }
 `;

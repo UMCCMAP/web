@@ -4,3 +4,6 @@
 .ql-editor em {
     font-style: italic;
 }
+.ql-editor img{
+    max-width: 100%;
+}

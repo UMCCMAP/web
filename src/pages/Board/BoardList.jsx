@@ -1,155 +1,39 @@
-import React, { useState } from 'react';
-import { styled } from 'styled-components';
+import React, { useState, useCallback, useEffect } from 'react';
+
 import Button from '../../components/Button';
 import WriteImg from '../../assets/icon/Vector.png';
 import Header from '../../components/Header';
 import Footer from './components/Footer';
 import * as C from './styles/Common.style';
 import boards from './dummy/Boards';
-import { Link, useNavigate } from 'react-router-dom';
-const BoardWrap = styled.div`
-  width: 100%;
-  height: fit-content;
-  margin-top: 10px;
-`;
-const BoardKeywordWrap = styled.div`
-  width: 100%;
-  height: 5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-const BoardKeyWords = styled.div`
-  width: 35rem;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-left: 2px;
-  gap: 10px;
-`;
+import baseAxios from '../../apis/baseAxios';
+import { useNavigate } from 'react-router-dom';
+import * as B from './styles/BoardList.style';
+import token from './dummy/token';
 
-const BoardWriteButton = styled.div`
-  background: #60a7e1;
-  width: 108px;
-  height: 41px;
-  padding: 10px 16px 10px 16px;
-  border-radius: 32px;
-  gap: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-`;
-const WriteText = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Pretendard;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 21px;
-  letter-spacing: -0.02em;
-  text-align: center;
-  color: white;
-`;
-const BoardContentsWrap = styled.div`
-  height: fit-content;
-  flex-direction: column;
-  display: flex;
-  margin-top: 5px;
-`;
-const Board = styled.div`
-  display: flex;
-  height: 15rem;
-  margin-top: 30px;
-  cursor: pointer;
-`;
-const BoardWords = styled.div`
-  width: 48%;
-  height: 100%;
-`;
-const Title = styled.div`
-  height: 3rem;
-  font-family: Pretendard;
-  font-size: 34px;
-  font-weight: 700;
-  line-height: 41px;
-  letter-spacing: -0.02em;
-  text-align: left;
-`;
-const Content = styled.div`
-  height: 9rem;
-  display: flex;
-  align-items: center;
-  line-height: 15px;
-`;
-const Themes = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 12px;
-`;
-const BoardImagesWrap = styled.div`
-  width: 52%;
-  height: 100%;
-  display: flex;
-  gap: 20px;
-  justify-content: flex-end;
-  align-items: flex-start;
-`;
-const BoardImage = styled.div`
-  width: 10rem;
-  height: 10rem;
-  background-color: #f1f1f1;
-  border-radius: 32px;
-  background-image: url('${(props) => props.background}');
-  background-size: cover;
-  transition: transform 0.3s ease; /* 부드러운 애니메이션 효과를 추가합니다. */
-
-  &:hover {
-    transform: scale(1.2); /* 마우스를 올렸을 때 이미지 크기를 1.2배로 확대합니다. */
-  }
-`;
-const PageButtons = styled.div`
-  width: 150px;
-  height: 20px;
-  margin-top: 43px;
-  margin-bottom: 12px;
-  display: flex;
-  justify-content: center;
-`;
-const PageNums = styled.div`
-  width: 70%;
-  height: 100%;
-  display: flex;
-`;
-const PageNum = styled.div`
-  width: calc(100% / 5);
-  text-align: center;
-  flex: 1;
-  cursor: pointer;
-  color: ${(props) => props.color};
-`;
-const PageMoveButton = styled.div`
-  width: 15%;
-  cursor: pointer;
-  text-align: center;
-`;
 function BoardList() {
-  const [keyWords] = useState([
-    '질문해요',
-    '추천해요',
-    '디저트',
-    '파스타',
-    '드립커피',
-    '음료',
-    'CMAP',
-  ]);
+  const [keyWords, setKeyWords] = useState([]);
   const navigate = useNavigate();
   const ITEMS_PER_PAGE = 5;
   const PAGE_RANGE_DISPLAY = 5;
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [activeButton, setActiveButton] = useState([]);
+  const [currentData, setCurrentData] = useState([]);
+  const [pageCount, setPageCount] = useState(5);
+  const [search, setSearch] = useState({ page: currentPage, searchType: '카페', keyword: '' });
+  const handleButtonClick = (theme) => {
+    setActiveButton(
+      (prevActive) =>
+        prevActive.includes(theme)
+          ? prevActive.filter((item) => item !== theme) // 이미 선택된 테마라면 제거
+          : [...prevActive, theme], // 선택되지 않은 테마라면 추가
+    );
+    setCurrentPage(1);
+    setSearch((prevSearch) => ({
+      ...prevSearch,
+      keyword: '',
+    }));
+  };
   // 현재 페이지에 해당하는 카페들을 가져오는 함수
   const getCurrentPageCafes = () => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -162,14 +46,12 @@ function BoardList() {
   };
 
   const handlePrevPage = () => {
-    setCurrentPage((prevPage) => 5 * Math.floor((prevPage - PAGE_RANGE_DISPLAY - 1) / 5) + 1);
+    setCurrentPage((prevPage) => 5 * Math.floor((prevPage - PAGE_RANGE_DISPLAY - 1) / 5) + 5);
   };
-
-  const pageCount = Math.ceil(boards.length / ITEMS_PER_PAGE);
 
   const isNextDisabled =
     Math.floor((currentPage - 1) / PAGE_RANGE_DISPLAY) ===
-    Math.floor(pageCount / PAGE_RANGE_DISPLAY);
+    Math.floor((pageCount - 1) / PAGE_RANGE_DISPLAY);
 
   const isPrevDisabled = Math.floor((currentPage - 1) / PAGE_RANGE_DISPLAY) === 0;
 
@@ -184,102 +66,171 @@ function BoardList() {
 
     for (let i = startPage; i <= endPage; i++) {
       pageButtons.push(
-        <PageNum
+        <B.PageNum
           key={i}
           onClick={() => setCurrentPage(i)}
           color={i === currentPage ? '#000000' : '#A0A0A0'}
         >
           {i}
-        </PageNum>,
+        </B.PageNum>,
       );
     }
 
     return pageButtons;
   };
+  async function fetchData(activeButton, currentPage, search) {
+    try {
+      const tagIdx = activeButton.join(','); // 배열의 요소를 문자열로 추출하고 쉼표로 구분하여 저장
+
+      // 쿼리 파라미터를 문자열로 만들기
+      let queryParams = new URLSearchParams({
+        tagIdx: tagIdx,
+        page: (currentPage - 1).toString(),
+      }).toString();
+
+      // 백엔드 URL 생성
+      let backendUrl = '/board';
+      if (search.keyword !== '') {
+        backendUrl = '/board/search';
+        let searchTypeMapping = {
+          카페: 'cafe',
+          작성자: 'writer',
+          제목: 'title-content',
+        };
+
+        let transformedSearchType = searchTypeMapping[search.searchType] || search.searchType;
+        queryParams = new URLSearchParams({
+          // tagIdx: tagIdx,
+
+          page: (currentPage - 1).toString(),
+          searchType: transformedSearchType,
+          keyword: search.keyword,
+        }).toString();
+      }
+
+      backendUrl += `?${queryParams}`;
+      console.log(backendUrl);
+      console.log(token);
+      // 요청 보내기
+      const response = await baseAxios.get(backendUrl);
+      setCurrentData(response.data.result.boardResponses.content);
+      setKeyWords(response.data.result.tagNames);
+      setPageCount(response.data.result.boardResponses.totalPages);
+      console.log(response.data);
+      // ... 데이터를 활용한 작업
+    } catch (error) {
+      console.error('데이터 요청 중 오류 발생:', error);
+    }
+  }
+  // HTML 태그를 제거하는 함수
+  const removeHtmlTags = (str) => {
+    const div = document.createElement('div');
+    div.innerHTML = str;
+    return div.textContent || div.innerText || '';
+  };
+
+  // fetchData 함수 호출
+  useEffect(() => {
+    console.log(search);
+    console.log(currentPage);
+    fetchData(activeButton, currentPage, search);
+  }, [activeButton, currentPage, search]);
 
   return (
     <C.Wrap>
       <C.ContentsWrap height="fit-content">
-        <Header name="검색" />
-        <BoardWrap>
-          <BoardKeywordWrap>
-            <BoardKeyWords>
+        <Header name="검색" value={search} set={setSearch} />
+        <B.BoardWrap>
+          <B.BoardKeywordWrap>
+            <B.BoardKeyWords>
               {keyWords.map((a) => (
                 <Button
-                  key={a}
-                  name={a}
+                  key={a.tagIdx}
+                  background={activeButton.includes(a.tagIdx) ? '#FF6868' : '#F1F1F1'}
+                  color={activeButton.includes(a.tagIdx) ? '#F1F1F1' : '#373737'}
+                  name={a.tagName}
+                  clickHandler={() => handleButtonClick(a.tagIdx)}
                   width="80px"
                   height="30px"
-                  background="#f1f1f1"
                   font="13px"
                 ></Button>
               ))}
-            </BoardKeyWords>
-            <BoardWriteButton
+            </B.BoardKeyWords>
+            <B.BoardWriteButton
               onClick={() => {
-                navigate('/board/write');
+                navigate('/board/write', {
+                  state: keyWords,
+                });
               }}
             >
               <img src={WriteImg} alt="logo image" />
-              <WriteText>글쓰기</WriteText>
-            </BoardWriteButton>
-          </BoardKeywordWrap>
-
-          <BoardContentsWrap>
-            {getCurrentPageCafes().map((a, i) => (
-              <Board
-                onClick={() => {
-                  navigate('/board/view');
-                }}
-                key={i}
-              >
-                <BoardWords>
-                  <Title>{a.title}</Title>
-                  <Content>{a.content}</Content>
-                  <Themes>
-                    {a.theme.map((a) => (
-                      <Button
-                        key={a}
-                        width="80px"
-                        height="30px"
-                        bacground="#f1f1f1"
-                        font="13px"
-                        name={a}
-                      ></Button>
+              <B.WriteText>글쓰기</B.WriteText>
+            </B.BoardWriteButton>
+          </B.BoardKeywordWrap>
+          <B.BoardContentsWrap>
+            {currentData.length > 0 ? (
+              currentData.map((a) => (
+                <B.Board
+                  onClick={() => {
+                    navigate(`/board/${a.idx}`, {
+                      state: keyWords,
+                    });
+                  }}
+                  key={a.idx}
+                >
+                  <B.BoardWords>
+                    <B.Title>{a.boardTitle}</B.Title>
+                    <B.Content>{removeHtmlTags(a.boardContent)}</B.Content>
+                    <B.Themes>
+                      {Object.values(a.tagList).map((obj) => {
+                        const tag = Object.values(obj)[0];
+                        return (
+                          <Button
+                            key={tag}
+                            width="80px"
+                            height="30px"
+                            background="#f1f1f1"
+                            font="13px"
+                            name={tag}
+                          ></Button>
+                        );
+                      })}
+                    </B.Themes>
+                  </B.BoardWords>
+                  <B.BoardImagesWrap>
+                    {Object.values(a.imgList).map((a) => (
+                      <B.BoardImage key={a} background={a}></B.BoardImage>
                     ))}
-                  </Themes>
-                </BoardWords>
-                <BoardImagesWrap>
-                  {a.image.map((a) => (
-                    <BoardImage key={a} background={a}></BoardImage>
-                  ))}
-                </BoardImagesWrap>
-              </Board>
-            ))}
-          </BoardContentsWrap>
-        </BoardWrap>
+                  </B.BoardImagesWrap>
+                </B.Board>
+              ))
+            ) : (
+              <B.NoDataWrap>게시물이 없습니다. ㅠㅠ</B.NoDataWrap>
+            )}
+          </B.BoardContentsWrap>
+        </B.BoardWrap>
+        <B.PageButtons>
 
-        <PageButtons>
           {!isPrevDisabled && (
-            <PageMoveButton
+            <B.PageMoveButton
               onClick={() => {
                 handlePrevPage();
               }}
             >
               {'<'}
-            </PageMoveButton>
+            </B.PageMoveButton>
           )}
-          <PageNums>{renderPageButtons()}</PageNums>
+          <B.PageNums>{renderPageButtons()}</B.PageNums>
           {!isNextDisabled && (
-            <PageMoveButton
+            <B.PageMoveButton
               onClick={() => {
                 handleNextPage();
               }}
             >
               {'>'}
-            </PageMoveButton>
+            </B.PageMoveButton>
           )}
-        </PageButtons>
+        </B.PageButtons>
       </C.ContentsWrap>
 
       <Footer />

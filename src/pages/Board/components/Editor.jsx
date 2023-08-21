@@ -4,7 +4,8 @@ import 'react-quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize-module-react';
 import DragAndDropModule from 'quill-drag-and-drop-module';
 import './Editor.css';
-function Editor({ value, setValue }) {
+import baseAxios from '../../../apis/baseAxios';
+function Editor({ value, setValue, img, setImg }) {
   // 버튼 클릭 시 실행될 함수
 
   const quillRef = useRef(null);
@@ -23,6 +24,21 @@ function Editor({ value, setValue }) {
     [{ font: [] }],
     [{ align: [] }], // 가운데 정렬, 왼쪽 정렬, 오른쪽 정렬 옵션 추가
   ];
+
+  const handleEditorChange = (content) => {
+    setValue(content); // 에디터 내용 변경
+    console.log('이거실행됨');
+    // 이미지 태그 추출
+    const editorDiv = document.createElement('div');
+    editorDiv.innerHTML = content;
+    const imgElements = editorDiv.querySelectorAll('img');
+
+    // 이미지 URL 추출
+    const imageUrls = Array.from(imgElements).map((img) => img.src);
+
+    console.log('이미지 URL 목록:', imageUrls);
+    setImg(imageUrls);
+  };
   const ImageHandler = () => {
     // input type="file" DOM을 생성합니다.
     const input = document.createElement('input');
@@ -36,10 +52,7 @@ function Editor({ value, setValue }) {
       const file = input.files ? input.files[0] : null;
       /* 이미지 선택을 취소한 경우 종료합니다. */
       if (!file) return;
-      const formData = new FormData(); // Create a new FormData to send the image file
-
-      formData.append('image', file); // Append the image file to the FormData with key 'image'
-
+      console.log(file);
       /* FileReader를 사용하여 이미지 파일을 읽습니다. */
       const reader = new FileReader();
       reader.onload = () => {
@@ -56,7 +69,6 @@ function Editor({ value, setValue }) {
       };
     };
   };
-
   const modules = useMemo(() => {
     return {
       toolbar: {
@@ -65,7 +77,6 @@ function Editor({ value, setValue }) {
           image: ImageHandler,
         },
       },
-
       ImageResize: {
         // 이미지 리사이즈 모듈 설정
         parchment: Quill.import('parchment'),
@@ -114,7 +125,7 @@ function Editor({ value, setValue }) {
       value={value}
       modules={modules}
       formats={formats}
-      onChange={setValue}
+      onChange={handleEditorChange}
       placeholder="내용을 입력하세요."
     />
   );

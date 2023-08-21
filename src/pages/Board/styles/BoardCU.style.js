@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const BoardWrap = styled.div`
   width: 100%;
@@ -45,14 +45,24 @@ const ContentsInput = styled.div`
   font-size: 20px;
   overflow: auto;
 `;
-
-const CafeNameInput = styled(InputBase)`
-  width: calc(100% - 20px);
+export const CafeWrap = styled.div`
+  width: 100%;
   height: 3rem;
+  margin-top: 16px;
+  position: relative;
+`;
+export const CafeNameInput = styled.input`
+  outline: none;
+  background: #f1f1f1;
+  border-radius: 32px;
+  border: none;
+  font-family: Pretendard;
+
   font-size: 24px;
   text-align: center;
-  margin-top: 16px;
-`;
+  width: 100%;
+  height: 100%;
+
 
 const DragDropWrap = styled.div`
   margin-top: 16px;
@@ -76,11 +86,22 @@ const DragDropTitle = styled.div`
   color: #939393;
 `;
 
-const DragDropImages = styled.div`
-  width: 21.25rem;
+export const DragDropImages = styled.div`
+  width: fit-content;
+
   height: 6.25rem;
   display: flex;
   gap: 10px;
+  justify-content: flex-end;
+  margin-right: 15px;
+`;
+const zoomInAnimation = keyframes`
+  0%, 100% {
+    transform: scale(0.8); /* 작은 크기로 시작과 끝 */
+  }
+  50% {
+    transform: scale(1.2); /* 큰 크기로 중간에 확대 */
+  }
 `;
 
 const Image = styled.div`
@@ -88,6 +109,12 @@ const Image = styled.div`
   height: 6.25rem;
   background-color: #f1f1f1;
   border-radius: 32px;
+  &:hover {
+    transform: scale(2);
+    z-index: 999;
+    transition: 0.2s;
+  }
+  animation: ${zoomInAnimation} 0.5s ease-in-out;
 `;
 
 const ThemeSelectWrap = styled.div`
@@ -106,10 +133,45 @@ const ThemesWrap = styled.div`
   height: fit-content;
   display: flex;
   margin-left: 10px;
-  gap: 10px;
+  gap: 15px;
   align-items: center;
   flex-wrap: wrap;
   margin: 5px;
+  z-index: 0;
+`;
+export const DropdownMenu = styled.div`
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: -5%;
+  max-height: 220px;
+`;
+
+export const DropdownList = styled.ul`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 100;
+  text-align: center;
+  border-radius: 16px;
+  box-shadow: 0px 4px 12px 0px #00000040;
+
+  max-height: 220px;
+  overflow: auto;
+`;
+
+export const DropdownItem = styled.li`
+  background-color: white;
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
 `;
 
 export {
