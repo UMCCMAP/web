@@ -51,7 +51,7 @@ export const CafeWrap = styled.div`
   margin-top: 16px;
   position: relative;
 `;
-export const CafeNameInput = styled.input`
+const CafeNameInput = styled.input`
   outline: none;
   background: #f1f1f1;
   border-radius: 32px;
@@ -62,7 +62,7 @@ export const CafeNameInput = styled.input`
   text-align: center;
   width: 100%;
   height: 100%;
-
+`;
 
 const DragDropWrap = styled.div`
   margin-top: 16px;
@@ -86,7 +86,7 @@ const DragDropTitle = styled.div`
   color: #939393;
 `;
 
-export const DragDropImages = styled.div`
+const DragDropImages = styled.div`
   width: fit-content;
 
   height: 6.25rem;

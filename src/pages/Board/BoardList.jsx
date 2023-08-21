@@ -5,11 +5,9 @@ import WriteImg from '../../assets/icon/Vector.png';
 import Header from '../../components/Header';
 import Footer from './components/Footer';
 import * as C from './styles/Common.style';
-import boards from './dummy/Boards';
 import baseAxios from '../../apis/baseAxios';
 import { useNavigate } from 'react-router-dom';
 import * as B from './styles/BoardList.style';
-import token from './dummy/token';
 
 function BoardList() {
   const [keyWords, setKeyWords] = useState([]);
@@ -210,7 +208,6 @@ function BoardList() {
           </B.BoardContentsWrap>
         </B.BoardWrap>
         <B.PageButtons>
-
           {!isPrevDisabled && (
             <B.PageMoveButton
               onClick={() => {
