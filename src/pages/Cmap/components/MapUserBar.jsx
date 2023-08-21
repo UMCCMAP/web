@@ -11,11 +11,7 @@ function MapUserBar({ user, setUser, setModal, setCmapList }) {
     const req = cmapType === 'WENT' ? 'went' : 'default';
     if (user === 'ME') {
       baseAxios
-        .get(`cmap/user-${req}`, {
-          headers: {
-            Authorization: Token,
-          },
-        })
+        .get(`cmap/user-${req}`)
         .then((response) => {
           // API 요청 성공 시 처리할 로직
           setCmapList(response.data);
@@ -27,11 +23,7 @@ function MapUserBar({ user, setUser, setModal, setCmapList }) {
         });
     } else {
       baseAxios
-        .get(`cmap/mates-${req}?Nickname=${user}`, {
-          headers: {
-            Authorization: Token,
-          },
-        })
+        .get(`cmap/mates-${req}?Nickname=${user}`)
         .then((response) => {
           // API 요청 성공 시 처리할 로직
           setCmapList(response.data);
@@ -51,7 +43,7 @@ function MapUserBar({ user, setUser, setModal, setCmapList }) {
     const url = 'cmap/mates-all'; // cmap URL
 
     try {
-      const response = await baseAxios.get(url, { headers: { Authorization: Token } });
+      const response = await baseAxios.get(url);
       console.log('Response:', response.data); // 요청 결과 확인 (필요에 따라 수정)
       setOptions(response.data);
     } catch (error) {

@@ -53,12 +53,7 @@ function ListModal({ user, modal, setModal }) {
         let response;
 
         if (user === 'ME') {
-          response = await baseAxios.get(`cmap/user-${req}`, {
-            headers: {
-              // 여기에 실제 토큰 값을 넣어야 합니다
-              Authorization: Token,
-            },
-          });
+          response = await baseAxios.get(`cmap/user-${req}`);
         } else {
           response = await baseAxios.get(`cmap/mates-${req}?Nickname=${user}`);
         }
