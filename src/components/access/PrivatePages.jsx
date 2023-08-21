@@ -1,4 +1,4 @@
-import Loginpage from '../../pages/Login/Loginpage';
+import Loginpage from '@/pages/Login/Loginpage';
 import isLogin from './isLogin';
 
 const PrivatePages = ({ Component }) => {

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import baseAxios from '../../../apis/baseAxios';
+import baseAxios from '@/apis/baseAxios';
 import * as TM from './styles/SelectThemeModal.style';
-import * as M from '../../../styles/Modal.style';
-import { ReactComponent as Book } from '../../../assets/images/book.svg';
-import { ReactComponent as Coffee } from '../../../assets/images/coffee.svg';
-import { ReactComponent as Mountain } from '../../../assets/images/mountain.svg';
-import { ReactComponent as Car } from '../../../assets/images/car.svg';
-import { ReactComponent as Photo } from '../../../assets/images/photo.svg';
-import { ReactComponent as Bread } from '../../../assets/images/bread.svg';
-import { ReactComponent as Cake } from '../../../assets/images/cake.svg';
-import { ReactComponent as Pasta } from '../../../assets/images/pasta.svg';
+import * as M from '@/styles/Modal.style';
+import { ReactComponent as Book } from '@/assets/images/book.svg';
+import { ReactComponent as Coffee } from '@/assets/images/coffee.svg';
+import { ReactComponent as Mountain } from '@/assets/images/mountain.svg';
+import { ReactComponent as Car } from '@/assets/images/car.svg';
+import { ReactComponent as Photo } from '@/assets/images/photo.svg';
+import { ReactComponent as Bread } from '@/assets/images/bread.svg';
+import { ReactComponent as Cake } from '@/assets/images/cake.svg';
+import { ReactComponent as Pasta } from '@/assets/images/pasta.svg';
 
 function SelectThemeModal({ closeAction, getRecommendData }) {
   const [selectTheme, setSelectTheme] = useState(false);

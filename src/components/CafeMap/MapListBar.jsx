@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import baseAxios from '../../apis/baseAxios';
+import baseAxios from '@/apis/baseAxios';
 import * as L from './styles/MapListBar.style';
 import MapCafeDetail from './MapCafeDetail';
 import RegisterReview from './MapReview/RegisterReview';
 import ReadReview from './MapReview/ReadReview';
 import UpdateReview from './MapReview/UpdateReview';
-import { ReactComponent as Open } from '../../assets/images/openSearchbar.svg';
-import { ReactComponent as Close } from '../../assets/images/closeSearchbar.svg';
+import { ReactComponent as Open } from '@/assets/images/openSearchbar.svg';
+import { ReactComponent as Close } from '@/assets/images/closeSearchbar.svg';
 
 function MapListBar({ color, cafeItems, mapItems, clickMarker }) {
   const location = useLocation();

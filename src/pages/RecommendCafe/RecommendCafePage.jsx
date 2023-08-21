@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import Map from '../../components/Map';
-import MapNavbar from '../../components/CafeMap/MapNavbar';
+import Map from '@/components/Map';
+import MapNavbar from '@/components/CafeMap/MapNavbar';
 import SelectThemeModal from './components/SelectThemeModal';
-import MapCafeDetail from '../../components/CafeMap/MapCafeDetail';
-import RegisterReview from '../../components/CafeMap/MapReview/RegisterReview';
-import ReadReview from '../../components/CafeMap/MapReview/ReadReview';
-import UpdateReview from '../../components/CafeMap/MapReview/UpdateReview';
-import * as C from '../../styles/PageContainer.style';
+import MapCafeDetail from '@/components/CafeMap/MapCafeDetail';
+import RegisterReview from '@/components/CafeMap/MapReview/RegisterReview';
+import ReadReview from '@/components/CafeMap/MapReview/ReadReview';
+import UpdateReview from '@/components/CafeMap/MapReview/UpdateReview';
+import * as C from '@/styles/PageContainer.style';
+import CMAPLogoB from '@/assets/images/cmapLogoB.svg';
 
 function RecommendCafePage() {
   const [selectModalOpen, setSelectModalOpen] = useState(true);
@@ -41,12 +42,12 @@ function RecommendCafePage() {
         <SelectThemeModal closeAction={handleModalClick} getRecommendData={handleRecommendCafe} />
       )}
       <Map
-        markerImg="src/assets/images/cmapLogoB.svg"
+        markerImg={CMAPLogoB}
         mapItems={recommendCafeList !== undefined ? recommendCafeList : []}
       />
       <MapNavbar
         content="recommend"
-        logoImg="src/assets/images/cmapLogoB.svg"
+        logoImg={CMAPLogoB}
         color="rgba(96, 167, 225, 1)"
         hovercolor="rgba(117, 177, 226, 0.812)"
         cafeItems={recommendCafeList !== undefined ? recommendCafeList : []}

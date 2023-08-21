@@ -4,17 +4,17 @@ import CommonBtn from '../CommonBtn';
 import { AiOutlineLeft } from 'react-icons/ai';
 import { MdOutlinePhotoCamera } from 'react-icons/md';
 import CafeReview from './CafeReview';
-import { ReactComponent as Scope } from '../../assets/images/scope.svg';
+import { ReactComponent as Scope } from '@/assets/images/scope.svg';
 import SaveCafe from './MapReview/SaveCafe';
-import baseAxios from '../../apis/baseAxios';
-import { ReactComponent as Book } from '../../assets/images/book.svg';
-import { ReactComponent as Coffee } from '../../assets/images/coffee.svg';
-import { ReactComponent as Mountain } from '../../assets/images/mountain.svg';
-import { ReactComponent as Car } from '../../assets/images/car.svg';
-import { ReactComponent as Photo } from '../../assets/images/photo.svg';
-import { ReactComponent as Bread } from '../../assets/images/bread.svg';
-import { ReactComponent as Cake } from '../../assets/images/cake.svg';
-import { ReactComponent as Pasta } from '../../assets/images/pasta.svg';
+import baseAxios from '@/apis/baseAxios';
+import { ReactComponent as Book } from '@/assets/images/book.svg';
+import { ReactComponent as Coffee } from '@/assets/images/coffee.svg';
+import { ReactComponent as Mountain } from '@/assets/images/mountain.svg';
+import { ReactComponent as Car } from '@/assets/images/car.svg';
+import { ReactComponent as Photo } from '@/assets/images/photo.svg';
+import { ReactComponent as Bread } from '@/assets/images/bread.svg';
+import { ReactComponent as Cake } from '@/assets/images/cake.svg';
+import { ReactComponent as Pasta } from '@/assets/images/pasta.svg';
 
 const fontColor = 'rgba(249, 255, 253, 1)';
 

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import baseAxios from '../../../apis/baseAxios';
-import * as M from '../../../styles/Modal.style';
+import baseAxios from '@/apis/baseAxios';
+import * as M from '@/styles/Modal.style';
 import * as S from './styles/SaveCafe.style';
+import closeSvg from '@/assets/images/close.svg';
 
 function SaveCafe({ color, closeAction, data }) {
   const [clickSave, setClickSave] = useState(data?.cafeType != null ? data?.cafeType : '');
@@ -31,7 +32,7 @@ function SaveCafe({ color, closeAction, data }) {
     <M.ModalBackground>
       <M.ModalContainer width="470px" height="305px">
         <M.CloseReviewModal onClick={closeAction}>
-          <img src="src/assets/images/close.svg" alt="close" />
+          <img src={closeSvg} alt="close" />
         </M.CloseReviewModal>
         <S.ReviewContainer>
           <S.AddBtnContainer>

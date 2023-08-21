@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import { format } from 'date-fns';
 import * as C from './styles/CafeReview.style';
-import baseAxios from '../../apis/baseAxios';
+import baseAxios from '@/apis/baseAxios';
 
 function CafeReview({ data, getReviewIndex, getReviewData }) {
   const [isExpanded, setIsExpanded] = useState(false);

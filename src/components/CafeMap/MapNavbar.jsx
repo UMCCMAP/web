@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import baseAxios from '../../apis/baseAxios';
+import baseAxios from '@/apis/baseAxios';
 import * as N from './styles/MapNavbar.style';
-import { ReactComponent as Home } from '../../assets/images/home.svg';
-import { ReactComponent as Book } from '../../assets/images/book.svg';
-import { ReactComponent as Coffee } from '../../assets/images/coffee.svg';
-import { ReactComponent as Mountain } from '../../assets/images/mountain.svg';
-import { ReactComponent as Car } from '../../assets/images/car.svg';
-import { ReactComponent as Photo } from '../../assets/images/photo.svg';
-import { ReactComponent as Bread } from '../../assets/images/bread.svg';
-import { ReactComponent as Cake } from '../../assets/images/cake.svg';
-import { ReactComponent as Pasta } from '../../assets/images/pasta.svg';
-import { ReactComponent as Bento } from '../../assets/images/bento.svg';
-import { ReactComponent as BentoStar } from '../../assets/images/bentoStar.svg';
-import { ReactComponent as BentoMap } from '../../assets/images/bentoMap.svg';
-import { ReactComponent as BentoMarker } from '../../assets/images/bentoMarker.svg';
+import { ReactComponent as Home } from '@/assets/images/home.svg';
+import { ReactComponent as Book } from '@/assets/images/book.svg';
+import { ReactComponent as Coffee } from '@/assets/images/coffee.svg';
+import { ReactComponent as Mountain } from '@/assets/images/mountain.svg';
+import { ReactComponent as Car } from '@/assets/images/car.svg';
+import { ReactComponent as Photo } from '@/assets/images/photo.svg';
+import { ReactComponent as Bread } from '@/assets/images/bread.svg';
+import { ReactComponent as Cake } from '@/assets/images/cake.svg';
+import { ReactComponent as Pasta } from '@/assets/images/pasta.svg';
+import { ReactComponent as Bento } from '@/assets/images/bento.svg';
+import { ReactComponent as BentoStar } from '@/assets/images/bentoStar.svg';
+import { ReactComponent as BentoMap } from '@/assets/images/bentoMap.svg';
+import { ReactComponent as BentoMarker } from '@/assets/images/bentoMarker.svg';
 
 function MapNavbar({ content, logoImg, color, hovercolor, cafeItems }) {
   const navigate = useNavigate();

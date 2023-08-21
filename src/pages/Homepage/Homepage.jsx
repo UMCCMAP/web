@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import Footer from '../../components/Footer';
-import Redpin from '../../assets/HomepageIcon/MainLogo.png';
-import Logo from '../../assets/CMAPwhite.png';
-import Search from '../../assets/HomepageIcon/SearchLogo.png';
-import Map from '../../assets/HomepageIcon/MapIcon.png';
-import Recommend from '../../assets/HomepageIcon/BluestarIcon.png';
-import Category from '../../assets/HomepageIcon/CommunityIcon.png';
-import RedStar from '../../assets/HomepageIcon/RedstarIcon.png';
+import Footer from '@/components/Footer';
+import Redpin from '@/assets/HomepageIcon/MainLogo.png';
+import Logo from '@/assets/CMAPwhite.png';
+import Search from '@/assets/HomepageIcon/SearchLogo.png';
+import Map from '@/assets/HomepageIcon/MapIcon.png';
+import Recommend from '@/assets/HomepageIcon/BluestarIcon.png';
+import Category from '@/assets/HomepageIcon/CommunityIcon.png';
+import RedStar from '@/assets/HomepageIcon/RedstarIcon.png';
 import { useNavigate } from 'react-router-dom';
 import './Homepage.css';
-import * as S from '../../styles/Homepage.style';
-import * as W from '../../styles/Wapper.style';
-import baseAxios from '../../apis/baseAxios';
+import * as S from '@/styles/Homepage.style';
+import * as W from '@/styles/Wapper.style';
+import baseAxios from '@/apis/baseAxios';
 
 function Homepage() {
   const navigate = useNavigate();
