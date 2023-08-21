@@ -18,6 +18,7 @@ function BoardModify() {
   const [img, setImg] = useState([]);
   const [prevImg, setPrevImg] = useState([]);
   const navigate = useNavigate();
+  const [tagList, setTagList] = useState([]);
   const [themes] = useState([
     '질문해요',
     '추천해요',
@@ -28,7 +29,7 @@ function BoardModify() {
     'CMAP',
   ]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('게시글');
+  const [selectedOption, setSelectedOption] = useState();
   const options = [
     '게시글',
     '작성자',
@@ -50,6 +51,10 @@ function BoardModify() {
       setValue(response.data?.result.boardContent);
       setTitle(response.data?.result.boardTitle);
       setCafeTitle(response.data?.result.cafeName);
+      setSelectedOption({
+        idx: response.data?.result.cafeIdx,
+        name: response.data?.result.cafeName,
+      });
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -60,7 +65,7 @@ function BoardModify() {
 
   useEffect(() => {
     if (data) {
-      const keys = data.tagList.map((tagObj) => Object.keys(tagObj)[0]);
+      const keys = data.tagList.map((tagObj) => parseInt(Object.keys(tagObj)[0]));
       console.log(keys);
       setActiveButton(keys);
       getImgs(data.boardContent);
@@ -79,11 +84,13 @@ function BoardModify() {
       });
 
       setPrevImg(srcList);
+      setImg(srcList);
     } else {
       console.log('No <img> tags found in the input string.');
     }
   }
-  console.log(activeButton);
+  console.log(img);
+  console.log(prevImg);
   const handleButtonClick = useCallback((theme) => {
     setActiveButton(
       (prevActive) =>
@@ -155,10 +162,62 @@ function BoardModify() {
 
     return newBody.innerHTML; // 수정된 <body> 내용 반환
   };
-  const handleInputChange = (e) => {
+
+  const sendDataToServer = async () => {
+    const filteredPrevImg = prevImg.filter((imgItem) => img.includes(imgItem));
+    const newImages = img.filter((imgItem) => !prevImg.includes(imgItem));
+
+    // 이미지 업로드를 진행하고, 업로드된 이미지의 URL을 받아온다.
+    const uploadedImageUrls = await handleImageUpload(newImages);
+
+    // 기존 이미지(prevImg)와 업로드된 이미지 URL을 합쳐서 최종 이미지 리스트(imgList) 생성
+    const imgList = [...filteredPrevImg,...uploadedImageUrls]
+    console.log(imgList)
+    // 나머지 작업을 수행합니다.
+    const contentWithReplacedImages = parseAndReplaceImages(value, imgList);
+    try {
+      // 서버에 보낼 데이터를 객체 형태로 만듭니다.
+      const dataToSend = {
+        cafeIdx: selectedOption.idx,
+        boardContent: contentWithReplacedImages,
+        boardTitle: title,
+
+        tagList: activeButton.sort(),
+        imgList: imgList,
+        // 기타 다른 필요한 데이터들을 추가로 넣을 수 있습니다.
+      };
+      // PATCH 요청을 보냅니다.
+      console.log('sendData:', dataToSend);
+      if (checkEmptyValuesAndShowAlert(dataToSend)) {
+        const response = await baseAxios.patch(`board/${idx}`, dataToSend);
+
+        if (response.status === 200) {
+          alert('글이 수정되었습니다!');
+          navigate(`/board/${data.idx}`);
+        } else {
+          throw new Error('Failed to send data to server');
+        }
+      } else {
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleInputChange = async (e) => {
     const value = e.target.value;
     setCafeTitle(value);
-    setIsDropdownOpen(true); // 입력 중에는 dropdown 메뉴를 보이도록 설정
+    try {
+      const response = await baseAxios.get(`/cafes/name?name=${value}`);
+      const data = response.data; // 이 부분은 서버에서 받은 데이터 구조에 따라 수정해야합니다.
+      setOptions(data); // 받은 데이터를 옵션 상태에 저장
+
+      setIsDropdownOpen(true); // 입력 중에는 dropdown 메뉴를 보이도록 설정
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching cafe data:', error);
+      // 에러 처리 로직을 추가할 수 있습니다.
+    }
   };
   const handleOutsideClick = (e) => {
     if (!e.target.closest('.B.CafeWrap')) {
@@ -166,8 +225,9 @@ function BoardModify() {
     }
   };
   const handleOptionSelect = (option) => {
-    setCafeTitle(option);
+    setCafeTitle(option.name);
     setIsDropdownOpen(false);
+    setSelectedOption(option);
   };
 
   React.useEffect(() => {
@@ -214,49 +274,6 @@ function BoardModify() {
       return true;
     }
   }
-  const sendDataToServer = async () => {
-    const uniqueImages = img.filter((imgItem) => !prevImg.includes(imgItem));
-
-    let imageUrl = await handleImageUpload(uniqueImages);
-
-    // handleImageUpload 함수로부터 받은 imageUrl 배열과 이미지 필터(uniqueImages)를 합쳐서 모든 이미지를 포함하는 imgList 배열 생성
-    const imgList = [...prevImg, ...imageUrl];
-
-    console.log(imgList); // 전체 이미지 배열 출력
-
-    // 나머지 작업을 수행합니다.
-    const contentWithReplacedImages = parseAndReplaceImages(value, imgList);
-    try {
-      // 서버에 보낼 데이터를 객체 형태로 만듭니다.
-      const dataToSend = {
-        cafeIdx: 11,
-        boardContent: contentWithReplacedImages,
-        boardTitle: title,
-
-        tagList: activeButton.sort(),
-        imgList: imgList,
-        // 기타 다른 필요한 데이터들을 추가로 넣을 수 있습니다.
-      };
-      // POST 요청을 보냅니다.
-      console.log(dataToSend);
-
-      if (checkEmptyValuesAndShowAlert(dataToSend)) {
-        const response = await baseAxios.post('board', dataToSend);
-
-        if (response.status === 200) {
-          console.log(response.data);
-          alert('글이 수정되었습니다!');
-          navigate(`/board/${data.idx}`);
-        } else {
-          throw new Error('Failed to send data to server');
-        }
-      } else {
-        return;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <C.Wrap>
@@ -319,19 +336,18 @@ function BoardModify() {
           </B.DragDropWrap>
           <B.ThemeSelectWrap>
             <B.ThemesWrap>
-              {data?.tagList.map((a) => {
-                const keys = Object.keys(a);
-                const value = Object.values(a);
-                console.log(value[0]);
+              {data?.tagNames.map((a) => {
+                const keys = a.tagIdx;
+                const value = a.tagName;
                 return (
                   <Button
                     key={keys}
                     width="80px"
                     height="40px"
-                    background={activeButton?.includes(keys[0]) ? '#FF6868' : '#F1F1F1'}
-                    color={activeButton?.includes(keys[0]) ? '#F1F1F1' : '#373737'}
-                    name={value[0]}
-                    clickHandler={() => handleButtonClick(keys[0])}
+                    background={activeButton?.includes(keys) ? '#FF6868' : '#F1F1F1'}
+                    color={activeButton?.includes(keys) ? '#F1F1F1' : '#373737'}
+                    name={value}
+                    clickHandler={() => handleButtonClick(keys)}
                   ></Button>
                 );
               })}

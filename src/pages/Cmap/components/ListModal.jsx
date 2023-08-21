@@ -49,23 +49,22 @@ function ListModal({ user, modal, setModal }) {
   useEffect(() => {
     const fetchList = async () => {
       try {
-        const req = modal === 'WENT' ? 'went' : 'default';
         let response;
-
+        console.log()
         if (user === 'ME') {
-          response = await baseAxios.get(`cmap/user-${req}`);
+          response = await baseAxios.get(`/cmap/${modal}?themeIdx=${activeButton}&nickName=${localStorage.getItem('nickname')}`);
         } else {
-          response = await baseAxios.get(`cmap/mates-${req}?Nickname=${user}`);
+          response = await baseAxios.get(`/cmap/${modal}?themeIdx=${activeButton}&nickname=${user}`);
         }
-        setCafes(response.data);
-        console.log(response.data);
+        console.log(response.data.result.cmapCafe)
+        setCafes(response.data.result.cmapCafe);
       } catch (error) {
         console.error('Error fetching want list:', error);
       }
     };
 
     fetchList();
-  }, []);
+  }, [activeButton]);
 
   const handleButtonClick = useCallback((theme) => {
     setActiveButton(

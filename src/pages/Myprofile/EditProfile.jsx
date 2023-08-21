@@ -4,7 +4,7 @@ import Footer from '../../components/footer';
 import Logo from '../../components/LogoHeader';
 import Myprofile from './assets/Myprofile.png';
 import Mycafe from './assets/Mycafe.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './profile.css';
 import * as S from '../../styles/Editprofilepage.style';
 import * as W from '../../styles/Wapper.style';
@@ -12,14 +12,13 @@ import baseAxios from '../../apis/baseAxios';
 
 function EditProfile() {
   const navigate = useNavigate();
-
-  const [userName, setUserName] = useState('hana');
-  const [myIntro, setMyIntro] = useState('');
-  const [cafeIntroTitle, setCafeIntroTitle] = useState('');
-  const [cafeIntro, setCafeIntro] = useState('');
+  const location = useLocation()
+  const [userName, setUserName] = useState(localStorage.getItem('nickname'));
+  const [myIntro, setMyIntro] = useState();
+  const [cafeIntroTitle, setCafeIntroTitle] = useState();
+  const [cafeIntro, setCafeIntro] = useState();
   const [userImage, setUserImage] = useState(null);
   const [cafeImage, setCafeImage] = useState(null);
-  const [data, setData] = useState();
   const handleDragOver = (e) => {
     e.preventDefault();
   };
@@ -38,7 +37,6 @@ function EditProfile() {
     }
   };
 
-  // 사진 제외 데이터 받는거 확인 => alert창에서는 안 나오는데 콘솔에서는 이미지 이름 확인됨 (주소로 받아와지지 X)
   // const dataToServer = () => {
   //   const formData = new FormData();
   //   formData.append('userNickname', userName);
@@ -123,10 +121,8 @@ function EditProfile() {
     try {
       const response = await baseAxios.patch(`users/profile/${userName}`, userData, {
         headers: {
-          Authorization:
-            'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoZzU5MjU2QGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjkyMzc3NTE5LCJleHAiOjE2OTM2OTE1MTl9.dN2cKmQDO2vEB4CQ1K7obrzQZTSz07abmQhrmzVGNWc4rGeH8DIsdjPXGCJbvMFI', // 본인의 토큰 값으로 변경
+          'Content-Type': 'application/json',
         },
-        'Content-Type': 'application/json',
       });
       console.log(response.data);
       // if (response.status === 200) {
@@ -140,6 +136,8 @@ function EditProfile() {
       // } else {
       //   console.error('Error updating profile:', response.statusText);
       // }
+      alert('수정되었습니다.')
+      navigate('/profile')
     } catch (error) {
       console.error('Error updating profile:', error);
     }

@@ -6,11 +6,12 @@ import Header from '../../components/Header';
 import Footer from './components/Footer';
 import * as C from './styles/Common.style';
 import baseAxios from '../../apis/baseAxios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import * as B from './styles/BoardList.style';
 
 function BoardList() {
   const [keyWords, setKeyWords] = useState([]);
+  const location = useLocation();
   const navigate = useNavigate();
   const ITEMS_PER_PAGE = 5;
   const PAGE_RANGE_DISPLAY = 5;
@@ -18,7 +19,11 @@ function BoardList() {
   const [activeButton, setActiveButton] = useState([]);
   const [currentData, setCurrentData] = useState([]);
   const [pageCount, setPageCount] = useState(5);
-  const [search, setSearch] = useState({ page: currentPage, searchType: '카페', keyword: '' });
+  const [search, setSearch] = useState({
+    page: currentPage,
+    searchType: location.state ? '작성자' : '카페',
+    keyword: location.state ? location.state.writer : '',
+  });
   const handleButtonClick = (theme) => {
     setActiveButton(
       (prevActive) =>
@@ -108,7 +113,6 @@ function BoardList() {
 
       backendUrl += `?${queryParams}`;
       console.log(backendUrl);
-      console.log(token);
       // 요청 보내기
       const response = await baseAxios.get(backendUrl);
       setCurrentData(response.data.result.boardResponses.content);
@@ -118,6 +122,8 @@ function BoardList() {
       // ... 데이터를 활용한 작업
     } catch (error) {
       console.error('데이터 요청 중 오류 발생:', error);
+      console.log(error.data);
+      setCurrentData([]);
     }
   }
   // HTML 태그를 제거하는 함수

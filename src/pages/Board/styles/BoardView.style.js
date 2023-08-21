@@ -72,6 +72,7 @@ export const UserInfoWrap = styled.div`
   display: flex;
   gap: 10px;
   justify-content: flex-end;
+  cursor: pointer;
 `;
 export const Icon = styled.div`
   width: 80px; /* 조금 작게 설정 */
@@ -98,6 +99,7 @@ export const CafeTitle = styled.div`
   letter-spacing: -0.02em;
   text-align: center;
   color: #939393;
+  cursor: pointer;
 `;
 export const BoardContentsWrap = styled.div`
   width: 100%;

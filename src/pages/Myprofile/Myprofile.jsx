@@ -5,15 +5,15 @@ import Logo from '../../components/LogoHeader';
 import './profile.css';
 import * as S from '../../styles/Myprofilepage.style';
 import * as W from '../../styles/Wapper.style';
-// import Review from '../Review/dummy/Review';
-// import Board from '../Board/dummy/Boards';
-import Follower from './dummy/Follower';
 import baseAxios from '../../apis/baseAxios';
 
 function Myprofile() {
   const navigate = useNavigate();
-  const [myName] = useState('cd');
-  const [userName, setUserName] = useState(myName);
+  const location = useLocation();
+
+  const myName = localStorage.getItem('nickname');
+  const [data, setData] = useState();
+  const [userName, setUserName] = useState(location.state ? location.state.user : myName);
   const [userImg, setUserImg] = useState('./assets/Myprofile.png'); // 기본 이미지 세팅 어떻게..?
   const [userIntro, setUserIntro] = useState('소개글');
   const [cafeImg, setCafeImg] = useState('./assets/Mycafe.png');
@@ -25,11 +25,13 @@ function Myprofile() {
   const [mateInfoList, setMateInfoList] = useState([]); // 에러나옴
   const isOwnProfile = myName === userName;
   const following = myMateInfo.includes(userName);
+  console.log(myName);
   const UserDataFromServer = async () => {
     try {
       // 서버에서 데이터를 가져오는 로직 구현
       const response = await baseAxios.get(`users/profile/${userName}`);
       console.log(response.data);
+      setData(response.data);
       setUserName(response.data.userNickname);
       setUserImg(response.data.userImg);
       setUserIntro(response.data.userInfo);
@@ -55,7 +57,6 @@ function Myprofile() {
       console.error(error);
     }
   };
-
 
   useEffect(() => {
     UserDataFromServer();
@@ -94,7 +95,7 @@ function Myprofile() {
             <S.UsernameAndCountDiv>
               <S.UsernameDiv>{userName}</S.UsernameDiv>
               <S.WriteCntText>
-                <S.CntBtn id="borderCnt">게시글 작성 수 {boardCnt} </S.CntBtn>
+                <S.CntBtn to = "/board" state = {{writer:userName}} id="borderCnt">게시글 작성 수 {boardCnt} </S.CntBtn>
                 <S.CntBtn id="reviewCnt" to="/review">
                   리뷰 작성 수 {reviewCnt}
                 </S.CntBtn>
@@ -105,7 +106,12 @@ function Myprofile() {
             </S.IntroText>
             <S.ButtonsDiv>
               {isOwnProfile ? (
-                <S.ProfileBtn to="/profile/edit" id="edit" background="#FF6868">
+                <S.ProfileBtn
+                  to="/profile/edit"
+                  state={{ data: data }}
+                  id="edit"
+                  background="#FF6868"
+                >
                   프로필 수정
                 </S.ProfileBtn>
               ) : (
@@ -189,7 +195,6 @@ function Myprofile() {
             >
               <img src={a.userImg} />
               <div>{a.user.nickname}</div>
-
             </S.Mate>
           ))}
         </S.MateList>

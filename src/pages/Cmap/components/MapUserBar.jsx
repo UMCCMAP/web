@@ -6,15 +6,23 @@ import baseAxios from '../../../apis/baseAxios';
 function MapUserBar({ user, setUser, setModal, setCmapList }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [options, setOptions] = useState([]);
-  const [cmapType, setcmapType] = useState('WANT');
+  const [cmapType, setcmapType] = useState('want');
   useEffect(() => {
-    const req = cmapType === 'WENT' ? 'went' : 'default';
+    const req = cmapType === 'went' ? 'went' : 'default';
+    function modifyCafeData(data) {
+      return data.map((item) => ({
+        ...item,
+        name: item.cafeName,
+        cafeName: undefined,
+      }));
+    }
     if (user === 'ME') {
       baseAxios
         .get(`cmap/user-${req}`)
         .then((response) => {
           // API 요청 성공 시 처리할 로직
-          setCmapList(response.data);
+          const modifiedData = modifyCafeData(response.data);
+          setCmapList(modifiedData);
         })
         .catch((error) => {
           // API 요청 실패 시 처리할 로직
@@ -26,7 +34,9 @@ function MapUserBar({ user, setUser, setModal, setCmapList }) {
         .get(`cmap/mates-${req}?Nickname=${user}`)
         .then((response) => {
           // API 요청 성공 시 처리할 로직
-          setCmapList(response.data);
+          const modifiedData = modifyCafeData(response.data);
+          setCmapList(modifiedData);
+          console.log(response.data);
         })
         .catch((error) => {
           // API 요청 실패 시 처리할 로직
@@ -98,7 +108,7 @@ function MapUserBar({ user, setUser, setModal, setCmapList }) {
       <U.WantButton
         margin="16"
         onClick={() => {
-          setModal('WANT');
+          setModal('want');
         }}
       >
         WANT
@@ -108,7 +118,7 @@ function MapUserBar({ user, setUser, setModal, setCmapList }) {
       <U.WantButton
         margin="8"
         onClick={() => {
-          setModal('WENT');
+          setModal('went');
         }}
       >
         WENT
@@ -139,7 +149,7 @@ const ToggleIcon = ({ initialFlex, initialPosition, cmapType, setcmapType }) => 
             <img src="src/assets/images/cmapLogoR.svg" width="100%" alt="Logo" />
           </U.LogoIcon>
         </U.IconBox>
-        <U.IconText position={position}>{cmapType}</U.IconText>
+        <U.IconText position={position}>{cmapType.toUpperCase()}</U.IconText>
       </U.IconCon>
     </U.IconWrapper>
   );

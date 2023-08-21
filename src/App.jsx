@@ -5,9 +5,9 @@ import Intropage from './pages/IntroPage/Intropage';
 import Homepage from './pages/Homepage/Homepage';
 import Loginpage from './pages/Login/Loginpage';
 import Registerpage from './pages/Login/RegisterPage';
-// import MyprofilePage from './pages/Myprofile/Myprofile';
-// import EditprofilePage from './pages/Myprofile/EditProfile';
-// import ReviewCheckPage from './pages/Review/ReviewCheck';
+import MyprofilePage from './pages/Myprofile/Myprofile';
+import EditprofilePage from './pages/Myprofile/EditProfile';
+import ReviewCheckPage from './pages/Review/ReviewCheck';
 import SearchPage from './pages/SearchPage';
 import RecommendCafePage from './pages/RecommendCafe/RecommendCafePage';
 import BoardList from './pages/Board/BoardList';
@@ -38,9 +38,9 @@ const router = createBrowserRouter([
       { path: '/login', element: <PublicPages Component={Loginpage} restricted /> },
       { path: '/oauth2/redirect', element: <LoginCallbackPage /> },
       { path: '/register', element: <PrivatePages Component={Registerpage} /> },
-      // { path: '/profile', element: <MyprofilePage /> },
-      // { path: '/profile/edit', element: <EditprofilePage /> },
-      // { path: '/review', element: <ReviewCheckPage /> },
+      { path: '/profile', element: <MyprofilePage /> },
+      { path: '/profile/edit', element: <EditprofilePage /> },
+      { path: '/review', element: <ReviewCheckPage /> },
       { path: '/search', element: <PrivatePages Component={SearchPage} /> },
       { path: '/recommend', element: <PrivatePages Component={RecommendCafePage} /> },
       { path: '/cmap', element: <PrivatePages Component={CmapPage} /> },

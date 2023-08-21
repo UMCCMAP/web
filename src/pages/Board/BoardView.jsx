@@ -84,45 +84,51 @@ function BoardView() {
                 return <Button key={value[0]} width="5rem" height="2rem" name={value[0]} />;
               })}
             </B.ThemesWrap>
-            <B.ModDeleteWrap>
-              <Button
-                width="5rem"
-                height="2rem"
-                name="편집하기"
-                clickHandler={() => {
-                  navigate(`/board/modify/${idx}`, {
-                    state: {
-                      data,
-                      keyWords,
-                    },
-                  });
-                }}
-              />
+            {data?.canModifyPost && (
+              <B.ModDeleteWrap>
+                <Button
+                  width="5rem"
+                  height="2rem"
+                  name="편집하기"
+                  clickHandler={() => {
+                    navigate(`/board/modify/${idx}`, {
+                      state: {
+                        data,
+                        keyWords,
+                      },
+                    });
+                  }}
+                />
 
-              <Button
-                width="5rem"
-                height="2rem"
-                name="삭제하기"
-                background="#60A7E1"
-                color="#fff"
-                clickHandler={async () => {
-                  const confirmed = window.confirm('정말로 삭제하시겠습니까?');
-                  if (confirmed) {
-                    try {
-                      await baseAxios.delete(`/board/${idx}`);
-                      alert('삭제되었습니다.');
-                      navigate('/board');
-                    } catch (error) {
-                      console.error('게시물 삭제 중 오류 발생:', error);
+                <Button
+                  width="5rem"
+                  height="2rem"
+                  name="삭제하기"
+                  background="#60A7E1"
+                  color="#fff"
+                  clickHandler={async () => {
+                    const confirmed = window.confirm('정말로 삭제하시겠습니까?');
+                    if (confirmed) {
+                      try {
+                        await baseAxios.delete(`/board/${idx}`);
+                        alert('삭제되었습니다.');
+                        navigate('/board');
+                      } catch (error) {
+                        console.error('게시물 삭제 중 오류 발생:', error);
+                      }
                     }
-                  }
-                }}
-              />
-            </B.ModDeleteWrap>
+                  }}
+                />
+              </B.ModDeleteWrap>
+            )}
           </B.ButtonsWrap>
           <B.TitleWrap>
             <B.BoardTitle>{data?.boardTitle}</B.BoardTitle>
-            <B.UserInfoWrap>
+            <B.UserInfoWrap
+              onClick={() => {
+                navigate('/profile', { state: { user: data?.nickName } });
+              }}
+            >
               <B.Info>
                 <B.Date>{data?.createdAt}</B.Date>
                 <B.User>{data?.nickName}</B.User>
@@ -132,7 +138,7 @@ function BoardView() {
           </B.TitleWrap>
           <C.Line top="26"></C.Line>
 
-          <B.CafeTitle>
+          <B.CafeTitle onClick={()=>{navigate(`/search?search=${data?.cafeName}`)}}>
             <B.CafeIcon>
               <img src={LocationImg} />
             </B.CafeIcon>
@@ -190,29 +196,30 @@ function BoardView() {
                       <B.ReviewUser>{a.nickname}</B.ReviewUser>
                       <B.ReviewDate>{a.createdAt}</B.ReviewDate>
                     </B.ReviewUserInfo>
-                    <B.ReviewButtons>
-                      <Button
-                        width="5rem"
-                        height="2rem"
-                        name="삭제하기"
-                        background="#60A7E1"
-                        color="#fff"
-                        clickHandler={async () => {
-                          const confirmed = window.confirm('정말로 삭제하시겠습니까?');
-                          if (confirmed) {
-                            try {
-                              await baseAxios.delete(`/board/post-comments/${a.commentIdx}`);
-                              alert('삭제되었습니다.');
-                              const comment = await baseAxios.get(`/board/${idx}/comments`);
-                              setComment(comment.data);
-                            } catch (error) {
-                              console.error('게시물 삭제 중 오류 발생:', error);
+                    {a.nickname === localStorage.getItem('nickname') && (
+                      <B.ReviewButtons>
+                        <Button
+                          width="5rem"
+                          height="2rem"
+                          name="삭제하기"
+                          background="#60A7E1"
+                          color="#fff"
+                          clickHandler={async () => {
+                            const confirmed = window.confirm('정말로 삭제하시겠습니까?');
+                            if (confirmed) {
+                              try {
+                                await baseAxios.delete(`/board/post-comments/${a.commentIdx}`);
+                                alert('삭제되었습니다.');
+                                const comment = await baseAxios.get(`/board/${idx}/comments`);
+                                setComment(comment.data);
+                              } catch (error) {
+                                console.error('게시물 삭제 중 오류 발생:', error);
+                              }
                             }
-                          }
-                        }}
-                      />
-                    </B.ReviewButtons>
-
+                          }}
+                        />
+                      </B.ReviewButtons>
+                    )}
                   </B.InfoWrap>
                   <B.ReviewContent>{a.content}</B.ReviewContent>
                 </B.Review>
