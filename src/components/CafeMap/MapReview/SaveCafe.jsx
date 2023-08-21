@@ -3,13 +3,13 @@ import baseAxios from '../../../apis/baseAxios';
 import * as M from '../../../styles/Modal.style';
 import * as S from './styles/SaveCafe.style';
 
-function SaveCafe({ color, closeAction, dataId }) {
-  const [clickSave, setClickSave] = useState('');
+function SaveCafe({ color, closeAction, data }) {
+  const [clickSave, setClickSave] = useState(data?.cafeType != null ? data?.cafeType : '');
 
   const sendSaveType = async () => {
     await baseAxios
       .put(
-        `map/place/${dataId}`,
+        `map/place/${data.idx}`,
         {
           type: clickSave,
         },

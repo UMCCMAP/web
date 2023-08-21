@@ -7,7 +7,6 @@ import CafeReview from './CafeReview';
 import { ReactComponent as Scope } from '../../assets/images/scope.svg';
 import SaveCafe from './MapReview/SaveCafe';
 import baseAxios from '../../apis/baseAxios';
-import search from '../../pages/dummy/Search';
 import { ReactComponent as Book } from '../../assets/images/book.svg';
 import { ReactComponent as Coffee } from '../../assets/images/coffee.svg';
 import { ReactComponent as Mountain } from '../../assets/images/mountain.svg';
@@ -21,6 +20,7 @@ const fontColor = 'rgba(249, 255, 253, 1)';
 
 function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data }) {
   const [saveModalOpen, setSaveModalOpen] = useState(false);
+  const [cafeData, setCafeData] = useState();
   const [reviewList, setReviewList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(0);
@@ -37,22 +37,33 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
   };
 
   useEffect(() => {
-    if (data.idx) {
-      setPage(0);
-      setReviewList([]);
+    getCafeDetail();
+    setPage(0);
+    setReviewList([]);
+    setThemeList([]);
+  }, [data]);
+
+  useEffect(() => {
+    if (cafeData) {
       setIsLoading(true);
       allReviewList(0);
+      const newThemeList = cafeData?.cafeThemes?.map((theme) => theme.themeName);
+      setThemeList(newThemeList);
     }
-    setThemeList([]);
-    const newThemeList = data.cafeThemes.map((theme) => theme.themeName);
-    setThemeList(newThemeList);
-  }, [data]);
+  }, [cafeData]);
+
+  const getCafeDetail = async () => {
+    try {
+      const response = await baseAxios.get(`cafes/${data}`);
+      setCafeData(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const allReviewList = async (pageNumber) => {
     try {
-      const response = await baseAxios.get(
-        `map/place/${data.idx}/preview?size=10&page=${pageNumber}`,
-      );
+      const response = await baseAxios.get(`map/place/${data}/preview?size=10&page=${pageNumber}`);
       setReviewList((prevReviews) => [...prevReviews, ...response.data]);
       setPage(pageNumber + 1);
     } catch (e) {
@@ -113,7 +124,7 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
   ];
 
   const getImgCount = () => {
-    const numImages = search[0].images.length;
+    const numImages = 1;
     switch (numImages) {
       case 1:
         return 'one';
@@ -129,7 +140,7 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
         return 'over';
     }
   };
-  let remainer = search[0].images.length - 5;
+  // let remainer = search[0].images.length - 5;
 
   return (
     <>
@@ -138,7 +149,7 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
           <AiOutlineLeft className="leftIcon" size={35} onClick={openDetailHandler} />
           {getImgCount() === 'over' ? (
             <>
-              {search[0].images.slice(0, 5).map((image, index) => (
+              {/* {search[0].images.slice(0, 5).map((image, index) => (
                 <div key={index}>
                   <D.DetailCafeImg src={image} alt="reviewPhoto" />
                   {index === 4 && (
@@ -148,19 +159,19 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
                     </D.TextOverlay>
                   )}
                 </div>
-              ))}
+              ))} */}
             </>
           ) : (
             <>
-              {data.images.map((image, index) => (
-                <div key={index}>
-                  <D.DetailCafeImg src={image} alt="reviewPhoto" />
-                </div>
-              ))}
+              {/* {data.images.map((image, index) => ( */}
+              <div>
+                <D.DetailCafeImg src={cafeData?.image} alt="reviewPhoto" />
+              </div>
+              {/* ))} */}
             </>
           )}
         </D.DetailImgContainer>
-        <D.DetailCafeName color={color}>{data.name}</D.DetailCafeName>
+        <D.DetailCafeName color={color}>{cafeData?.name}</D.DetailCafeName>
         <D.ThemeBtnContainer>
           {themeList.map((theme) =>
             navItems.find((navItem) => navItem.theme === theme) ? (
@@ -171,15 +182,15 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
         <D.ReviewScore>
           <Scope fill={color} />
           &nbsp;&nbsp;
-          <span>{data.averageRating} / </span>
+          <span>{cafeData?.averageRating} / </span>
           &nbsp;
-          <span>게시글 {data.totalPosts} / </span>
+          <span>게시글 {cafeData?.totalPosts} / </span>
           &nbsp;
-          <span>리뷰 {data.totalReviews}</span>
+          <span>리뷰 {cafeData?.totalReviews}</span>
         </D.ReviewScore>
         <D.SaveBtnContainer>
           <CommonBtn
-            name="지도에 저장"
+            name={cafeData?.cafeType != null ? cafeData?.cafeType : '지도에 저장'}
             width="70px"
             color={fontColor}
             background={color}
@@ -221,9 +232,7 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
           )}
         </D.ReviewContainer>
       </D.DetailWrapper>
-      {saveModalOpen && (
-        <SaveCafe color={color} closeAction={handleModalClick} dataId={data?.idx} />
-      )}
+      {saveModalOpen && <SaveCafe color={color} closeAction={handleModalClick} data={cafeData} />}
     </>
   );
 }
