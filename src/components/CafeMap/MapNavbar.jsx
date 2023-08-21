@@ -108,11 +108,15 @@ function MapNavbar({ content, logoImg, color, hovercolor, cafeItems }) {
 
   const getThemeCafe = async () => {
     if (checkedList.length !== 0) {
+      const sendThemeList = selectThemeList.join(',');
       try {
-        const response = await baseAxios.get(`cafes/theme-all?themeName=${selectThemeList[0]}`);
+        const response = await baseAxios.get(`cafes/theme-all?theme=${sendThemeList}`);
         cafeItems(response.data);
       } catch (e) {
-        console.error(e);
+        if (e.response.data.code === 3106) {
+          alert(e.response.data.message);
+          cafeItems(e.response.data.code);
+        }
       }
     }
   };
@@ -130,7 +134,7 @@ function MapNavbar({ content, logoImg, color, hovercolor, cafeItems }) {
               onClick={() => {
                 setActiveNav(true);
                 setCheckedList([]);
-                cafeItems([]);
+                cafeItems(0);
               }}
               className={activeNav ? 'active' : 'hover'}
               color={color}
