@@ -79,7 +79,7 @@ function Homepage() {
 
       <S.ContentWholeDiv>
         <S.MainBtnDiv id="colorBtn">
-          <S.PinkBtn height="318px">
+          <S.PinkBtn to="/cmap" state={{ userName: 'ME' }} height="318px">
             <div className="PinkOpt">
               <img src={Redpin} className="OptinImg"></img>
               <S.MyCmapTextDiv>

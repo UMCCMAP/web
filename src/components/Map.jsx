@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container as MapDiv, NaverMap, Marker, useNavermaps } from 'react-naver-maps';
 
+
 function Map({ markerImg, mapItems, clickMarker }) {
   const navermaps = useNavermaps();
   const [location, setLocation] = useState({ latitude: 37.566535, longitude: 126.9779692 });
@@ -70,6 +71,7 @@ function Map({ markerImg, mapItems, clickMarker }) {
         defaultZoom={15}
         ref={setMap}
       >
+
         {Array.isArray(mapItems) ? (
           <>
             {mapItems.map((data) => (

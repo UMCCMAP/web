@@ -16,7 +16,7 @@ import BoardView from './pages/Board/BoardView';
 import BoardWrite from './pages/Board/BoardWrite';
 import Root from './Root';
 import ErrorPage from './pages/ErrorPage';
-import CmapPage from './pages/CmapPage';
+import CmapPage from './pages/Cmap/CmapPage';
 import LoginCallbackPage from './pages/Login/LoginCallbackPage';
 import PublicPages from './components/access/PublicPages';
 import PrivatePages from './components/access/PrivatePages';
