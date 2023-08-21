@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import baseAxios from '@/apis/baseAxios';
 import * as R from './styles/ReviewCU.style';
 import ImgDragDrop from './ImgDragDrop';
-import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
+import { ReactComponent as ReviewStar } from '@/assets/images/reviewstar.svg';
+import closeSvg from '@/assets/images/close.svg';
 
-function RegisterReview({ closeReview, color }) {
+function RegisterReview({ closeReview, color, dataId }) {
+  const form = new FormData();
   const [addReviewTitle, setAddReviewTitle] = useState('');
   const [addReviewImg, setAddReviewImg] = useState([]);
   const [addReviewContent, setAddReviewContent] = useState('');
@@ -23,18 +26,55 @@ function RegisterReview({ closeReview, color }) {
     setAddReviewScope(id);
   };
 
-  const sendRegisterReview = () => {
-    console.log('제목: ' + addReviewTitle);
-    console.log('이미지: ' + addReviewImg);
-    console.log('내용: ' + addReviewContent);
-    console.log('해시태크: ' + addReviewSubContent);
-    console.log('별점 ' + addReviewScope);
+  const blobUrlToFile = async () => {
+    for (let index = 0; index < addReviewImg.length; index++) {
+      const file = addReviewImg[index];
+      const response = await fetch(file);
+      const blob = await response.blob();
+      const imgFile = new File([blob], `image${index}.png`, { type: 'image/png' });
+      form.append('multipartFile', imgFile);
+    }
+    await baseAxios
+      .post('s3/file', form, {
+        'Content-Type': 'multipart/form-data',
+      })
+      .then(function (response) {
+        sendRegisterReview(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
+
+  const sendRegisterReview = async (imgData) => {
+    await baseAxios
+      .post(
+        `map/place/${dataId}/review`,
+        {
+          score: addReviewScope,
+          title: addReviewTitle,
+          content: addReviewContent,
+          keyword: addReviewSubContent,
+          imageUrls: imgData,
+        },
+        {
+          'Content-Type': 'application/json',
+        },
+      )
+      .then(function (response) {
+        if (response.status === 201) {
+          location.reload();
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   };
 
   return (
     <R.ReviewWriteContainer>
       <R.Title>
-        <img src="src/assets/images/close.svg" alt="close" onClick={() => closeReview(0)} />
+        <img src={closeSvg} alt="close" onClick={() => closeReview(0)} />
         <p>리뷰 작성</p>
       </R.Title>
       <R.ReviewTitle
@@ -76,7 +116,7 @@ function RegisterReview({ closeReview, color }) {
         ))}
       </R.ReviewScopeWrapper>
       <R.ReviewBtnWrapper>
-        <R.ReviewBtn color={color} onClick={() => sendRegisterReview()}>
+        <R.ReviewBtn color={color} onClick={() => blobUrlToFile()}>
           작성하기
         </R.ReviewBtn>
       </R.ReviewBtnWrapper>

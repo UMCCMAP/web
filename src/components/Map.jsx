@@ -1,100 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import { Container as MapDiv, NaverMap, Marker, useNavermaps } from 'react-naver-maps';
 
-const mapItems = [
-  {
-    id: 1,
-    station: '서울시청',
-    latitude: 37.566535,
-    longitude: 126.9779692,
-  },
-  {
-    id: 2,
-    station: '우리집',
-    latitude: 37.5230658,
-    longitude: 126.736356,
-  },
-  {
-    id: 3,
-    station: '방배1',
-    latitude: 37.4859,
-    longitude: 126.997865,
-  },
-  {
-    id: 4,
-    station: '방배2',
-    latitude: 37.48528,
-    longitude: 126.997227,
-  },
-  {
-    id: 5,
-    station: '방배3',
-    latitude: 37.484234,
-    longitude: 126.999292,
-  },
-];
-function Map({ cmapList, markerImg }) {
+
+function Map({ markerImg, mapItems, clickMarker }) {
   const navermaps = useNavermaps();
   const [location, setLocation] = useState({ latitude: 37.566535, longitude: 126.9779692 });
   const [map, setMap] = useState(null);
   const [clickedMarkerId, setClickedMarkerId] = useState(null);
-  const [mapList, setMapList] = useState([]);
-  // 새로운 state 업데이트 함수 정의
-  const updateLists = () => {
-    const updatedList = cmapList?.map((cmapItem, i) => {
-      const mapItem = {
-        id: i,
-        station: cmapItem.cafeName,
-        latitude: cmapItem.cafeLatitude, // 수정: cmapItem.latitude -> cmapItem.cafeLatitude
-        longitude: cmapItem.cafeLongitude, // 수정: cmapItem.longitude -> cmapItem.cafeLongitude
-      };
-      return mapItem; // 수정: mapList.push(mapItem) -> return mapItem
-    });
-    setMapList(updatedList); // cmapList state 업데이트
-  };
-
   useEffect(() => {
-    updateLists();
+    if (mapItems.length === 0) return;
 
-    // Check if cmapList has at least one item
-    if (cmapList && cmapList.length > 0) {
-      const firstCafe = cmapList[0];
-      const newLocation = {
-        latitude: firstCafe.cafeLatitude,
-        longitude: firstCafe.cafeLongitude,
-      };
-
-      if (map) {
-        // Use animateTo to smoothly animate the map movement
-        map.panTo(new navermaps.LatLng(newLocation.latitude, newLocation.longitude), {
-          duration: 500,
+    if (Array.isArray(mapItems)) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+          const location = new navermaps.LatLng(
+            position.coords.latitude,
+            position.coords.longitude,
+          );
+          map?.setCenter(location);
+          map?.setZoom(15);
         });
+      } else {
+        window.alert('현재 위치를 알 수 없습니다.');
       }
-
-      setLocation(newLocation);
-    }
-  }, [cmapList, map]);
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-        const location = new navermaps.LatLng(position.coords.latitude, position.coords.longitude);
-        map?.setCenter(location);
-        map?.setZoom(15);
-      });
     } else {
-      window.alert('현재 위치를 알 수 없습니다.');
+      navigator.geolocation.getCurrentPosition(() => {
+        setLocation({
+          latitude: mapItems.cafeLatitude,
+          longitude: mapItems.cafeLongitude,
+        });
+        const location = new navermaps.LatLng(mapItems.cafeLatitude, mapItems.cafeLongitude);
+        map?.setCenter(location);
+        map?.setZoom(16);
+      });
     }
-  }, [map]);
+  }, [map, mapItems]);
 
   const handleClickMarker = (lat, long, id) => {
     const clickPosition = new navermaps.LatLng(lat, long);
     map?.panTo(clickPosition);
     setClickedMarkerId(id);
+    clickMarker(id);
   };
 
   // marker 아이콘 커스텀
@@ -121,15 +71,30 @@ function Map({ cmapList, markerImg }) {
         defaultZoom={15}
         ref={setMap}
       >
-        {mapList.map((data) => (
+
+        {Array.isArray(mapItems) ? (
+          <>
+            {mapItems.map((data) => (
+              <Marker
+                key={data?.idx}
+                position={new navermaps.LatLng(data?.cafeLatitude, data?.cafeLongitude)}
+                icon={customMarkerIcon(data?.name, markerImg, data?.idx)}
+                onClick={() =>
+                  handleClickMarker(data?.cafeLatitude, data?.cafeLongitude, data?.idx)
+                }
+              />
+            ))}
+          </>
+        ) : (
           <Marker
-            key={data?.id}
-            position={new navermaps.LatLng(data?.latitude, data?.longitude)}
-            animation={1}
-            icon={customMarkerIcon(data.station, markerImg, data.id)}
-            onClick={() => handleClickMarker(data?.latitude, data?.longitude, data?.id)}
+            key={mapItems.idx}
+            position={new navermaps.LatLng(mapItems.cafeLatitude, mapItems.cafeLongitude)}
+            icon={customMarkerIcon(mapItems.name, markerImg, mapItems.idx)}
+            onClick={() =>
+              handleClickMarker(mapItems.cafeLatitude, mapItems.cafeLongitude, mapItems.idx)
+            }
           />
-        ))}
+        )}
       </NaverMap>
     </MapDiv>
   );

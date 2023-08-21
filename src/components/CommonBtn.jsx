@@ -1,5 +1,5 @@
 import React from 'react';
-import * as B from '../styles/Button.style';
+import * as B from '@/styles/Button.style';
 
 function CommonBtn({ name, width, color, background, clickEvent, style }) {
   const handleClick = () => {

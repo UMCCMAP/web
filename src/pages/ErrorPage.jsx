@@ -1,14 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import CMAP from '@/assets/icon/CMAP.svg';
+import Error from '@/assets/images/404error.svg';
 
 function ErrorPage() {
   const navigate = useNavigate();
   return (
     <ErrorContainer>
-      <img src="src/assets/icon/CMAP.svg" alt="로고" />
+      <img src={CMAP} alt="로고" />
       <ErrorCode>
-        <img src="src/assets/images/404error.svg" alt="404" />
+        <img src={Error} alt="404" />
       </ErrorCode>
       <ErrorMsg>
         이런! <br />

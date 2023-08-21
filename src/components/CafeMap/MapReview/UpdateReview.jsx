@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import baseAxios from '@/apis/baseAxios';
 import * as R from './styles/ReviewCU.style';
 import ImgDragDrop from './ImgDragDrop';
-import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
+import { ReactComponent as ReviewStar } from '@/assets/images/reviewstar.svg';
+import closeSvg from '@/assets/images/close.svg';
 
 function UpdateReview({ closeReview, color, reviewData }) {
-  const [updateReviewTitle, setUpdateReviewTitle] = useState(reviewData.title);
+  const form = new FormData();
+  const [updateReviewTitle, setUpdateReviewTitle] = useState(reviewData.data.title);
   const [updateReviewImg, setUpdateReviewImg] = useState([]);
-  const [updateReviewContent, setUpdateReviewContent] = useState(reviewData.content);
-  const [updateReviewSubContent, setUpdateReviewSubContent] = useState(reviewData.subContent);
-  const [updateReviewScope, setUpdateReviewScope] = useState(reviewData.scope);
+  const [updateReviewContent, setUpdateReviewContent] = useState(reviewData.data.content);
+  const [updateReviewSubContent, setUpdateReviewSubContent] = useState(reviewData.data.keyword);
+  const [updateReviewScope, setUpdateReviewScope] = useState(reviewData.data.score);
 
   const handleInputTitle = (e) => {
     setUpdateReviewTitle(e.target.value);
@@ -23,18 +26,56 @@ function UpdateReview({ closeReview, color, reviewData }) {
     setUpdateReviewScope(id);
   };
 
-  const sendUpdateReview = () => {
-    console.log('제목: ' + updateReviewTitle);
-    console.log('이미지: ' + updateReviewImg);
-    console.log('내용: ' + updateReviewContent);
-    console.log('해시태크: ' + updateReviewSubContent);
-    console.log('별점 ' + updateReviewScope);
+  const blobUrlToFile = async () => {
+    for (let index = 0; index < updateReviewImg.length; index++) {
+      const file = updateReviewImg[index];
+      const response = await fetch(file);
+      const blob = await response.blob();
+      const imgFile = new File([blob], `image${index}.png`, { type: 'image/png' });
+      form.append('multipartFile', imgFile);
+    }
+
+    await baseAxios
+      .post('s3/file', form, {
+        'Content-Type': 'multipart/form-data',
+      })
+      .then(function (response) {
+        sendUpdateReview(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
+
+  const sendUpdateReview = async (imgData) => {
+    await baseAxios
+      .put(
+        `map/place/cafe-reviews/${reviewData.reviewIdx}`,
+        {
+          title: updateReviewTitle,
+          content: updateReviewContent,
+          keyword: updateReviewSubContent,
+          score: updateReviewScope,
+          imageUrls: imgData,
+        },
+        {
+          'Content-Type': 'application/json',
+        },
+      )
+      .then(function (response) {
+        if (response.status === 204) {
+          location.reload();
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   };
 
   return (
     <R.ReviewWriteContainer>
       <R.Title>
-        <img src="src/assets/images/close.svg" alt="close" onClick={() => closeReview(0)} />
+        <img src={closeSvg} alt="close" onClick={() => closeReview(0)} />
         <p>리뷰 수정</p>
       </R.Title>
       <R.ReviewTitle
@@ -45,7 +86,7 @@ function UpdateReview({ closeReview, color, reviewData }) {
         onChange={handleInputTitle}
       />
       <R.ImgWrap color={color}>
-        <ImgDragDrop color={color} addImg={setUpdateReviewImg} data={reviewData.images} />
+        <ImgDragDrop color={color} addImg={setUpdateReviewImg} data={reviewData.data.imageUrls} />
       </R.ImgWrap>
       <R.ReviewContentWrap color={color}>
         <R.ReviewContent
@@ -75,7 +116,7 @@ function UpdateReview({ closeReview, color, reviewData }) {
         ))}
       </R.ReviewScopeWrapper>
       <R.ReviewBtnWrapper>
-        <R.ReviewBtn color={color} onClick={() => sendUpdateReview()}>
+        <R.ReviewBtn color={color} onClick={() => blobUrlToFile()}>
           수정하기
         </R.ReviewBtn>
       </R.ReviewBtnWrapper>

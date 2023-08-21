@@ -56,6 +56,7 @@ function Myprofile() {
     }
   };
 
+
   useEffect(() => {
     UserDataFromServer();
     console.log(userName);
@@ -188,6 +189,7 @@ function Myprofile() {
             >
               <img src={a.userImg} />
               <div>{a.user.nickname}</div>
+
             </S.Mate>
           ))}
         </S.MateList>

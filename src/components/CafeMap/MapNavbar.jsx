@@ -1,27 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import baseAxios from '@/apis/baseAxios';
 import * as N from './styles/MapNavbar.style';
-import { ReactComponent as Home } from '../../assets/images/home.svg';
-import { ReactComponent as Book } from '../../assets/images/book.svg';
-import { ReactComponent as Coffee } from '../../assets/images/coffee.svg';
-import { ReactComponent as Mountain } from '../../assets/images/mountain.svg';
-import { ReactComponent as Car } from '../../assets/images/car.svg';
-import { ReactComponent as Photo } from '../../assets/images/photo.svg';
-import { ReactComponent as Bread } from '../../assets/images/bread.svg';
-import { ReactComponent as Cake } from '../../assets/images/cake.svg';
-import { ReactComponent as Pasta } from '../../assets/images/pasta.svg';
-import { ReactComponent as Bento } from '../../assets/images/bento.svg';
-import { ReactComponent as BentoStar } from '../../assets/images/bentoStar.svg';
-import { ReactComponent as BentoMap } from '../../assets/images/bentoMap.svg';
-import { ReactComponent as BentoMarker } from '../../assets/images/bentoMarker.svg';
+import { ReactComponent as Home } from '@/assets/images/home.svg';
+import { ReactComponent as Book } from '@/assets/images/book.svg';
+import { ReactComponent as Coffee } from '@/assets/images/coffee.svg';
+import { ReactComponent as Mountain } from '@/assets/images/mountain.svg';
+import { ReactComponent as Car } from '@/assets/images/car.svg';
+import { ReactComponent as Photo } from '@/assets/images/photo.svg';
+import { ReactComponent as Bread } from '@/assets/images/bread.svg';
+import { ReactComponent as Cake } from '@/assets/images/cake.svg';
+import { ReactComponent as Pasta } from '@/assets/images/pasta.svg';
+import { ReactComponent as Bento } from '@/assets/images/bento.svg';
+import { ReactComponent as BentoStar } from '@/assets/images/bentoStar.svg';
+import { ReactComponent as BentoMap } from '@/assets/images/bentoMap.svg';
+import { ReactComponent as BentoMarker } from '@/assets/images/bentoMarker.svg';
 
-function MapNavbar({ content, logoImg, color, hovercolor }) {
+function MapNavbar({ content, logoImg, color, hovercolor, cafeItems }) {
   const navigate = useNavigate();
   const [activeNav, setActiveNav] = useState(true);
   const [checkedList, setCheckedList] = useState([]);
+  const [selectThemeList, setSelectThemeList] = useState([]);
   const [bentoMenu, setBentoMenu] = useState(false);
   const path = window.location.pathname;
-
   const handleBentoMenu = () => {
     setBentoMenu((bentoMenu) => !bentoMenu);
   };
@@ -34,17 +35,17 @@ function MapNavbar({ content, logoImg, color, hovercolor }) {
     },
     {
       id: 2,
-      name: 'coffee',
+      name: 'beverage',
       image: <Coffee fill={color} />,
     },
     {
       id: 3,
-      name: 'mountain',
+      name: 'view',
       image: <Mountain fill={color} />,
     },
     {
       id: 4,
-      name: 'car',
+      name: 'parking',
       image: <Car fill={color} />,
     },
     {
@@ -54,17 +55,17 @@ function MapNavbar({ content, logoImg, color, hovercolor }) {
     },
     {
       id: 6,
-      name: 'bread',
+      name: 'bakery',
       image: <Bread fill={color} />,
     },
     {
       id: 7,
-      name: 'cake',
+      name: 'dessert',
       image: <Cake fill={color} />,
     },
     {
       id: 8,
-      name: 'pasta',
+      name: 'brunch',
       image: <Pasta fill={color} />,
     },
   ];
@@ -74,6 +75,45 @@ function MapNavbar({ content, logoImg, color, hovercolor }) {
       setCheckedList((prev) => [...prev, id]);
     } else {
       setCheckedList(checkedList.filter((el) => el !== id));
+    }
+  };
+
+  useEffect(() => {
+    if (content === 'recommend') {
+      const navItemNames = new Set(cafeItems?.cafeThemes?.map((item) => item.themeName));
+      const newCheckedList = navItems
+        .filter((data) => navItemNames.has(data.name))
+        .map((data) => data.id);
+      if (newCheckedList) {
+        setCheckedList((prev) => [...prev, ...newCheckedList]);
+      }
+    }
+  }, [cafeItems]);
+
+  useEffect(() => {
+    const newSelectThemeList = [];
+    for (let i = 0; i < navItems.length; i++) {
+      if (checkedList.includes(navItems[i].id)) {
+        newSelectThemeList.push(navItems[i].name);
+      }
+    }
+    setSelectThemeList(newSelectThemeList);
+  }, [checkedList]);
+
+  useEffect(() => {
+    if (content === 'search') {
+      getThemeCafe();
+    }
+  }, [selectThemeList]);
+
+  const getThemeCafe = async () => {
+    if (checkedList.length !== 0) {
+      try {
+        const response = await baseAxios.get(`cafes/theme-all?themeName=${selectThemeList[0]}`);
+        cafeItems(response.data);
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
 
@@ -90,6 +130,7 @@ function MapNavbar({ content, logoImg, color, hovercolor }) {
               onClick={() => {
                 setActiveNav(true);
                 setCheckedList([]);
+                cafeItems([]);
               }}
               className={activeNav ? 'active' : 'hover'}
               color={color}

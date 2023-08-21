@@ -3,52 +3,52 @@ import Pro2 from '../assets/p2.jpg';
 import Pro3 from '../assets/p3.jpg';
 const Follower = [
   {
-    followername: '김ㅇㅇ',
-    followerImg: Pro1,
+    userNickname: '김ㅇㅇ',
+    userImg: Pro1,
   },
   {
-    followername: '오ㅇㅇ',
-    followerImg: null,
+    userNickname: '오ㅇㅇ',
+    userImg: null,
   },
   {
-    followername: '이ㅇㅇ',
-    followerImg: Pro3,
+    userNickname: '이ㅇㅇ',
+    userImg: Pro3,
   },
   {
-    followername: '김ㅇㅇ',
-    followerImg: Pro1,
+    userNickname: '김ㅇㅇ',
+    userImg: Pro1,
   },
   {
-    followername: '조ㅇㅇ',
-    followerImg: Pro2,
+    userNickname: '조ㅇㅇ',
+    userImg: Pro2,
   },
   {
-    followername: '강ㅇㅇ',
-    followerImg: Pro1,
+    userNickname: '강ㅇㅇ',
+    userImg: Pro1,
   },
   {
-    followername: '윤ㅇㅇ',
-    followerImg: Pro2,
+    userNickname: '윤ㅇㅇ',
+    userImg: Pro2,
   },
   {
-    followername: '지ㅇㅇ',
-    followerImg: Pro3,
+    userNickname: '지ㅇㅇ',
+    userImg: Pro3,
   },
   {
-    followername: '송ㅇㅇ',
-    followerImg: Pro2,
+    userNickname: '송ㅇㅇ',
+    userImg: Pro2,
   },
   {
-    followername: '이ㅇㅇ',
-    followerImg: Pro2,
+    userNickname: '이ㅇㅇ',
+    userImg: Pro2,
   },
   {
-    followername: '성ㅇㅇ',
-    followerImg: Pro1,
+    userNickname: '성ㅇㅇ',
+    userImg: Pro1,
   },
   {
-    followername: '강ㅇㅇ',
-    followerImg: Pro1,
+    userNickname: '강ㅇㅇ',
+    userImg: Pro1,
   },
 ];
 

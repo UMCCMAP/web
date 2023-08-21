@@ -1,17 +1,14 @@
-import GIcon from '../../assets/LoginIcon/googleIcon.png';
-import NIcon from '../../assets/LoginIcon/naverIcon.png';
-import Cmap from '../../assets/CMAP.png';
-import { useNavigate } from 'react-router-dom';
+import GIcon from '@/assets/LoginIcon/googleIcon.png';
+import NIcon from '@/assets/LoginIcon/naverIcon.png';
+import Cmap from '@/assets/CMAP.png';
 import * as L from './style/Login.style';
-import * as W from '../../styles/Wapper.style';
-import * as S from '../../styles/Loginpage.style';
+import * as W from '@/styles/Wapper.style';
+import * as S from '@/styles/Loginpage.style';
 
 function Loginpage() {
-  const navigate = useNavigate();
-  const LoginListener = () => {
-    alert('로그인 되었습니다.');
-    navigate('/home');
-  };
+  const baseUrl = import.meta.env.VITE_APP_SERVER_BaseURL;
+  const redirect_uri = import.meta.env.VITE_APP_REDIRECT_URL;
+
   return (
     <W.Wrapper>
       <L.WholeDiv>
@@ -22,11 +19,11 @@ function Loginpage() {
         <L.Hr></L.Hr>
         <S.ChooseLogintext>로그인 방식을 선택해 주세요</S.ChooseLogintext>
         <S.BtnCollect>
-          <S.LoginBtn onClick={LoginListener} to="/oauth2/authorization/google">
+          <S.LoginBtn to={baseUrl + 'oauth2/authorization/google?redirect_uri=' + redirect_uri}>
             <S.Icon src={GIcon}></S.Icon>
             <S.BtnText>구글 아이디로 로그인</S.BtnText>
           </S.LoginBtn>
-          <S.LoginBtn onClick={LoginListener}>
+          <S.LoginBtn to={baseUrl + 'oauth2/authorization/naver?redirect_uri=' + redirect_uri}>
             <S.Icon src={NIcon}></S.Icon>
             <S.BtnText>네이버 아이디로 로그인</S.BtnText>
           </S.LoginBtn>

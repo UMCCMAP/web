@@ -94,11 +94,11 @@ export const SearchDiv = styled.div`
   display: flex;
   align-items: center;
   margin-top: 60px;
+  z-index: 99;
 
-  input {
+  > input {
     width: 315px;
     height: 100%;
-    background-color: #ffffff;
     margin-left: 20px;
     background-color: transparent;
     border: none;
@@ -117,7 +117,7 @@ export const SearchBtn = styled.button`
   border: none;
   cursor: pointer;
   outline: none;
-  img {
+  > img {
     width: 24px;
     height: 24px;
     margin-right: 10px;
@@ -284,4 +284,10 @@ export const RecommendCommu = styled.button`
   border-radius: 32px;
   border: none;
   cursor: pointer;
+  overflow: hidden;
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 `;
