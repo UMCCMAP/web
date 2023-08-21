@@ -210,6 +210,7 @@ function BoardList() {
           </B.BoardContentsWrap>
         </B.BoardWrap>
         <B.PageButtons>
+
           {!isPrevDisabled && (
             <B.PageMoveButton
               onClick={() => {

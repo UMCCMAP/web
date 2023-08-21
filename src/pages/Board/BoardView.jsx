@@ -212,6 +212,7 @@ function BoardView() {
                         }}
                       />
                     </B.ReviewButtons>
+
                   </B.InfoWrap>
                   <B.ReviewContent>{a.content}</B.ReviewContent>
                 </B.Review>
@@ -236,7 +237,7 @@ function BoardView() {
           </B.ReviewWrap>
         </B.BoardWrap>
       </C.ContentsWrap>
-      <Footer top="260px" />
+      <Footer top="40px" />
     </C.Wrap>
   );
 }

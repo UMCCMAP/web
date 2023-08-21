@@ -1,114 +1,253 @@
-import { styled } from 'styled-components';
-import Logo from '../../components/logo';
-import Profile from '../../assets/ProfileImg.png';
+import React, { useState, useCallback, useEffect } from 'react';
+import axios from 'axios';
+import Footer from '../../components/footer';
+import Logo from '../../components/LogoHeader';
+import Myprofile from './assets/Myprofile.png';
+import Mycafe from './assets/Mycafe.png';
+import { useNavigate } from 'react-router-dom';
 import './profile.css';
+import * as S from '../../styles/Editprofilepage.style';
+import * as W from '../../styles/Wapper.style';
+import baseAxios from '../../apis/baseAxios';
 
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const IntroDiv = styled.div`
-  width: 815px;
-  height: ${(props) => (props.height ? props.height : '200px')};
-  position: absolute;
-  top: ${(props) => (props.top ? props.top : '212px')};
-  left: 600px;
-
-  img {
-    widtht: ${(props) => (props.width ? props.width : '200px')};
-    height: ${(props) => (props.height ? props.height : '200px')};
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-  }
-`;
-const ProfileBtn = styled.button`
-  width: 100px;
-  height: 30px;
-  border-radius: 50px;
-  border: none;
-  position: absolute;
-  top: 0px;
-  right: ${(props) => props.right};
-  background-color: #d9d9d9;
-
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 19.36px;
-  align-items: center;
-  cursor: pointer;
-`;
-const IntroText = styled.textarea`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  background-color: #ffffff;
-  border-radius: ${(props) => (props.radius ? props.radius : '0px')};
-  border: 1px solid #000000;
-
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 29px;
-  letter-spacing: 0em;
-`;
-const ShareTxt = styled.div`
-  width: ${(props) => (props.width ? props.width : '813px')};
-  height: 40px;
-  position: absolute;
-  top: ${(props) => (props.top ? props.top : '0px')};
-  right: 0px;
-  background-color: #d9d9d9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 24.2px;
-  color: #000000;
-`;
-const FavoriteCafe = styled.div`
-  width: 100%;
-  height: 386px;
-  position: absolute;
-  bottom: 0px;
-
-  img {
-    width: 466px;
-    height: 386px;
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-  }
-`;
 function EditProfile() {
+  const navigate = useNavigate();
+
+  const [userName, setUserName] = useState('hana');
+  const [myIntro, setMyIntro] = useState('');
+  const [cafeIntroTitle, setCafeIntroTitle] = useState('');
+  const [cafeIntro, setCafeIntro] = useState('');
+  const [userImage, setUserImage] = useState(null);
+  const [cafeImage, setCafeImage] = useState(null);
+  const [data, setData] = useState();
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e, setImage) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    setImage(file);
+  };
+
+  const handleImageChange = (e, setImage) => {
+    const selectedFile = e.target.files[0];
+
+    if (selectedFile) {
+      setImage(selectedFile);
+    }
+  };
+
+  // 사진 제외 데이터 받는거 확인 => alert창에서는 안 나오는데 콘솔에서는 이미지 이름 확인됨 (주소로 받아와지지 X)
+  // const dataToServer = () => {
+  //   const formData = new FormData();
+  //   formData.append('userNickname', userName);
+  //   formData.append('userInfo', myIntro);
+  //   formData.append('cafeTitle', cafeIntroTitle);
+  //   formData.append('cafeInfo', cafeIntro);
+
+  //   if (userImage) {
+  //     formData.append('userImage', userImage);
+  //   }
+
+  //   if (cafeImage) {
+  //     formData.append('cafeImage', cafeImage);
+  //   }
+  //   try {
+  //     setData(formData);
+  //     const formDataAsString = JSON.stringify([...formData.entries()]);
+  //     alert(formDataAsString);
+  //     // eslint-disable-next-line no-console
+  //     console.log(
+  //       userImage,
+  //       '\n',
+  //       userName,
+  //       '\n',
+  //       myIntro,
+  //       '\n',
+  //       cafeIntroTitle,
+  //       '\n',
+  //       cafeIntro,
+  //       '\n',
+  //       cafeImage,
+  //     );
+
+  //     navigate('/profile');
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // 이미지 url 받아오기 -> 이미지 url
+  const uploadImageToServer = async (image) => {
+    const formData = new FormData();
+    formData.append('multipartFile', image); // 이미지 데이터만 FormData에 추가
+
+    try {
+      const response = await baseAxios.post('s3/file', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // FormData 사용 시 Content-Type 설정
+        },
+      });
+
+      if (response.status === 201) {
+        console.log(response.data);
+        const imageUrl = response.data; // 이미지 URL을 서버 응답 데이터에서 가져옴
+        console.log('Uploaded Image URL:', imageUrl);
+
+        return imageUrl;
+      } else {
+        console.error('Error uploading image to server.');
+      }
+    } catch (error) {
+      console.error('Error uploading image to server:', error);
+    }
+  };
+
+  // 서버에 request 보내기 -> 프로필 수정
+
+  const dataToServer = async (imageUrl) => {
+    const userImgUrl = userImage ? await uploadImageToServer(userImage) : '';
+    const cafeImgUrl = cafeImage ? await uploadImageToServer(cafeImage) : '';
+    console.log(userImgUrl);
+    console.log(cafeImgUrl);
+    const userData = {
+      userNickname: userName,
+      userImg: userImgUrl[0],
+      userInfo: myIntro,
+      cafeTitle: cafeIntroTitle,
+      cafeInfo: cafeIntro,
+      cafeImg: cafeImgUrl[0],
+    };
+    console.log(userData);
+    try {
+      const response = await baseAxios.patch(`users/profile/${userName}`, userData, {
+        headers: {
+          Authorization:
+            'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoZzU5MjU2QGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjkyMzc3NTE5LCJleHAiOjE2OTM2OTE1MTl9.dN2cKmQDO2vEB4CQ1K7obrzQZTSz07abmQhrmzVGNWc4rGeH8DIsdjPXGCJbvMFI', // 본인의 토큰 값으로 변경
+        },
+        'Content-Type': 'application/json',
+      });
+      console.log(response.data);
+      // if (response.status === 200) {
+      //   const responseData = response.data;
+
+      //   if (responseData.success) {
+      //     navigate('/profile');
+      //   } else {
+      //     console.error('Profile update failed:', responseData.errorMessage);
+      //   }
+      // } else {
+      //   console.error('Error updating profile:', response.statusText);
+      // }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
+
   return (
-    <Wrapper>
+    <W.Wrapper>
       <Logo />
-      <IntroDiv id="profile">
-        <img src={Profile} />
-        <div
-          className="name"
-          style={{ border: '1px solid black', padding: '4px 10px', margin: '0px -7px' }}
-        >
-          닉네임
-        </div>
-        <ProfileBtn right="0px">수정 완료</ProfileBtn>
-        <IntroText width="540px" height="158px"></IntroText>
-      </IntroDiv>
-      <IntroDiv id="cafe" height="440px" top="470px">
-        <ShareTxt>가장 좋아하는 카페</ShareTxt>
-        <FavoriteCafe>
-          <img src={Profile} />
-          <IntroText width="335px" height="386px"></IntroText>
-        </FavoriteCafe>
-      </IntroDiv>
-    </Wrapper>
+      <S.IntroDiv id="profile" margin="90px 0px">
+        <label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleImageChange(e, setUserImage)} //이미지 변경을 처리
+            style={{ display: 'none' }}
+          />
+          <img
+            src={userImage ? URL.createObjectURL(userImage) : Myprofile}
+            onDragOver={handleDragOver}
+            onDrop={(e) => handleDrop(e, setUserImage)}
+            onClick={(e) => {
+              // 이미지를 클릭하면 파일 선택 대화상자를 열기
+              e.preventDefault();
+              e.currentTarget.parentElement.querySelector('input[type="file"]').click();
+            }}
+            style={{ cursor: 'pointer', width: '232px', height: '230px' }}
+            value={userImage}
+            onChange={(e) => {
+              setUserImage(e.target.value);
+            }}
+          />
+        </label>
+        <S.ProfileEditDiv width="540px">
+          <S.NameAndButtonDiv>
+            <input
+              className="name"
+              style={{
+                border: '1px solid black',
+                padding: '4px 10px',
+                margin: '0px',
+                outline: 'none',
+              }}
+              value={userName}
+              onChange={(e) => {
+                setUserName(e.target.value);
+              }}
+            />
+            <S.ProfileBtn onClick={dataToServer}>수정 완료</S.ProfileBtn>
+          </S.NameAndButtonDiv>
+          <S.MyIntroText
+            value={myIntro}
+            onChange={(e) => {
+              setMyIntro(e.target.value);
+            }}
+          >
+            소개글
+          </S.MyIntroText>
+        </S.ProfileEditDiv>
+      </S.IntroDiv>
+
+      <S.IntroDiv id="cafe" height="440px" flexDirection="column" margin="-50px 0px">
+        <S.ShareTxt>가장 좋아하는 카페</S.ShareTxt>
+        <S.FavoriteCafe>
+          <label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e, setCafeImage)} //이미지 변경을 처리
+              style={{ display: 'none' }}
+            />
+            <img
+              src={cafeImage ? URL.createObjectURL(cafeImage) : Mycafe}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, setCafeImage)}
+              onClick={(e) => {
+                // 이미지를 클릭하면 파일 선택 대화상자를 열기
+                e.preventDefault();
+                e.currentTarget.parentElement.querySelector('input[type="file"]').click();
+              }}
+              style={{ cursor: 'pointer', width: '450px', height: '380px' }}
+              value={cafeImage}
+              onChange={(e) => {
+                setCafeImage(e.target.value);
+              }}
+            />
+          </label>
+          <S.IntroTextDiv>
+            <S.CafeIntroTitle
+              placeholder="제목"
+              value={cafeIntroTitle}
+              onChange={(e) => {
+                setCafeIntroTitle(e.target.value);
+              }}
+            ></S.CafeIntroTitle>
+            <S.CafeIntroText
+              placeholder="소개글
+              "
+              value={cafeIntro}
+              onChange={(e) => {
+                setCafeIntro(e.target.value);
+              }}
+            ></S.CafeIntroText>
+          </S.IntroTextDiv>
+        </S.FavoriteCafe>
+      </S.IntroDiv>
+      <S.OutBtn>회원탈퇴</S.OutBtn>
+      <Footer></Footer>
+    </W.Wrapper>
   );
 }
 
