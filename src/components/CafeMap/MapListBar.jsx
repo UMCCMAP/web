@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import baseAxios from '../../apis/baseAxios';
+import baseAxios from '@/apis/baseAxios';
 import * as L from './styles/MapListBar.style';
 import MapCafeDetail from './MapCafeDetail';
 import RegisterReview from './MapReview/RegisterReview';
 import ReadReview from './MapReview/ReadReview';
 import UpdateReview from './MapReview/UpdateReview';
-import { ReactComponent as Open } from '../../assets/images/openSearchbar.svg';
-import { ReactComponent as Close } from '../../assets/images/closeSearchbar.svg';
+import { ReactComponent as Open } from '@/assets/images/openSearchbar.svg';
+import { ReactComponent as Close } from '@/assets/images/closeSearchbar.svg';
 
-function MapListBar({ color, cafeItems, mapItems }) {
+function MapListBar({ color, cafeItems, mapItems, clickMarker }) {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const queryParamValue = queryParams.get('search');
-
   const [isOpen, setIsOpen] = useState(false);
-  const [detailCafe, setDetailCafe] = useState([]);
+  const [detailCafeIdx, setDetailCafeIdx] = useState(-1);
   const [reviewCRU, setReviewCRU] = useState(0);
   const [reviewData, setReviewData] = useState({
     reviewIdx: -1,
     data: [],
   });
   const [searchText, setSearchText] = useState('');
-  const [cafeData, setCafeData] = useState(mapItems);
+  const [cafeData, setCafeData] = useState([]);
 
   const handleInputText = (e) => {
     const searchText = e.target.value;
@@ -34,7 +33,7 @@ function MapListBar({ color, cafeItems, mapItems }) {
   };
 
   const handleDetailClick = () => {
-    setDetailCafe([]);
+    setDetailCafeIdx(-1);
   };
 
   const handleReviewIndexClick = (index) => {
@@ -45,38 +44,34 @@ function MapListBar({ color, cafeItems, mapItems }) {
     setReviewData(data);
   };
 
-  const searchCafe = async () => {
-    try {
-      const response = await baseAxios.get(`cafes/name?name=${searchText}`);
-      setCafeData(response.data);
-      cafeItems(response.data);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      const searchCafe = async () => {
-        try {
-          const response = await baseAxios.get(`cafes/name?name=${searchText}`);
-          setCafeData(response.data);
-          cafeItems(response.data);
-        } catch (e) {
-          console.error(e);
-        }
-      };
-      searchCafe();
-    }, 200);
+    if (searchText != '') {
+      const timeoutId = setTimeout(() => {
+        const searchCafe = async () => {
+          try {
+            const response = await baseAxios.get(`cafes/name?name=${searchText}`);
+            setCafeData(response.data);
+            cafeItems(response.data);
+          } catch (e) {
+            console.error(e);
+          }
+        };
+        searchCafe();
+      }, 200);
 
-    return () => {
-      clearTimeout(timeoutId);
-    };
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
   }, [searchText]);
 
   useEffect(() => {
     setCafeData(mapItems);
   }, [mapItems]);
+
+  useEffect(() => {
+    setDetailCafeIdx(clickMarker);
+  }, [clickMarker]);
 
   useEffect(() => {
     if (queryParamValue) {
@@ -106,7 +101,7 @@ function MapListBar({ color, cafeItems, mapItems }) {
             <li
               key={index}
               onClick={() => {
-                setDetailCafe(data);
+                setDetailCafeIdx(data.idx);
               }}
             >
               <L.SearchCafeImg>
@@ -115,40 +110,36 @@ function MapListBar({ color, cafeItems, mapItems }) {
               <L.SearchCafeName color={color}>{data?.name}</L.SearchCafeName>
               <L.SearchCafe>{data?.info}</L.SearchCafe>
               <L.SearchCafeScore>
-                <span>리뷰 {data.totalReviews}개</span>
+                <span>리뷰 {data?.totalReviews}개</span>
                 <hr />
-                <span>평점 {data.averageRating}</span>
+                <span>평점 {data?.averageRating}</span>
               </L.SearchCafeScore>
             </li>
           ))}
         </ul>
       </L.SearchBarContainer>
-      {detailCafe.length === 0 ? (
+      {detailCafeIdx === -1 ? (
         <L.ShowSearchBar onClick={handleClick}>
           {!isOpen ? <Open fill={color} /> : <Close fill={color} />}
         </L.ShowSearchBar>
       ) : (
         <L.CloseSearchBar onClick={handleClick}></L.CloseSearchBar>
       )}
-      {detailCafe.length !== 0 && (
+      {detailCafeIdx !== -1 && (
         <MapCafeDetail
           closeAction={handleDetailClick}
           getReviewIndex={handleReviewIndexClick}
           color={color}
-          data={detailCafe}
+          data={detailCafeIdx}
           getReviewData={handleReviewData}
         />
       )}
-      {detailCafe.length !== 0 && reviewCRU === 1 ? (
-        <RegisterReview
-          closeReview={handleReviewIndexClick}
-          color={color}
-          dataId={detailCafe.idx}
-        />
-      ) : detailCafe.length !== 0 && reviewCRU === 2 ? (
+      {detailCafeIdx !== -1 && reviewCRU === 1 ? (
+        <RegisterReview closeReview={handleReviewIndexClick} color={color} dataId={detailCafeIdx} />
+      ) : detailCafeIdx !== -1 && reviewCRU === 2 ? (
         <UpdateReview closeReview={handleReviewIndexClick} color={color} reviewData={reviewData} />
       ) : (
-        detailCafe.length !== 0 &&
+        detailCafeIdx !== -1 &&
         reviewCRU === 3 && (
           <ReadReview
             closeReview={handleReviewIndexClick}

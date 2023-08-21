@@ -1,11 +1,11 @@
-import Cmap from '../../assets/CMAP.png';
-import Icon from '../../assets/LoginIcon/placeholder.png';
+import Cmap from '@/assets/CMAP.png';
+import Icon from '@/assets/LoginIcon/placeholder.png';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import * as L from './style/Login.style';
-import * as S from '../../styles/Registerpage.style';
-import * as W from '../../styles/Wapper.style';
-import baseAxios from '../../apis/baseAxios';
+import * as S from '@/styles/Registerpage.style';
+import * as W from '@/styles/Wapper.style';
+import baseAxios from '@/apis/baseAxios';
 
 function RegisterPage() {
   const navigate = useNavigate();

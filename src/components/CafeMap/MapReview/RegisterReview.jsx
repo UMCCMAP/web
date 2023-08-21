@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import baseAxios from '../../../apis/baseAxios';
+import baseAxios from '@/apis/baseAxios';
 import * as R from './styles/ReviewCU.style';
 import ImgDragDrop from './ImgDragDrop';
-import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
+import { ReactComponent as ReviewStar } from '@/assets/images/reviewstar.svg';
+import closeSvg from '@/assets/images/close.svg';
 
 function RegisterReview({ closeReview, color, dataId }) {
   const form = new FormData();
@@ -73,7 +74,7 @@ function RegisterReview({ closeReview, color, dataId }) {
   return (
     <R.ReviewWriteContainer>
       <R.Title>
-        <img src="src/assets/images/close.svg" alt="close" onClick={() => closeReview(0)} />
+        <img src={closeSvg} alt="close" onClick={() => closeReview(0)} />
         <p>리뷰 작성</p>
       </R.Title>
       <R.ReviewTitle

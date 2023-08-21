@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import baseAxios from '../../apis/baseAxios';
+import baseAxios from '@/apis/baseAxios';
 
 function LoginCallbackPage() {
   const navigate = useNavigate();

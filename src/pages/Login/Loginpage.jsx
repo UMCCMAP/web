@@ -1,9 +1,9 @@
-import GIcon from '../../assets/LoginIcon/googleIcon.png';
-import NIcon from '../../assets/LoginIcon/naverIcon.png';
-import Cmap from '../../assets/CMAP.png';
+import GIcon from '@/assets/LoginIcon/googleIcon.png';
+import NIcon from '@/assets/LoginIcon/naverIcon.png';
+import Cmap from '@/assets/CMAP.png';
 import * as L from './style/Login.style';
-import * as W from '../../styles/Wapper.style';
-import * as S from '../../styles/Loginpage.style';
+import * as W from '@/styles/Wapper.style';
+import * as S from '@/styles/Loginpage.style';
 
 function Loginpage() {
   const baseUrl = import.meta.env.VITE_APP_SERVER_BaseURL;

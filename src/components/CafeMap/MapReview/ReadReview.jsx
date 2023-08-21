@@ -1,11 +1,11 @@
 import React from 'react';
 import { format } from 'date-fns';
-import baseAxios from '../../../apis/baseAxios';
+import baseAxios from '@/apis/baseAxios';
 import * as R from './styles/ReadReview.style';
-import { ReactComponent as ReviewStar } from '../../../assets/images/reviewstar.svg';
-import { ReactComponent as Next } from '../../../assets/images/next.svg';
-import { ReactComponent as Prev } from '../../../assets/images/prev.svg';
-// import CommonBtn from '../../CommonBtn';
+import { ReactComponent as ReviewStar } from '@/assets/images/reviewstar.svg';
+import { ReactComponent as Next } from '@/assets/images/next.svg';
+import { ReactComponent as Prev } from '@/assets/images/prev.svg';
+import closeSvg from '@/assets/images/close.svg';
 
 const settings = {
   dots: false,
@@ -57,7 +57,7 @@ function ReadReview({ reviewData, color, closeReview, getReviewIndex }) {
     <R.ReadReviewContainer>
       <R.Title color={color}>
         <p>{reviewData.data?.title}</p>
-        <img src="src/assets/images/close.svg" alt="close" onClick={() => closeReview(0)} />
+        <img src={closeSvg} alt="close" onClick={() => closeReview(0)} />
       </R.Title>
       <hr />
       <R.SubContentWrap>
