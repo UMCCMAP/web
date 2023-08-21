@@ -29,6 +29,7 @@ function RegisterPage() {
       )
       .then(function (res) {
         if (res.data === 'redirect:/main') {
+          localStorage.setItem('nickname', nickname);
           navigate('/home');
         } else {
           alert(res.data);
