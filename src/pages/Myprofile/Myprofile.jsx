@@ -1,14 +1,13 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import Footer from '../../components/footer';
-import Logo from '../../components/LogoHeader';
+import Footer from '@/components/footer';
+import Logo from '@/components/LogoHeader';
 import './profile.css';
-import * as S from '../../styles/Myprofilepage.style';
-import * as W from '../../styles/Wapper.style';
-import baseAxios from '../../apis/baseAxios';
+import * as S from '@/styles/Myprofilepage.style';
+import * as W from '@/styles/Wapper.style';
+import baseAxios from '@/apis/baseAxios';
 
 function Myprofile() {
-  const navigate = useNavigate();
   const location = useLocation();
 
   const myName = localStorage.getItem('nickname');
@@ -25,7 +24,6 @@ function Myprofile() {
   const [mateInfoList, setMateInfoList] = useState([]); // 에러나옴
   const isOwnProfile = myName === userName;
   const following = myMateInfo.includes(userName);
-  console.log(myName);
   const UserDataFromServer = async () => {
     try {
       // 서버에서 데이터를 가져오는 로직 구현
@@ -77,9 +75,7 @@ function Myprofile() {
       // 에러 처리
     }
   };
-  const getFollowers = () => {
-    return Follower;
-  };
+
   useEffect(() => {
     MateFromServer();
     console.log(mateInfoList);
@@ -95,7 +91,9 @@ function Myprofile() {
             <S.UsernameAndCountDiv>
               <S.UsernameDiv>{userName}</S.UsernameDiv>
               <S.WriteCntText>
-                <S.CntBtn to = "/board" state = {{writer:userName}} id="borderCnt">게시글 작성 수 {boardCnt} </S.CntBtn>
+                <S.CntBtn to="/board" state={{ writer: userName }} id="borderCnt">
+                  게시글 작성 수 {boardCnt}{' '}
+                </S.CntBtn>
                 <S.CntBtn id="reviewCnt" to="/review">
                   리뷰 작성 수 {reviewCnt}
                 </S.CntBtn>

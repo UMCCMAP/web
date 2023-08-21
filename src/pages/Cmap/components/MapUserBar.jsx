@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as U from './styles/MapUserBar.style';
-import Arrow from '../../../assets/icon/Arrow.png';
-import Token from '../../dummy/Token';
-import baseAxios from '../../../apis/baseAxios';
+import Arrow from '@/assets/icon/Arrow.png';
+import baseAxios from '@/apis/baseAxios';
 function MapUserBar({ user, setUser, setModal, setCmapList }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [options, setOptions] = useState([]);

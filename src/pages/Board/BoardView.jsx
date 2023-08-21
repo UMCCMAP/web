@@ -1,35 +1,27 @@
 import './components/Editor.css';
 import 'react-quill/dist/quill.snow.css';
-import Header from '../../components/Header';
-import Button from '../../components/Button';
-import LocationImg from '../../assets/icon/locationIcon.png';
+import Header from '@/components/Header';
+import Button from '@/components/Button';
+import LocationImg from '@/assets/icon/locationIcon.png';
 import { useEffect, useState } from 'react';
-import tempImg from '../../assets/temp/tempcafeimg2.png';
-import tempImg2 from '../../assets/temp/tempcafeimg.jpg';
-import reviewIcon from '../../assets/icon/reviewIcon.png';
-import reviewHeart from '../../assets/icon/reviewHeart.png';
 import Footer from './components/Footer';
 import * as C from './styles/Common.style';
 import * as B from './styles/BoardView.style';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import baseAxios from '../../apis/baseAxios';
-import { ReactComponent as HeartIcon } from '../../assets/icon/reviewHeart.svg';
-import { ReactComponent as HeartFillIcon } from '../../assets/icon/reviewFillHeart.svg';
-import { ReactComponent as BoardReviewIcon } from '../../assets/icon/BoardReviewIcon.svg';
+import { useParams, useNavigate } from 'react-router-dom';
+import baseAxios from '@/apis/baseAxios';
+import { ReactComponent as HeartIcon } from '@/assets/icon/reviewHeart.svg';
+import { ReactComponent as HeartFillIcon } from '@/assets/icon/reviewFillHeart.svg';
+import { ReactComponent as BoardReviewIcon } from '@/assets/icon/BoardReviewIcon.svg';
 
 function BoardView() {
   const { idx } = useParams();
 
   const navigate = useNavigate();
-  const location = useLocation();
   const [data, setData] = useState();
   const [comment, setComment] = useState();
   const [review, setReview] = useState({
     content: '',
   });
-  const [keyWords, setKeyWords] = useState([]);
-  const [like, setLike] = useState(0);
-  console.log(location.state);
   const handleClick = () => {
     const fetchData = async () => {
       try {
@@ -94,7 +86,6 @@ function BoardView() {
                     navigate(`/board/modify/${idx}`, {
                       state: {
                         data,
-                        keyWords,
                       },
                     });
                   }}
@@ -138,7 +129,11 @@ function BoardView() {
           </B.TitleWrap>
           <C.Line top="26"></C.Line>
 
-          <B.CafeTitle onClick={()=>{navigate(`/search?search=${data?.cafeName}`)}}>
+          <B.CafeTitle
+            onClick={() => {
+              navigate(`/search?search=${data?.cafeName}`);
+            }}
+          >
             <B.CafeIcon>
               <img src={LocationImg} />
             </B.CafeIcon>

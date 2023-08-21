@@ -1,11 +1,11 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import Button from '../../components/Button';
-import WriteImg from '../../assets/icon/Vector.png';
-import Header from '../../components/Header';
+import Button from '@/components/Button';
+import WriteImg from '@/assets/icon/Vector.png';
+import Header from '@/components/Header';
 import Footer from './components/Footer';
 import * as C from './styles/Common.style';
-import baseAxios from '../../apis/baseAxios';
+import baseAxios from '@/apis/baseAxios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as B from './styles/BoardList.style';
 
@@ -13,7 +13,6 @@ function BoardList() {
   const [keyWords, setKeyWords] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
-  const ITEMS_PER_PAGE = 5;
   const PAGE_RANGE_DISPLAY = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const [activeButton, setActiveButton] = useState([]);
@@ -21,8 +20,8 @@ function BoardList() {
   const [pageCount, setPageCount] = useState(5);
   const [search, setSearch] = useState({
     page: currentPage,
-    searchType: location.state ? '작성자' : '카페',
-    keyword: location.state ? location.state.writer : '',
+    searchType: location.state ? (location.state.writer ? '작성자' : '카페') : '카페',
+    keyword: location.state ? location.state.writer || location.state.cafe || '' : '',
   });
   const handleButtonClick = (theme) => {
     setActiveButton(
@@ -36,12 +35,6 @@ function BoardList() {
       ...prevSearch,
       keyword: '',
     }));
-  };
-  // 현재 페이지에 해당하는 카페들을 가져오는 함수
-  const getCurrentPageCafes = () => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    return boards.slice(startIndex, endIndex);
   };
 
   const handleNextPage = () => {

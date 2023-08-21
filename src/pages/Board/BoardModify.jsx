@@ -1,47 +1,24 @@
-import Header from '../../components/Header';
-import Button from '../../components/Button';
+import Header from '@/components/Header';
+import Button from '@/components/Button';
 import Footer from './components/Footer';
 import * as B from './styles/BoardCU.style';
 import * as C from './styles/Common.style';
 import Editor from './components/Editor';
 import React, { useState, useEffect, useCallback } from 'react';
-import baseAxios from '../../apis/baseAxios';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import baseAxios from '@/apis/baseAxios';
+import { useNavigate, useParams } from 'react-router-dom';
 function BoardModify() {
-  const location = useLocation();
   const { idx } = useParams();
   const [data, setData] = useState();
   const [value, setValue] = useState();
-  console.log(data);
   const [title, setTitle] = useState();
   const [cafeTitle, setCafeTitle] = useState();
   const [img, setImg] = useState([]);
   const [prevImg, setPrevImg] = useState([]);
   const navigate = useNavigate();
-  const [tagList, setTagList] = useState([]);
-  const [themes] = useState([
-    '질문해요',
-    '추천해요',
-    '디저트',
-    '파스타',
-    '드립커피',
-    '음료',
-    'CMAP',
-  ]);
+  const [options, setOptions] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState();
-  const options = [
-    '게시글',
-    '작성자',
-    '카페',
-    '질문해요',
-    '추천해요',
-    '디저트',
-    '파스타',
-    '드립커피',
-    '음료',
-    'CMAP',
-  ];
   const [activeButton, setActiveButton] = useState();
 
   const fetchData = async () => {
@@ -171,8 +148,8 @@ function BoardModify() {
     const uploadedImageUrls = await handleImageUpload(newImages);
 
     // 기존 이미지(prevImg)와 업로드된 이미지 URL을 합쳐서 최종 이미지 리스트(imgList) 생성
-    const imgList = [...filteredPrevImg,...uploadedImageUrls]
-    console.log(imgList)
+    const imgList = [...filteredPrevImg, ...uploadedImageUrls];
+    console.log(imgList);
     // 나머지 작업을 수행합니다.
     const contentWithReplacedImages = parseAndReplaceImages(value, imgList);
     try {
@@ -204,6 +181,12 @@ function BoardModify() {
       console.error(error);
     }
   };
+  const handleOptionSelect = (option) => {
+    setCafeTitle(option.name);
+    setIsDropdownOpen(false);
+    setSelectedOption(option);
+  };
+
   const handleInputChange = async (e) => {
     const value = e.target.value;
     setCafeTitle(value);
@@ -219,15 +202,11 @@ function BoardModify() {
       // 에러 처리 로직을 추가할 수 있습니다.
     }
   };
+
   const handleOutsideClick = (e) => {
     if (!e.target.closest('.B.CafeWrap')) {
       setIsDropdownOpen(false); // 입력 창 밖을 클릭하면 dropdown 메뉴를 숨김
     }
-  };
-  const handleOptionSelect = (option) => {
-    setCafeTitle(option.name);
-    setIsDropdownOpen(false);
-    setSelectedOption(option);
   };
 
   React.useEffect(() => {
@@ -308,9 +287,9 @@ function BoardModify() {
             <B.DropdownMenu>
               {isDropdownOpen && (
                 <B.DropdownList>
-                  {options.map((option, index) => (
-                    <B.DropdownItem key={index} onClick={() => handleOptionSelect(option)}>
-                      {option}
+                  {options.map((option) => (
+                    <B.DropdownItem key={option.dix} onClick={() => handleOptionSelect(option)}>
+                      {option.name}
                     </B.DropdownItem>
                   ))}
                 </B.DropdownList>

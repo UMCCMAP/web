@@ -1,18 +1,16 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import axios from 'axios';
-import Footer from '../../components/footer';
-import Logo from '../../components/LogoHeader';
+import React, { useState } from 'react';
+import Footer from '@/components/footer';
+import Logo from '@/components/LogoHeader';
 import Myprofile from './assets/Myprofile.png';
 import Mycafe from './assets/Mycafe.png';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './profile.css';
-import * as S from '../../styles/Editprofilepage.style';
-import * as W from '../../styles/Wapper.style';
-import baseAxios from '../../apis/baseAxios';
+import * as S from '@/styles/Editprofilepage.style';
+import * as W from '@/styles/Wapper.style';
+import baseAxios from '@/apis/baseAxios';
 
 function EditProfile() {
   const navigate = useNavigate();
-  const location = useLocation()
   const [userName, setUserName] = useState(localStorage.getItem('nickname'));
   const [myIntro, setMyIntro] = useState();
   const [cafeIntroTitle, setCafeIntroTitle] = useState();
@@ -136,8 +134,8 @@ function EditProfile() {
       // } else {
       //   console.error('Error updating profile:', response.statusText);
       // }
-      alert('수정되었습니다.')
-      navigate('/profile')
+      alert('수정되었습니다.');
+      navigate('/profile');
     } catch (error) {
       console.error('Error updating profile:', error);
     }

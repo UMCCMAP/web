@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
-import ProFile from '../assets/icon/ProFile.png';
-import imgLogo from '../assets/icon/CMAP.png';
+import ProFile from '@/assets/icon/ProFile.png';
+import imgLogo from '@/assets/icon/CMAP.png';
 import { Link } from 'react-router-dom';
-import { ReactComponent as ArrowBottom } from '../assets/icon/arrowBottom.svg';
-import React, { useEffect, useState } from 'react';
+import { ReactComponent as ArrowBottom } from '@/assets/icon/arrowBottom.svg';
+import React, { useState } from 'react';
 
 const HeaderWrap = styled.div`
   width: 100%;
@@ -87,13 +87,14 @@ const HeaderTitle = styled.div`
   text-align: center;
   color: #ff6868;
 `;
-const MyProfile = styled.div`
+const MyProfile = styled(Link)`
   width: 7.875rem;
   height: 3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+  text-decoration: none;
 `;
 const ProfileWord = styled.div`
   font-family: Pretendard;
@@ -190,7 +191,7 @@ function Header({ name, value, set }) {
         <HeaderTitle>{name}</HeaderTitle>
       )}
 
-      <MyProfile>
+      <MyProfile to="/profile">
         <img src={ProFile} />
         <ProfileWord>내정보</ProfileWord>
       </MyProfile>
