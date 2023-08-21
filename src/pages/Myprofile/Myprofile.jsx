@@ -12,7 +12,7 @@ import baseAxios from '../../apis/baseAxios';
 
 function Myprofile() {
   const navigate = useNavigate();
-  const [myName] = useState('nick');
+  const [myName] = useState('cd');
   const [userName, setUserName] = useState(myName);
   const [userImg, setUserImg] = useState('./assets/Myprofile.png'); // 기본 이미지 세팅 어떻게..?
   const [userIntro, setUserIntro] = useState('소개글');
@@ -34,7 +34,7 @@ function Myprofile() {
       setUserImg(response.data.userImg);
       setUserIntro(response.data.userInfo);
       setCafeImg(response.data.cafeImg);
-      setCafeTitle(response.data.userTitle);
+      setCafeTitle(response.data.cafeTitle);
       setCafeContent(response.data.cafeInfo);
       setReviewCnt(response.data.reviewNo);
       setBoardCnt(response.data.boardNo);
@@ -62,11 +62,10 @@ function Myprofile() {
   }, [userName]);
 
   // 팔로우 버튼 클릭 시 호출
-  const handleFollowClick = async (userNickname) => {
+  const handleFollowClick = async (userNickname, follow) => {
     try {
       const response = await baseAxios.put(`/users/profile/${userNickname}`, {
-        headers:
-          'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdXl1bmcwOTAzQG5hdmVyLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjkyNDgwNzIxLCJleHAiOjE2OTM3OTQ3MjF9.Rko5JCtYOm__JzltOZh1966MkQWUzls9HrhpnovgStj2sSZnK7Csz7two4CohQc6',
+        checkFollow: follow,
       });
       console.log('Follow request successful', response.data);
       // 여기서 필요한 처리를 수행하세요.
@@ -136,7 +135,7 @@ function Myprofile() {
                       border="1px solid #21ae21"
                       color="#21ae21"
                       onClick={() => {
-                        handleFollowClick(userName);
+                        handleFollowClick(userName, 'follow');
                       }}
                     >
                       팔로우 +
@@ -147,7 +146,7 @@ function Myprofile() {
                       background="#21ae21"
                       color="#ffffff"
                       onClick={() => {
-                        handleFollowClick(userName);
+                        handleFollowClick(userName, 'unfollow');
                       }}
                     >
                       언팔로우

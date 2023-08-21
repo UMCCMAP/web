@@ -11,9 +11,12 @@ function CmapPage() {
   const location = useLocation();
   const [modal, setModal] = useState('none');
   const [cmapList, setCmapList] = useState([]);
+  const [user, setUser] = useState(
+    location.state && location.state.userName ? location.state.userName : 'ME',
+  );
   return (
     <C.Container>
-      {modal !== 'none' && <ListModal modal={modal} setModal={setModal}></ListModal>}
+      {modal !== 'none' && <ListModal user = {user} modal={modal} setModal={setModal}></ListModal>}
       <Map markerImg="src/assets/images/cmapLogoR.svg" cmapList={cmapList} />
       <MapNavbar
         content="search"
@@ -22,11 +25,7 @@ function CmapPage() {
         hovercolor="rgb(245, 173, 173)"
       />
       <MapListBar color="rgba(255, 104, 104, 1)" />
-      <MapUserBar
-        nick={location.state && location.state.userName ? location.state.userName : 'ME'}
-        setModal={setModal}
-        setCmapList={setCmapList}
-      />
+      <MapUserBar user={user} setUser={setUser} setModal={setModal} setCmapList={setCmapList} />
     </C.Container>
   );
 }

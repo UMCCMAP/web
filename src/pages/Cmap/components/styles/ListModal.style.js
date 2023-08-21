@@ -35,16 +35,20 @@ export const UserCon = styled.div`
 
 export const Line = styled.div`
   width: 70%;
-  border: 3px solid #ff6868;
+  border-bottom: 3px solid #ff6868;
+}
 `;
-
 export const UserText = styled.div`
   ${commonTextStyles}
   font-size: 30px;
   font-weight: 700;
   text-align: right;
-  width: calc(100% - 250px);
+  width: calc(100% - 200px);
   color: #ff6868;
+  @media (max-width: 900px) {
+    font-size: 20px;
+    width: 50%;
+  }
 `;
 
 export const ThemeCon = styled.div`
@@ -65,13 +69,20 @@ export const ThemeText = styled.div`
 export const ThemeBox = styled.div`
   width: 70%;
   margin-top: 20px;
-  height: 200px;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: space-between;
+  gap: 20px;
   @media (max-width: 850px) {
     width: 100%;
   }
+`;
+
+export const Theme = styled.div`
+  width: calc(100% / 4 - 20px);
+  height: 90px;
+  margin-bottom: 20px;
+  cursor: pointer;
 `;
 
 export const ThemeIcons = styled.div`
@@ -81,15 +92,8 @@ export const ThemeIcons = styled.div`
   justify-content: space-between;
 `;
 
-export const Theme = styled.div`
-  width: 45px;
-  height: 90px;
-  justify-content: space-between;
-  cursor: pointer;
-`;
-
 export const ThemeIcon = styled.div`
-  width: 45px;
+  width: 100%;
   height: 54px;
   align-items: center;
   justify-content: center;
@@ -112,7 +116,7 @@ export const CafesWrapper = styled.div`
   width: 47%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  gap: 10px;
   overflow: auto;
   &::-webkit-scrollbar {
     display: none;
@@ -133,6 +137,13 @@ export const CafeImg = styled.div`
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${commonTextStyles}
+  font-size:11px;
+  font-weight: 400;
+  text-align: center;
 `;
 
 export const CafeName = styled.div`
@@ -141,6 +152,10 @@ export const CafeName = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  ${commonTextStyles}
+  font-size:13px;
+  font-weight: 400;
+  text-align: center;
 `;
 
 export const CloseButton = styled.div`
@@ -150,4 +165,12 @@ export const CloseButton = styled.div`
   top: 10px;
   right: 10px;
   cursor: pointer;
+`;
+export const NoCafeWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 180px;
+  ${commonTextStyles}
+  font-size: 30px;
 `;

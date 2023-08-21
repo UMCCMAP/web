@@ -55,8 +55,26 @@ function Map({ cmapList, markerImg }) {
 
   useEffect(() => {
     updateLists();
-    console.log(mapList);
-  }, [cmapList]);
+
+    // Check if cmapList has at least one item
+    if (cmapList && cmapList.length > 0) {
+      const firstCafe = cmapList[0];
+      const newLocation = {
+        latitude: firstCafe.cafeLatitude,
+        longitude: firstCafe.cafeLongitude,
+      };
+
+      if (map) {
+        // Use animateTo to smoothly animate the map movement
+        map.panTo(new navermaps.LatLng(newLocation.latitude, newLocation.longitude), {
+          duration: 500,
+        });
+      }
+
+      setLocation(newLocation);
+    }
+  }, [cmapList, map]);
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -103,7 +121,7 @@ function Map({ cmapList, markerImg }) {
         defaultZoom={15}
         ref={setMap}
       >
-        {mapItems.map((data) => (
+        {mapList.map((data) => (
           <Marker
             key={data?.id}
             position={new navermaps.LatLng(data?.latitude, data?.longitude)}
