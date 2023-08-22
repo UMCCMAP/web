@@ -9,51 +9,40 @@ function Map({ markerImg, mapItems, clickMarker, clickedCafeItem }) {
 
   useEffect(() => {
     if (mapItems.length === 0) return;
-
     if (Array.isArray(mapItems)) {
-      // if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLocation({
-          // latitude: position.coords.latitude,
-          // longitude: position.coords.longitude,
-          latitude: mapItems[0].cafeLatitude,
-          longitude: mapItems[0].cafeLongitude,
-        });
-        const location = new navermaps.LatLng(mapItems[0].cafeLatitude, mapItems[0].cafeLongitude);
-        map?.setCenter(location);
-        map?.setZoom(15);
+      setLocation({
+        // latitude: position.coords.latitude,
+        // longitude: position.coords.longitude,
+        latitude: mapItems[0].cafeLatitude,
+        longitude: mapItems[0].cafeLongitude,
       });
-      // } else {
-      //   window.alert('현재 위치를 알 수 없습니다.');
-      // }
+      const location = new navermaps.LatLng(mapItems[0].cafeLatitude, mapItems[0].cafeLongitude);
+      map?.setCenter(location);
+      map?.setZoom(15);
     } else {
-      navigator.geolocation.getCurrentPosition(() => {
-        setLocation({
-          latitude: mapItems.cafeLatitude,
-          longitude: mapItems.cafeLongitude,
-        });
-        const location = new navermaps.LatLng(mapItems.cafeLatitude, mapItems.cafeLongitude);
-        map?.setCenter(location);
-        map?.setZoom(16);
+      setLocation({
+        latitude: mapItems.cafeLatitude,
+        longitude: mapItems.cafeLongitude,
       });
+      const location = new navermaps.LatLng(mapItems.cafeLatitude, mapItems.cafeLongitude);
+      map?.setCenter(location);
+      map?.setZoom(16);
     }
   }, [map, mapItems]);
 
   useEffect(() => {
     if (clickedCafeItem !== undefined) {
       setClickedMarkerId(clickedCafeItem.idx);
-      navigator.geolocation.getCurrentPosition(() => {
-        setLocation({
-          latitude: clickedCafeItem.cafeLatitude,
-          longitude: clickedCafeItem.cafeLongitude,
-        });
-        const location = new navermaps.LatLng(
-          clickedCafeItem.cafeLatitude,
-          clickedCafeItem.cafeLongitude,
-        );
-        map?.setCenter(location);
-        map?.setZoom(16);
+      setLocation({
+        latitude: clickedCafeItem.cafeLatitude,
+        longitude: clickedCafeItem.cafeLongitude,
       });
+      const location = new navermaps.LatLng(
+        clickedCafeItem.cafeLatitude,
+        clickedCafeItem.cafeLongitude,
+      );
+      map?.setCenter(location);
+      map?.setZoom(16);
     }
   }, [clickedCafeItem]);
 
