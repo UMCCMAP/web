@@ -28,7 +28,7 @@ function MapListBar({
     reviewIdx: -1,
     data: [],
   });
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(queryParamValue ? queryParamValue : '');
   const [cafeData, setCafeData] = useState([]);
 
   const handleInputText = (e) => {
@@ -71,9 +71,9 @@ function MapListBar({
     };
   }, [searchText]);
 
-  useEffect(() => {
-    setCafeData(mapItems);
-  }, [mapItems]);
+  // useEffect(() => {
+  //   setCafeData(mapItems);
+  // }, [mapItems]);
 
   useEffect(() => {
     setDetailCafeIdx(clickMarker);

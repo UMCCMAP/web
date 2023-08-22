@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Map from '@/components/Map';
 import MapNavbar from '@/components/CafeMap/MapNavbar';
 import MapListBar from '@/components/CafeMap/MapListBar';
@@ -7,6 +8,9 @@ import * as C from '@/styles/PageContainer.style';
 import CMAPLogoG from '@/assets/images/cmapLogoG.svg';
 
 function SearchPage() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const queryParamValue = queryParams.get('search');
   const [mapItemList, setMapItemList] = useState([]);
   const [selectThemeData, setSelectThemeData] = useState(-1);
   const [searchCafeData, setSearchCafeData] = useState([]);
@@ -26,7 +30,7 @@ function SearchPage() {
   useEffect(() => {
     if (selectThemeData === -1) {
       const data = getCafeMapItem();
-      setSearchCafeData(data);
+      if (!queryParamValue) setSearchCafeData(data);
     } else if (selectThemeData === 0) {
       getCafeMapItem();
     }
@@ -34,7 +38,7 @@ function SearchPage() {
 
   useEffect(() => {
     if (selectThemeData === 0 || selectThemeData === -1) {
-      setSearchCafeData([]);
+      if (!queryParamValue) setSearchCafeData([]);
     } else if (selectThemeData.length !== 0 && selectThemeData !== 3106) {
       const commonData = selectThemeData.filter((item) =>
         searchCafeData.some((searchItem) => searchItem.idx === item.idx),
