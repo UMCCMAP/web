@@ -11,24 +11,21 @@ function Map({ markerImg, mapItems, clickMarker, clickedCafeItem }) {
     if (mapItems.length === 0) return;
 
     if (Array.isArray(mapItems)) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          setLocation({
-            // latitude: position.coords.latitude,
-            // longitude: position.coords.longitude,
-            latitude: mapItems[0].cafeLatitude,
-            longitude: mapItems[0].cafeLongitude,
-          });
-          const location = new navermaps.LatLng(
-            mapItems[0].cafeLatitude,
-            mapItems[0].cafeLongitude,
-          );
-          map?.setCenter(location);
-          map?.setZoom(15);
+      // if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLocation({
+          // latitude: position.coords.latitude,
+          // longitude: position.coords.longitude,
+          latitude: mapItems[0].cafeLatitude,
+          longitude: mapItems[0].cafeLongitude,
         });
-      } else {
-        window.alert('현재 위치를 알 수 없습니다.');
-      }
+        const location = new navermaps.LatLng(mapItems[0].cafeLatitude, mapItems[0].cafeLongitude);
+        map?.setCenter(location);
+        map?.setZoom(15);
+      });
+      // } else {
+      //   window.alert('현재 위치를 알 수 없습니다.');
+      // }
     } else {
       navigator.geolocation.getCurrentPosition(() => {
         setLocation({
