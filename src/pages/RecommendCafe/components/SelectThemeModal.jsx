@@ -10,6 +10,7 @@ import { ReactComponent as Photo } from '@/assets/images/photo.svg';
 import { ReactComponent as Bread } from '@/assets/images/bread.svg';
 import { ReactComponent as Cake } from '@/assets/images/cake.svg';
 import { ReactComponent as Pasta } from '@/assets/images/pasta.svg';
+import Close from '@/assets/images/close.svg';
 
 function SelectThemeModal({ closeAction, getRecommendData }) {
   const [selectTheme, setSelectTheme] = useState(false);
@@ -125,11 +126,7 @@ function SelectThemeModal({ closeAction, getRecommendData }) {
           <TM.ThemeAddBtn onClick={() => setSelectTheme(true)}>추가하기</TM.ThemeAddBtn>
           <TM.SelectTheme className={selectTheme ? 'show' : 'hide'}>
             <TM.CloseImgWrap>
-              <img
-                src="src/assets/images/close.svg"
-                alt="close"
-                onClick={() => setSelectTheme(false)}
-              />
+              <img src={Close} alt="close" onClick={() => setSelectTheme(false)} />
             </TM.CloseImgWrap>
             <TM.ThemeListWrap>
               <div>

@@ -97,7 +97,7 @@ function ListModal({ setCafeData, user, modal, setModal }) {
                   }}
                 >
                   <LM.ThemeIcon>
-                    {a.image(activeButton.includes(i + 1) ? '#60A7E1' : '#F1F1F1')}
+                    {a.image(activeButton.includes(i + 1) ? 'rgba(255, 104, 104, 1)' : '#F1F1F1')}
                   </LM.ThemeIcon>
                   <LM.ThemeName>{a.name}</LM.ThemeName>
                 </LM.Theme>
