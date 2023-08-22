@@ -16,7 +16,7 @@ import { ReactComponent as BentoStar } from '@/assets/images/bentoStar.svg';
 import { ReactComponent as BentoMap } from '@/assets/images/bentoMap.svg';
 import { ReactComponent as BentoMarker } from '@/assets/images/bentoMarker.svg';
 
-function MapNavbar({ content, logoImg, color, hovercolor, cafeItems }) {
+function MapNavbar({ content, logoImg, color, hovercolor, cafeItems, getRecommendData }) {
   const navigate = useNavigate();
   const [activeNav, setActiveNav] = useState(true);
   const [checkedList, setCheckedList] = useState([]);
@@ -103,6 +103,8 @@ function MapNavbar({ content, logoImg, color, hovercolor, cafeItems }) {
   useEffect(() => {
     if (content === 'search') {
       getThemeCafe();
+    } else if (content === 'recommend') {
+      if (selectThemeList.length !== 0) getThemeCafeList();
     }
   }, [selectThemeList]);
 
@@ -117,6 +119,22 @@ function MapNavbar({ content, logoImg, color, hovercolor, cafeItems }) {
           alert(e.response.data.message);
           cafeItems(e.response.data.code);
         }
+      }
+    }
+  };
+
+  const getThemeCafeList = async () => {
+    let sendThemeList = selectThemeList.join(',');
+    try {
+      const response = await baseAxios.get(
+        `cafes/filter?district=영등포구&city=서울시&theme=${sendThemeList}`,
+      );
+      if (response.status === 200) {
+        getRecommendData(response.data);
+      }
+    } catch (e) {
+      if (e.response.data.code) {
+        alert('조건에 맞는 카페가 없습니다');
       }
     }
   };

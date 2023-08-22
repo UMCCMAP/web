@@ -9,7 +9,7 @@ import UpdateReview from './MapReview/UpdateReview';
 import { ReactComponent as Open } from '@/assets/images/openSearchbar.svg';
 import { ReactComponent as Close } from '@/assets/images/closeSearchbar.svg';
 
-function MapListBar({ color, cafeItems, search, mapItems, clickMarker }) {
+function MapListBar({ color, cafeItems, search, mapItems, clickMarker, clickedCafeItem }) {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const queryParamValue = queryParams.get('search');
@@ -106,6 +106,7 @@ function MapListBar({ color, cafeItems, search, mapItems, clickMarker }) {
               key={index}
               onClick={() => {
                 setDetailCafeIdx(data.idx);
+                clickedCafeItem(data);
               }}
             >
               <L.SearchCafeImg>

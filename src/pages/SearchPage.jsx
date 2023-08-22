@@ -11,6 +11,7 @@ function SearchPage() {
   const [selectThemeData, setSelectThemeData] = useState(-1);
   const [searchCafeData, setSearchCafeData] = useState([]);
   const [clickMarkerItem, setClickedMarkerItem] = useState(-1);
+  const [clickMarkerData, setClickMarkerData] = useState();
 
   const getCafeMapItem = async () => {
     try {
@@ -46,9 +47,18 @@ function SearchPage() {
     setClickedMarkerItem(id);
   };
 
+  const clickedCafeData = (data) => {
+    setClickMarkerData(data);
+  };
+
   return (
     <C.Container>
-      <Map markerImg={CMAPLogoG} mapItems={mapItemList} clickMarker={clickedMapMarker} />
+      <Map
+        markerImg={CMAPLogoG}
+        mapItems={mapItemList}
+        clickMarker={clickedMapMarker}
+        clickedCafeItem={clickMarkerData}
+      />
       <MapNavbar
         content="search"
         logoImg={CMAPLogoG}
@@ -62,6 +72,7 @@ function SearchPage() {
         search={selectThemeData === 0 ? true : false}
         mapItems={mapItemList}
         clickMarker={clickMarkerItem}
+        clickedCafeItem={clickedCafeData}
       />
     </C.Container>
   );
