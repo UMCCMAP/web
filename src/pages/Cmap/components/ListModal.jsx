@@ -112,7 +112,6 @@ function ListModal({ setCafeData, user, modal, setModal }) {
               onClick={() => {
                 setCafeData(a.cafeName);
                 setModal('none');
-                console.log(a.cafeName);
               }}
             >
               <LM.CafeImg>

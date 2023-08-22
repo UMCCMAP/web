@@ -4,7 +4,6 @@ import MapNavbar from '@/components/CafeMap/MapNavbar';
 import MapListBar from '@/components/CafeMap/MapListBar';
 import MapUserBar from './components/MapUserBar';
 import ListModal from './components/ListModal';
-import baseAxios from '@/apis/baseAxios';
 import * as C from '@/styles/PageContainer.style';
 import { useLocation } from 'react-router-dom';
 import cmapLogoR from '@/assets/images/cmapLogoR.svg';
@@ -12,7 +11,6 @@ import cmapLogoR from '@/assets/images/cmapLogoR.svg';
 function CmapPage() {
   const location = useLocation();
   const [modal, setModal] = useState('none');
-  const [cmapList, setCmapList] = useState([]);
   const [user, setUser] = useState(
     location.state && location.state.userName ? location.state.userName : 'ME',
   );
@@ -20,21 +18,8 @@ function CmapPage() {
   const [selectThemeData, setSelectThemeData] = useState(-1);
   const [searchCafeData, setSearchCafeData] = useState([]);
   const [clickMarkerItem, setClickedMarkerItem] = useState(-1);
-
-  const getCafeMapItem = async () => {
-    try {
-      const response = await baseAxios.get('cafes');
-      setMapItemList(response.data);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  useEffect(() => {
-    if (selectThemeData === -1 || selectThemeData === 0) {
-      getCafeMapItem();
-    }
-  }, [selectThemeData]);
+  const [clickMarkerData, setClickMarkerData] = useState();
+  const [listModalData, setListModalData] = useState('');
 
   useEffect(() => {
     if (selectThemeData === 0 || selectThemeData === -1) {
@@ -55,31 +40,43 @@ function CmapPage() {
     setClickedMarkerItem(id);
   };
 
+  const clickedCafeData = (data) => {
+    setClickMarkerData(data);
+  };
+
   return (
     <C.Container>
       {modal !== 'none' && (
         <ListModal
-          setCafeData={setClickedMarkerItem}
+          setCafeData={setListModalData}
           user={user}
           modal={modal}
           setModal={setModal}
         ></ListModal>
       )}
-      <Map markerImg={cmapLogoR} mapItems={cmapList} clickMarker={clickedMapMarker} />
+      <Map
+        markerImg={cmapLogoR}
+        mapItems={mapItemList}
+        clickMarker={clickedMapMarker}
+        clickedCafeItem={clickMarkerData}
+      />
       <MapNavbar
         content="search"
         logoImg={cmapLogoR}
         color="rgba(255, 104, 104, 1)"
         hovercolor="rgb(245, 173, 173)"
+        cafeItems={setSelectThemeData}
       />
       <MapListBar
-        color="rgb(33, 174, 33)"
+        color="rgba(255, 104, 104, 1)"
         cafeItems={setSearchCafeData}
         search={selectThemeData === 0 ? true : false}
         mapItems={mapItemList}
         clickMarker={clickMarkerItem}
+        clickedCafeItem={clickedCafeData}
+        listModalData={listModalData}
       />
-      <MapUserBar user={user} setUser={setUser} setModal={setModal} setCmapList={setCmapList} />
+      <MapUserBar user={user} setUser={setUser} setModal={setModal} setCmapList={setMapItemList} />
     </C.Container>
   );
 }

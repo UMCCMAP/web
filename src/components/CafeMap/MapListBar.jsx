@@ -9,7 +9,15 @@ import UpdateReview from './MapReview/UpdateReview';
 import { ReactComponent as Open } from '@/assets/images/openSearchbar.svg';
 import { ReactComponent as Close } from '@/assets/images/closeSearchbar.svg';
 
-function MapListBar({ color, cafeItems, search, mapItems, clickMarker, clickedCafeItem }) {
+function MapListBar({
+  color,
+  cafeItems,
+  search,
+  mapItems,
+  clickMarker,
+  clickedCafeItem,
+  listModalData,
+}) {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const queryParamValue = queryParams.get('search');
@@ -83,7 +91,12 @@ function MapListBar({ color, cafeItems, search, mapItems, clickMarker, clickedCa
       setSearchText('');
     }
   }, [search]);
-
+  useEffect(() => {
+    if (listModalData !== '') {
+      setSearchText(listModalData);
+      setIsOpen(true);
+    }
+  }, [listModalData]);
   return (
     <>
       <L.SearchBarContainer

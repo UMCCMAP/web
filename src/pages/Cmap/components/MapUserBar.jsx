@@ -12,7 +12,9 @@ function MapUserBar({ user, setUser, setModal, setCmapList }) {
       return data.map((item) => ({
         ...item,
         name: item.cafeName,
+        idx: item.cafeIdx,
         cafeName: undefined,
+        cafeIdx: undefined,
       }));
     }
     if (user === 'ME') {
@@ -22,6 +24,7 @@ function MapUserBar({ user, setUser, setModal, setCmapList }) {
           // API 요청 성공 시 처리할 로직
           const modifiedData = modifyCafeData(response.data);
           setCmapList(modifiedData);
+          console.log(response.data);
         })
         .catch((error) => {
           // API 요청 실패 시 처리할 로직
@@ -136,7 +139,7 @@ const ToggleIcon = ({ initialFlex, initialPosition, cmapType, setcmapType }) => 
   const toggleIcon = () => {
     setFlex(flex === 'end' ? 'start' : 'end');
     setPosition(position === 'top' ? 'bottom' : 'top');
-    setcmapType(cmapType === 'WANT' ? 'WENT' : 'WANT');
+    setcmapType(cmapType === 'want' ? 'went' : 'want');
     setShadow(shadow === '-' ? '' : '-');
   };
 

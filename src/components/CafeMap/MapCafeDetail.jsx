@@ -145,7 +145,7 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
     <>
       <D.DetailWrapper>
         <D.DetailImgContainer className={`${getImgCount()}`}>
-          <AiOutlineLeft className="leftIcon" size={35} onClick={openDetailHandler} />
+          <AiOutlineLeft className="leftIcon" color={color} size={35} onClick={openDetailHandler} />
           {getImgCount() === 'over' ? (
             <>
               {/* {search[0].images.slice(0, 5).map((image, index) => (
