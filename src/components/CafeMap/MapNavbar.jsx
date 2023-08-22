@@ -103,9 +103,10 @@ function MapNavbar({ content, logoImg, color, hovercolor, cafeItems, getRecommen
   useEffect(() => {
     if (content === 'search') {
       getThemeCafe();
-    } else if (content === 'recommend') {
-      if (selectThemeList.length !== 0) getThemeCafeList();
     }
+    // else if (content === 'recommend') {
+    //   if (selectThemeList.length !== 0) getThemeCafeList();
+    // }
   }, [selectThemeList]);
 
   const getThemeCafe = async () => {
@@ -123,21 +124,21 @@ function MapNavbar({ content, logoImg, color, hovercolor, cafeItems, getRecommen
     }
   };
 
-  const getThemeCafeList = async () => {
-    let sendThemeList = selectThemeList.join(',');
-    try {
-      const response = await baseAxios.get(
-        `cafes/filter?district=영등포구&city=서울시&theme=${sendThemeList}`,
-      );
-      if (response.status === 200) {
-        getRecommendData(response.data);
-      }
-    } catch (e) {
-      if (e.response.data.code) {
-        alert('조건에 맞는 카페가 없습니다');
-      }
-    }
-  };
+  // const getThemeCafeList = async () => {
+  //   let sendThemeList = selectThemeList.join(',');
+  //   try {
+  //     const response = await baseAxios.get(
+  //       `cafes/filter?district=영등포구&city=서울시&theme=${sendThemeList}`,
+  //     );
+  //     if (response.status === 200) {
+  //       getRecommendData(response.data);
+  //     }
+  //   } catch (e) {
+  //     if (e.response.data.code) {
+  //       alert('조건에 맞는 카페가 없습니다');
+  //     }
+  //   }
+  // };
 
   return (
     <N.NavbarWrapper>
