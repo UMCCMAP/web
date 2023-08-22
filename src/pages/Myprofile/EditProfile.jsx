@@ -172,6 +172,7 @@ function EditProfile() {
           <S.NameAndButtonDiv>
             <input
               className="name"
+              disabled
               style={{
                 border: '1px solid black',
                 padding: '4px 10px',
@@ -183,6 +184,7 @@ function EditProfile() {
                 setUserName(e.target.value);
               }}
             />
+
             <S.ProfileBtn onClick={dataToServer}>수정 완료</S.ProfileBtn>
           </S.NameAndButtonDiv>
           <S.MyIntroText
