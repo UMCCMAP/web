@@ -9,7 +9,7 @@ import UpdateReview from './MapReview/UpdateReview';
 import { ReactComponent as Open } from '@/assets/images/openSearchbar.svg';
 import { ReactComponent as Close } from '@/assets/images/closeSearchbar.svg';
 
-function MapListBar({ color, cafeItems, mapItems, clickMarker }) {
+function MapListBar({ color, cafeItems, search, mapItems, clickMarker, clickedCafeItem }) {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const queryParamValue = queryParams.get('search');
@@ -45,24 +45,22 @@ function MapListBar({ color, cafeItems, mapItems, clickMarker }) {
   };
 
   useEffect(() => {
-    if (searchText != '') {
-      const timeoutId = setTimeout(() => {
-        const searchCafe = async () => {
-          try {
-            const response = await baseAxios.get(`cafes/name?name=${searchText}`);
-            setCafeData(response.data);
-            cafeItems(response.data);
-          } catch (e) {
-            console.error(e);
-          }
-        };
-        searchCafe();
-      }, 200);
-
-      return () => {
-        clearTimeout(timeoutId);
+    const timeoutId = setTimeout(() => {
+      const searchCafe = async () => {
+        try {
+          const response = await baseAxios.get(`cafes/name?name=${searchText}`);
+          setCafeData(response.data);
+          cafeItems(response.data);
+        } catch (e) {
+          console.error(e);
+        }
       };
-    }
+      searchCafe();
+    }, 200);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [searchText]);
 
   useEffect(() => {
@@ -79,6 +77,12 @@ function MapListBar({ color, cafeItems, mapItems, clickMarker }) {
       setIsOpen(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (search) {
+      setSearchText('');
+    }
+  }, [search]);
 
   return (
     <>
@@ -102,6 +106,7 @@ function MapListBar({ color, cafeItems, mapItems, clickMarker }) {
               key={index}
               onClick={() => {
                 setDetailCafeIdx(data.idx);
+                clickedCafeItem(data);
               }}
             >
               <L.SearchCafeImg>

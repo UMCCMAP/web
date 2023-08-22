@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -74,10 +75,12 @@ export const Date = styled.div`
   text-align: center;
   color: rgba(147, 147, 147, 1);
 `;
-export const UserInfo = styled.div`
+export const UserInfo = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  cursor: pointer;
+  text-decoration: none;
   > p {
     font-family: 'Pretendard';
     font-size: 12px;

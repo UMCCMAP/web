@@ -77,7 +77,7 @@ function ReadReview({ reviewData, color, closeReview, getReviewIndex }) {
       </R.SubContentWrap>
       <R.UserInfoWrap>
         <R.Date>{date}</R.Date>
-        <R.UserInfo>
+        <R.UserInfo to={'/profile'} state={{ user: reviewData.data?.userInfo?.userNickname }}>
           <p>{reviewData.data?.userInfo?.userNickname}</p>
           <img src={reviewData.data?.userInfo?.userImg} alt="user" />
         </R.UserInfo>

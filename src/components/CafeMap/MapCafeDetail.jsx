@@ -141,7 +141,6 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
     }
   };
   // let remainer = search[0].images.length - 5;
-
   return (
     <>
       <D.DetailWrapper>
@@ -171,7 +170,9 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
             </>
           )}
         </D.DetailImgContainer>
-        <D.DetailCafeName color={color}>{cafeData?.name}</D.DetailCafeName>
+        <D.DetailCafeName color={color} to={'/board'} state={{ cafe: cafeData?.name }}>
+          {cafeData?.name}
+        </D.DetailCafeName>
         <D.ThemeBtnContainer>
           {themeList.map((theme) =>
             navItems.find((navItem) => navItem.theme === theme) ? (

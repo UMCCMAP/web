@@ -5,27 +5,53 @@ import * as S from './styles/SaveCafe.style';
 import closeSvg from '@/assets/images/close.svg';
 
 function SaveCafe({ color, closeAction, data }) {
+  const nickname = localStorage.getItem('nickname');
   const [clickSave, setClickSave] = useState(data?.cafeType != null ? data?.cafeType : '');
 
   const sendSaveType = async () => {
-    await baseAxios
-      .post(
-        `/map/place/${data.idx}`,
-        {
-          type: clickSave,
-        },
-        {
-          'Content-Type': 'application/json',
-        },
-      )
-      .then(function (res) {
-        if (res.status === 201) {
-          location.reload();
-        }
-      })
-      .catch(function (e) {
-        console.error(e);
-      });
+    if (data?.cafeType != null) {
+      if (data?.cafeType === clickSave) {
+        location.reload();
+      } else {
+        await baseAxios
+          .put(
+            `/map/${nickname}/place/${data.idx}`,
+            {
+              type: clickSave,
+            },
+            {
+              'Content-Type': 'application/json',
+            },
+          )
+          .then(function (res) {
+            if (res.status === 204) {
+              location.reload();
+            }
+          })
+          .catch(function (e) {
+            console.error(e);
+          });
+      }
+    } else {
+      await baseAxios
+        .post(
+          `/map/place/${data.idx}`,
+          {
+            type: clickSave,
+          },
+          {
+            'Content-Type': 'application/json',
+          },
+        )
+        .then(function (res) {
+          if (res.status === 201) {
+            location.reload();
+          }
+        })
+        .catch(function (e) {
+          console.error(e);
+        });
+    }
   };
 
   return (

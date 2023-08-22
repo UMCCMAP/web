@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container as MapDiv, NaverMap, Marker, useNavermaps } from 'react-naver-maps';
 
-
-function Map({ markerImg, mapItems, clickMarker }) {
+function Map({ markerImg, mapItems, clickMarker, clickedCafeItem }) {
   const navermaps = useNavermaps();
   const [location, setLocation] = useState({ latitude: 37.566535, longitude: 126.9779692 });
   const [map, setMap] = useState(null);
   const [clickedMarkerId, setClickedMarkerId] = useState(null);
+
   useEffect(() => {
     if (mapItems.length === 0) return;
 
@@ -14,12 +14,14 @@ function Map({ markerImg, mapItems, clickMarker }) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
           setLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
+            // latitude: position.coords.latitude,
+            // longitude: position.coords.longitude,
+            latitude: mapItems[0].cafeLatitude,
+            longitude: mapItems[0].cafeLongitude,
           });
           const location = new navermaps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude,
+            mapItems[0].cafeLatitude,
+            mapItems[0].cafeLongitude,
           );
           map?.setCenter(location);
           map?.setZoom(15);
@@ -39,6 +41,24 @@ function Map({ markerImg, mapItems, clickMarker }) {
       });
     }
   }, [map, mapItems]);
+
+  useEffect(() => {
+    if (clickedCafeItem !== undefined) {
+      setClickedMarkerId(clickedCafeItem.idx);
+      navigator.geolocation.getCurrentPosition(() => {
+        setLocation({
+          latitude: clickedCafeItem.cafeLatitude,
+          longitude: clickedCafeItem.cafeLongitude,
+        });
+        const location = new navermaps.LatLng(
+          clickedCafeItem.cafeLatitude,
+          clickedCafeItem.cafeLongitude,
+        );
+        map?.setCenter(location);
+        map?.setZoom(16);
+      });
+    }
+  }, [clickedCafeItem]);
 
   const handleClickMarker = (lat, long, id) => {
     const clickPosition = new navermaps.LatLng(lat, long);
@@ -71,7 +91,6 @@ function Map({ markerImg, mapItems, clickMarker }) {
         defaultZoom={15}
         ref={setMap}
       >
-
         {Array.isArray(mapItems) ? (
           <>
             {mapItems.map((data) => (
