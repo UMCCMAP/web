@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { fadeIn } from '../../../styles/Transition.style';
+import { Link } from 'react-router-dom';
 
 export const DetailImgContainer = styled.div`
   display: grid;
@@ -98,10 +99,11 @@ export const DetailWrapper = styled.div`
   animation: ${fadeIn} 0.3s ease-in-out;
 `;
 
-export const DetailCafeName = styled.h2`
+export const DetailCafeName = styled(Link)`
   font-size: 36px;
   font-weight: 700;
   color: ${(props) => props.color};
+  text-decoration: none;
 `;
 
 export const ThemeBtnContainer = styled.div`
