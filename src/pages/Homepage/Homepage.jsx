@@ -132,12 +132,12 @@ function Homepage() {
         </S.CommunityRecommendMent>
 
         <S.MainBtnDiv>
-          <S.RecommendCommu>
+          <S.RecommendCommu to={`/board/${randomBoardList[0]?.boardIdx}`}>
             {randomBoardList[0]?.imageUrl ? (
               <img src={randomBoardList[0].imageUrl} alt="게시판" />
             ) : null}
           </S.RecommendCommu>
-          <S.RecommendCommu>
+          <S.RecommendCommu to={`/board/${randomBoardList[1]?.boardIdx}`}>
             {randomBoardList[1]?.imageUrl ? (
               <img src={randomBoardList[1].imageUrl} alt="게시판" />
             ) : null}

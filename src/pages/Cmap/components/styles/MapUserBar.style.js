@@ -20,6 +20,7 @@ export const UserBarWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 2;
 `;
 export const UserMenu = styled.div`
   width: 113px;

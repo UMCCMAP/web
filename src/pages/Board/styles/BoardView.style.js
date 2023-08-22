@@ -106,7 +106,7 @@ export const BoardContentsWrap = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 100px;
-  margin-bottom: 360px;
+  margin-bottom: 200px;
 `;
 export const BoardContent = styled.div`
   width: 100%;

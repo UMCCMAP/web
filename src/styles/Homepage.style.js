@@ -275,7 +275,7 @@ export const CommunityRecommendMent = styled.div`
     height: 22px;
   }
 `;
-export const RecommendCommu = styled.button`
+export const RecommendCommu = styled(Link)`
   width: 410px;
   height: 100%;
   radius: 32px;
