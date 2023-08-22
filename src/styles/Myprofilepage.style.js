@@ -189,7 +189,7 @@ export const Mate = styled.button`
   width: 100%;
   height: 65px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   cursor: pointer;
 
