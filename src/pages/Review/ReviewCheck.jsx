@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Footer from '../../components/footer';
+import Footer from '../../components/Footer';
 import Logo from '../../components/LogoHeader';
 import Next from './assets/NextIcon.png';
 import Prev from './assets/PrevIcon.png';
