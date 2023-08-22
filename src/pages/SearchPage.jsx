@@ -17,13 +17,17 @@ function SearchPage() {
     try {
       const response = await baseAxios.get('cafes');
       setMapItemList(response.data);
+      return response;
     } catch (e) {
       console.error(e);
     }
   };
 
   useEffect(() => {
-    if (selectThemeData === -1 || selectThemeData === 0) {
+    if (selectThemeData === -1) {
+      const data = getCafeMapItem();
+      setSearchCafeData(data);
+    } else if (selectThemeData === 0) {
       getCafeMapItem();
     }
   }, [selectThemeData]);
