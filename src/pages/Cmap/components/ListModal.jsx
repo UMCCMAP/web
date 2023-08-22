@@ -1,14 +1,14 @@
 import * as M from '@/styles/Modal.style';
 import * as LM from './styles/ListModal.style';
 import { React, useState, useCallback, useEffect } from 'react';
-import { ReactComponent as BookIcon } from '@/assets/icon/CmapModalICon/book.svg';
-import { ReactComponent as BrunchIcon } from '@/assets/icon/CmapModalICon/brunch.svg';
-import { ReactComponent as CoffeeIcon } from '@/assets/icon/CmapModalICon/coffee.svg';
-import { ReactComponent as ViewIcon } from '@/assets/icon/CmapModalICon/view.svg';
-import { ReactComponent as ParkingIcon } from '@/assets/icon/CmapModalICon/parking.svg';
-import { ReactComponent as BreadIcon } from '@/assets/icon/CmapModalICon/bread.svg';
-import { ReactComponent as CameraIcon } from '@/assets/icon/CmapModalICon/camera.svg';
-import { ReactComponent as DesertIcon } from '@/assets/icon/CmapModalICon/desert.svg';
+import { ReactComponent as BookIcon } from '@/assets/icon/CmapModalIcon/book.svg';
+import { ReactComponent as BrunchIcon } from '@/assets/icon/CmapModalIcon/brunch.svg';
+import { ReactComponent as CoffeeIcon } from '@/assets/icon/CmapModalIcon/coffee.svg';
+import { ReactComponent as ViewIcon } from '@/assets/icon/CmapModalIcon/view.svg';
+import { ReactComponent as ParkingIcon } from '@/assets/icon/CmapModalIcon/parking.svg';
+import { ReactComponent as BreadIcon } from '@/assets/icon/CmapModalIcon/bread.svg';
+import { ReactComponent as CameraIcon } from '@/assets/icon/CmapModalIcon/camera.svg';
+import { ReactComponent as DesertIcon } from '@/assets/icon/CmapModalIcon/desert.svg';
 import baseAxios from '@/apis/baseAxios';
 import close from '@/assets/images/close.svg';
 function ListModal({ setCafeData, user, modal, setModal }) {
