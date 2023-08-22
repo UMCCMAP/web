@@ -1,10 +1,9 @@
 import ReactQuill, { Quill } from 'react-quill';
-import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import { useRef, useMemo } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize-module-react';
 import DragAndDropModule from 'quill-drag-and-drop-module';
 import './Editor.css';
-import baseAxios from '../../../apis/baseAxios';
 function Editor({ value, setValue, img, setImg }) {
   // 버튼 클릭 시 실행될 함수
 

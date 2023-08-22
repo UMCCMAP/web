@@ -36,9 +36,10 @@ export const TitleLogo = styled.img`
 `;
 export const HeaderBtnDiv = styled.div`
   height: 64px;
-  width: 100%;
+  width: auto;
   position: absolute;
   top: 0px;
+  right: 12%;
   display: flex;
   justify-content: right;
   align-items: center;
@@ -70,7 +71,6 @@ export const LogoutBtn = styled.button`
   line-height: 23.87px;
   letter-spacing: 0em;
   text-align: center;
-  margin-right: 300px;
 
   color: #ffffff;
   background-color: transparent;

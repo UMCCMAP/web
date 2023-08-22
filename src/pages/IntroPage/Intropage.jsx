@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '../../assets/CMAPwhite.png';
+import Icon from '@/assets/CMAPwhite.png';
 import main1 from './assets/main1.png';
 import main2_1 from './assets/b1.png';
 import main2_2 from './assets/b2.png';
@@ -7,10 +7,10 @@ import main3_1 from './assets/c1.png';
 import main3_2 from './assets/c2.png';
 import main4_1 from './assets/d1.png';
 import main4_2 from './assets/d2.png';
-import Footer from '../../components/Footer';
+import Footer from '@/components/Footer';
 import { useNavigate } from 'react-router-dom';
-import * as S from '../../styles/Intropage.style';
-import * as W from '../../styles/Wapper.style';
+import * as S from '@/styles/Intropage.style';
+import * as W from '@/styles/Wapper.style';
 
 function Intropage() {
   const navigate = useNavigate();

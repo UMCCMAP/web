@@ -1,12 +1,12 @@
-import Header from '../../components/Header';
-import Button from '../../components/Button';
+import Header from '@/components/Header';
+import Button from '@/components/Button';
 import Footer from './components/Footer';
 import * as B from './styles/BoardCU.style';
 import * as C from './styles/Common.style';
 import Editor from './components/Editor';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import baseAxios from '../../apis/baseAxios';
+import baseAxios from '@/apis/baseAxios';
 
 function BoardWrite() {
   const [value, setValue] = useState('');
@@ -17,7 +17,6 @@ function BoardWrite() {
   const navigate = useNavigate();
   const [options, setOptions] = useState([]);
   const location = useLocation();
-  const [themes, setThemes] = useState([location.state]);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('게시글');
