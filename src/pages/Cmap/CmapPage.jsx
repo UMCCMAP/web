@@ -7,6 +7,7 @@ import ListModal from './components/ListModal';
 import baseAxios from '@/apis/baseAxios';
 import * as C from '@/styles/PageContainer.style';
 import { useLocation } from 'react-router-dom';
+import cmapLogoR from '@/assets/images/cmapLogoR.svg';
 
 function CmapPage() {
   const location = useLocation();
@@ -57,10 +58,10 @@ function CmapPage() {
   return (
     <C.Container>
       {modal !== 'none' && <ListModal user={user} modal={modal} setModal={setModal}></ListModal>}
-      <Map markerImg="src/assets/images/cmapLogoR.svg" mapItems={cmapList} />
+      <Map markerImg={cmapLogoR} mapItems={cmapList} clickMarker={clickedMapMarker} />
       <MapNavbar
         content="search"
-        logoImg="src/assets/images/cmapLogoR.svg"
+        logoImg={cmapLogoR}
         color="rgba(255, 104, 104, 1)"
         hovercolor="rgb(245, 173, 173)"
       />
