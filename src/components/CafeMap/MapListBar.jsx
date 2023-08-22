@@ -92,7 +92,7 @@ function MapListBar({
     }
   }, [search]);
   useEffect(() => {
-    if (listModalData !== '') {
+    if (listModalData !== '' && listModalData !== undefined) {
       setSearchText(listModalData);
       setIsOpen(true);
     }
