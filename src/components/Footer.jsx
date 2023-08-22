@@ -12,7 +12,7 @@ const Footerdiv = styled.div`
   justify-content: center;
 `;
 const Footertext = styled.div`
-  width: 23%;
+  width: 40%;
   height: 29px;
   text-align: center;
   margin: 0 auto;

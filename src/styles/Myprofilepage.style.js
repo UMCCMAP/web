@@ -8,7 +8,7 @@ export const ProfileWholeDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: ${(props) => (props.align ? props.align : 'center')};
-  margin: 100px 50px 0 242px;
+  margin: 100px 200px 0 50px;
 `;
 export const IntroDiv = styled.div`
   width: 815px;
@@ -153,7 +153,7 @@ export const MateListDiv = styled.div`
   border: 2px solid #ff6868;
 
   flex-direction: column;
-  margin: 100px 0 0 160px;
+  margin: 100px 0 0 10px;
 `;
 export const MateList = styled.div`
   width: 230px;
@@ -163,7 +163,6 @@ export const MateList = styled.div`
   overflow: auto;
 
   flex-direction: column;
-  justify-content: top;
 
   overflow-y: auto;
   &::-webkit-scrollbar {

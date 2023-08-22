@@ -57,7 +57,14 @@ function CmapPage() {
 
   return (
     <C.Container>
-      {modal !== 'none' && <ListModal user={user} modal={modal} setModal={setModal}></ListModal>}
+      {modal !== 'none' && (
+        <ListModal
+          setCafeData={setClickedMarkerItem}
+          user={user}
+          modal={modal}
+          setModal={setModal}
+        ></ListModal>
+      )}
       <Map markerImg={cmapLogoR} mapItems={cmapList} clickMarker={clickedMapMarker} />
       <MapNavbar
         content="search"

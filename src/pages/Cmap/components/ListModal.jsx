@@ -11,7 +11,7 @@ import { ReactComponent as CameraIcon } from '@/assets/icon/CmapModalICon/camera
 import { ReactComponent as DesertIcon } from '@/assets/icon/CmapModalICon/desert.svg';
 import baseAxios from '@/apis/baseAxios';
 import close from '@/assets/images/close.svg';
-function ListModal({ user, modal, setModal }) {
+function ListModal({ setCafeData, user, modal, setModal }) {
   const [themes] = useState([
     {
       image: (fill) => <BookIcon width="100%" height="100%" fill={fill} />,
@@ -52,7 +52,7 @@ function ListModal({ user, modal, setModal }) {
           );
         } else {
           response = await baseAxios.get(
-            `/cmap/${modal}?themeIdx=${activeButton}&nickname=${user}`,
+            `/cmap/${modal}?themeIdx=${activeButton}&nickName=${user}`,
           );
         }
         console.log(response.data.result.cmapCafe);
@@ -107,10 +107,17 @@ function ListModal({ user, modal, setModal }) {
         </LM.ListModalCon>
         <LM.CafesWrapper>
           {cafes.map((a, i) => (
-            <LM.Cafe key={i}>
+            <LM.Cafe
+              key={i}
+              onClick={() => {
+                setCafeData(a.cafeName);
+                setModal('none');
+                console.log(a.cafeName);
+              }}
+            >
               <LM.CafeImg>
-                {a.image ? (
-                  <img src={a.image} alt={a.name} style={{ width: '100%', height: '100%' }} />
+                {a.cafeImg ? (
+                  <img src={a.cafeImg} alt={a.cafeName} style={{ width: '100%', height: '100%' }} />
                 ) : (
                   'No IMAGE'
                 )}

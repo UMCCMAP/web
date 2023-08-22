@@ -1,6 +1,5 @@
 import { useLocation } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import Footer from '@/components/footer';
 import Logo from '@/components/LogoHeader';
 import './profile.css';
 import * as S from '@/styles/Myprofilepage.style';
@@ -197,7 +196,6 @@ function Myprofile() {
           ))}
         </S.MateList>
       </S.MateListDiv>
-      <Footer></Footer>
     </W.Wrapper>
   );
 }
