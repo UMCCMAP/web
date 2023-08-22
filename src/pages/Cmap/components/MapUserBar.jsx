@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as U from './styles/MapUserBar.style';
 import Arrow from '@/assets/icon/Arrow.png';
 import baseAxios from '@/apis/baseAxios';
+import cmapLogoR from '@/assets/images/cmapLogoR';
 function MapUserBar({ user, setUser, setModal, setCmapList }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [options, setOptions] = useState([]);
@@ -148,7 +149,7 @@ const ToggleIcon = ({ initialFlex, initialPosition, cmapType, setcmapType }) => 
       <U.IconCon flex={flex} onClick={toggleIcon}>
         <U.IconBox shadow={shadow}>
           <U.LogoIcon>
-            <img src="src/assets/images/cmapLogoR.svg" width="100%" alt="Logo" />
+            <img src={cmapLogoR} width="100%" alt="Logo" />
           </U.LogoIcon>
         </U.IconBox>
         <U.IconText position={position}>{cmapType.toUpperCase()}</U.IconText>
