@@ -24,6 +24,17 @@ export const IntroDiv = styled.div`
     height: ${(props) => (props.height ? props.height : '200px')};
   }
 `;
+
+export const UserInfo = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 5px;
+  margin-left: 3px;
+  > p {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+`;
 export const UserDataDiv = styled.div`
   width: 540px;
   height: 200px;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as U from './styles/MapUserBar.style';
 import Arrow from '@/assets/icon/Arrow.png';
 import baseAxios from '@/apis/baseAxios';
-import cmapLogoR from '@/assets/images/cmapLogoR';
+import cmapLogoR from '@/assets/images/cmapLogoR.svg';
 function MapUserBar({ user, setUser, setModal, setCmapList }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [options, setOptions] = useState([]);

@@ -21,15 +21,18 @@ function Myprofile() {
   const [boardCnt, setBoardCnt] = useState(0);
   const [myMateInfo, setMyMateInfo] = useState([]);
   const [mateInfoList, setMateInfoList] = useState([]); // 에러나옴
+  const [userRealName, setUserRealName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const isOwnProfile = myName === userName;
   const following = myMateInfo.includes(userName);
   const UserDataFromServer = async () => {
     try {
       // 서버에서 데이터를 가져오는 로직 구현
       const response = await baseAxios.get(`users/profile/${userName}`);
-      console.log(response.data);
       setData(response.data);
       setUserName(response.data.userNickname);
+      setUserRealName(response.data.userName);
+      setUserEmail(response.data.userEmail);
       setUserImg(response.data.userImg);
       setUserIntro(response.data.userInfo);
       setCafeImg(response.data.cafeImg);
@@ -79,7 +82,6 @@ function Myprofile() {
     MateFromServer();
     console.log(mateInfoList);
   }, []);
-
   return (
     <W.Wrapper flexDir="row">
       <Logo></Logo>
@@ -87,6 +89,10 @@ function Myprofile() {
         <S.IntroDiv id="profile" margin="0 0 15px 0">
           <img src={userImg} />
           <S.UserDataDiv>
+            <S.UserInfo>
+              <p>{userRealName}</p>
+              <p>{userEmail}</p>
+            </S.UserInfo>
             <S.UsernameAndCountDiv>
               <S.UsernameDiv>{userName}</S.UsernameDiv>
               <S.WriteCntText>
