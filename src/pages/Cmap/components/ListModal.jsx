@@ -17,23 +17,22 @@ function ListModal({ setCafeData, user, modal, setModal }) {
       image: (fill) => <BookIcon width="100%" height="100%" fill={fill} />,
       name: '스터디',
     },
+    { image: (fill) => <CameraIcon width="100%" height="100%" fill={fill} />, name: '사진' },
     {
       image: (fill) => <CoffeeIcon width="100%" height="100%" fill={fill} />,
       name: '음료',
     },
+    { image: (fill) => <BreadIcon width="100%" height="100%" fill={fill} />, name: '베이커리' },
     {
       image: (fill) => <ViewIcon width="100%" height="100%" fill={fill} />,
       name: '뷰',
     },
+    { image: (fill) => <DesertIcon width="100%" height="100%" fill={fill} />, name: '디저트' },
+    { image: (fill) => <ParkingIcon width="100%" height="100%" fill={fill} />, name: '주차' },
     {
       image: (fill) => <BrunchIcon width="100%" height="100%" fill={fill} />,
       name: '브런치',
     },
-
-    { image: (fill) => <ParkingIcon width="100%" height="100%" fill={fill} />, name: '주차' },
-    { image: (fill) => <CameraIcon width="100%" height="100%" fill={fill} />, name: '사진' },
-    { image: (fill) => <BreadIcon width="100%" height="100%" fill={fill} />, name: '베이커리' },
-    { image: (fill) => <DesertIcon width="100%" height="100%" fill={fill} />, name: '디저트' },
   ]);
   const [cafes, setCafes] = useState([]);
 

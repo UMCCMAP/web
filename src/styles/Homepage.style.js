@@ -45,21 +45,20 @@ export const HeaderBtnDiv = styled.div`
   align-items: center;
 `;
 export const ProfileBtn = styled(Link)`
-  width: 105px;
+  width: 300px;
   height: 24px;
 
   font-size: 20px;
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0em;
-  text-align: center;
+  text-align: right;
   text-decoration: none;
-
-  margin-right: 20px;
   color: #ffffff;
   background-color: transparent;
   border: none;
   cursor: pointer;
+  margin-right: 30px;
 `;
 export const LogoutBtn = styled.button`
   width: 105px;

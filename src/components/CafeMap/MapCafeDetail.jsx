@@ -192,7 +192,7 @@ function MapCafeDetail({ closeAction, getReviewIndex, getReviewData, color, data
         <D.SaveBtnContainer>
           <CommonBtn
             name={cafeData?.cafeType != null ? cafeData?.cafeType : '지도에 저장'}
-            width="70px"
+            width="auto"
             color={fontColor}
             background={color}
             clickEvent={() => {

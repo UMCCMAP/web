@@ -13,8 +13,7 @@ function CmapPage() {
   const [modal, setModal] = useState('none');
   const [user, setUser] = useState(
     location.state && location.state.userName ? location.state.userName : 'ME',
-  );
-  const [mapItemList, setMapItemList] = useState([]);
+  );  const [mapItemList, setMapItemList] = useState([]);
   const [selectThemeData, setSelectThemeData] = useState(-1);
   const [searchCafeData, setSearchCafeData] = useState([]);
   const [clickMarkerItem, setClickedMarkerItem] = useState(-1);
@@ -61,11 +60,10 @@ function CmapPage() {
         clickedCafeItem={clickMarkerData}
       />
       <MapNavbar
-        content="search"
+        content="cmap"
         logoImg={cmapLogoR}
         color="rgba(255, 104, 104, 1)"
         hovercolor="rgb(245, 173, 173)"
-        cafeItems={setSelectThemeData}
       />
       <MapListBar
         color="rgba(255, 104, 104, 1)"

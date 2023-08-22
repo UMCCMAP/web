@@ -8,7 +8,7 @@ export const ProfileWholeDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: ${(props) => (props.align ? props.align : 'center')};
-  margin: 100px 200px 0 50px;
+  margin: 15vh 200px 0 50px;
 `;
 export const IntroDiv = styled.div`
   width: 815px;
@@ -164,7 +164,7 @@ export const MateListDiv = styled.div`
   border: 2px solid #ff6868;
 
   flex-direction: column;
-  margin: 100px 0 0 10px;
+  margin: 15vh 0 0 10px;
 `;
 export const MateList = styled.div`
   width: 230px;
@@ -205,7 +205,7 @@ export const Mate = styled.button`
   }
   div {
     max-width: 235px;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 700;
     line-height: 24px;
     letter-spacing: 0em;

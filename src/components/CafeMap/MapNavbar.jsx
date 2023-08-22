@@ -117,7 +117,6 @@ function MapNavbar({ content, logoImg, color, hovercolor, cafeItems, getRecommen
         cafeItems(response.data);
       } catch (e) {
         if (e.response.data.code === 3106) {
-          alert(e.response.data.message);
           cafeItems(e.response.data.code);
         }
       }
