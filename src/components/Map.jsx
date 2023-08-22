@@ -14,12 +14,14 @@ function Map({ markerImg, mapItems, clickMarker, clickedCafeItem }) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
           setLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
+            // latitude: position.coords.latitude,
+            // longitude: position.coords.longitude,
+            latitude: mapItems[0].cafeLatitude,
+            longitude: mapItems[0].cafeLongitude,
           });
           const location = new navermaps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude,
+            mapItems[0].cafeLatitude,
+            mapItems[0].cafeLongitude,
           );
           map?.setCenter(location);
           map?.setZoom(15);
